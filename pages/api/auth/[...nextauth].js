@@ -17,7 +17,6 @@ export default NextAuth({
       try {
         user.name = profile.data.username
         user.image = profile.data.profile_image_url
-        delete user.email
 
         const permissionsExist = await Permissions.findOne(
           { uid: profile.data.id },
@@ -52,5 +51,4 @@ export default NextAuth({
     encryption: true,
     maxAge: 60 * 60 * 24 * 30
   }
-  // adapter: MongoDBAdapter(clientPromise)
 })
