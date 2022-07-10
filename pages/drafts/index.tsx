@@ -1,5 +1,7 @@
 import dynamic from "next/dynamic"
 import { GetServerSideProps } from "next"
+import { useGlobalState } from "state/hooks/useGlobalState"
+
 const Layout = dynamic(() => import("components/layout/Layout"))
 const PrimaryHeading = dynamic(
   () => import("components/headings/PrimaryHeading")
@@ -9,6 +11,8 @@ interface DashboardPage {
 }
 
 const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
+  const { togglePopover } = useGlobalState()
+
   if (drafts != null && drafts.length < 1) {
     return (
       <Layout enforceAuth={true}>
@@ -16,7 +20,11 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
       </Layout>
     )
   }
-  return <div>Drafts</div>
+  return (
+    <Layout enforceAuth={true}>
+      <PrimaryHeading>Drafts</PrimaryHeading>
+    </Layout>
+  )
 }
 
 export default DraftsPage

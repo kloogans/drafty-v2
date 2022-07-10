@@ -9,7 +9,7 @@ const draftsSchema = new Schema({
   drafts: {
     type: Array,
     required: true
-  },
+  }
 })
 
 // @ts-expect-error
