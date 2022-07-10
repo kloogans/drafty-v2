@@ -1,14 +1,19 @@
 import type { NextPage } from "next"
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import { useSession, signIn, signOut } from "next-auth/react"
-import Layout from "components/layout/Layout"
-
+const Layout = dynamic(() => import("components/layout/Layout"))
+const PrimaryHeading = dynamic(
+  () => import("components/headings/PrimaryHeading")
+)
 const Home: NextPage = () => {
   const { data: session, status } = useSession()
   const isAuthenticated = status !== "loading" && status === "authenticated"
   return (
     <Layout enforceAuth={false}>
-      <h1 className="text-2xl text-white font-bold mb-2">Drafty</h1>
+      <PrimaryHeading className="mb-2">
+        <strong>Drafty</strong>
+      </PrimaryHeading>
 
       {!isAuthenticated && (
         <button

@@ -1,7 +1,9 @@
-import React from "react"
+import dynamic from "next/dynamic"
 import { GetServerSideProps } from "next"
-import Layout from "components/layout/Layout"
-
+const Layout = dynamic(() => import("components/layout/Layout"))
+const PrimaryHeading = dynamic(
+  () => import("components/headings/PrimaryHeading")
+)
 interface DashboardPage {
   drafts: string[]
 }
@@ -10,7 +12,7 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
   if (drafts != null && drafts.length < 1) {
     return (
       <Layout enforceAuth={true}>
-        <h1 className="text-xl text-white">No drafts found</h1>
+        <PrimaryHeading>No drafts yet!</PrimaryHeading>
       </Layout>
     )
   }
