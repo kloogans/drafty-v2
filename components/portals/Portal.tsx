@@ -1,10 +1,6 @@
 import { useState, useLayoutEffect } from "react"
 import { createPortal } from "react-dom"
-
-interface PortalProps {
-  children: React.ReactNode
-  containerId: string
-}
+import { PortalProps } from "./types"
 
 const createContainerAndAppendToBody = (containerId: string) => {
   const wrapperElement = document.createElement("div")
@@ -27,7 +23,7 @@ const createContainerAndAppendToBody = (containerId: string) => {
   return wrapperElement
 }
 
-const ReactPortal: React.FC<PortalProps> = ({
+const Portal: React.FC<PortalProps> = ({
   children,
   containerId = "popover"
 }) => {
@@ -59,4 +55,4 @@ const ReactPortal: React.FC<PortalProps> = ({
   )
 }
 
-export default ReactPortal
+export default Portal

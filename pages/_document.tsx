@@ -1,6 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document"
 
-class LittleBuildsDocument extends Document {
+class DraftyDocument extends Document {
   render() {
     return (
       <Html>
@@ -51,4 +51,4 @@ class LittleBuildsDocument extends Document {
   }
 }
 
-export default LittleBuildsDocument
+export default DraftyDocument

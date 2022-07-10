@@ -1,15 +1,10 @@
 import { useReducer } from "react"
 import { GlobalState, initialGlobalState } from "./globalContext"
-import { GlobalStateProps } from "./types"
-
-interface GlobalStateProviderProps {
-  children: React.ReactNode
-}
-
-interface GlobalStateActions {
-  type: string
-  payload?: string | boolean
-}
+import {
+  GlobalStateProps,
+  GlobalStateProviderProps,
+  GlobalStateActions
+} from "./types"
 
 const globalStateReducer = (
   state: GlobalStateProps,

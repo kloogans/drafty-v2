@@ -1,12 +1,8 @@
 import { useRef, useEffect } from "react"
-import ReactPortal from "components/portals/ReactPortal"
+import Portal from "components/portals/Portal"
 import { useGlobalState } from "state/hooks/useGlobalState"
 import { useClickAway } from "react-use"
-
-interface PopoverProps {
-  children: React.ReactNode
-  id: string
-}
+import { PopoverProps } from "./types"
 
 const Popover: React.FC<PopoverProps> = ({ children, id = "popover" }) => {
   const popoverRef = useRef<HTMLDivElement>(null)
@@ -43,9 +39,9 @@ const Popover: React.FC<PopoverProps> = ({ children, id = "popover" }) => {
   if (!popoverIsOpen) return null
 
   return (
-    <ReactPortal containerId={id}>
+    <Portal containerId={id}>
       <span ref={popoverRef}>{children}</span>
-    </ReactPortal>
+    </Portal>
   )
 }
 

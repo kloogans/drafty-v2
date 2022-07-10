@@ -1,12 +1,9 @@
+import dynamic from "next/dynamic"
 import { useSession } from "next-auth/react"
 import Error from "next/error"
-import Popover from "components/popover/Popover"
 import { useGlobalState } from "state/hooks/useGlobalState"
-
-interface LayoutProps {
-  children: React.ReactNode
-  enforceAuth?: boolean
-}
+import { LayoutProps } from "./types"
+const Popover = dynamic(() => import("components/popover/Popover"))
 
 const Layout: React.FC<LayoutProps> = ({ children, enforceAuth = false }) => {
   const { togglePopover } = useGlobalState()
