@@ -5,7 +5,11 @@ import { useGlobalState } from "state/hooks/useGlobalState"
 import { LayoutProps } from "./types"
 const Popover = dynamic(() => import("components/popover/Popover"))
 
-const Layout: React.FC<LayoutProps> = ({ children, enforceAuth = false }) => {
+const Layout: React.FC<LayoutProps> = ({
+  children,
+  enforceAuth = false,
+  className
+}) => {
   const { togglePopover } = useGlobalState()
   const { status } = useSession()
   const isAuthenticated = status !== "loading" && status === "authenticated"
@@ -17,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({ children, enforceAuth = false }) => {
   if (status === "loading") {
     return (
       <div className={`${containerClass}`}>
-        <main className={mainClass}>
+        <main className={`${mainClass} ${className}`}>
           <p className="text-sm text-white">
             <strong>Loading</strong>
           </p>
@@ -33,7 +37,7 @@ const Layout: React.FC<LayoutProps> = ({ children, enforceAuth = false }) => {
   return (
     <>
       <div className={`${containerClass}`}>
-        <main className={mainClass}>{children}</main>
+        <main className={`${mainClass} ${className}`}>{children}</main>
       </div>
       <Popover id="main-layout-popover">
         <div className="bg-zinc-700 min-h-[70vh] lg:max-h-[70vh] lg:min-w-[532px] overflow-y-auto scrollbar-blue p-10 rounded-2xl shadow-md flex flex-col items-center justify-start">

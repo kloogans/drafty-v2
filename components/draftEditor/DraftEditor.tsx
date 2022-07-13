@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from "react"
-import dynamic from "next/dynamic"
 import { DraftEditorProps } from "./types"
 import { SecondaryButton } from "components/buttons"
 const MAX_CHARACTERS = 10
-const Layout = dynamic(() => import("components/layout/Layout"))
 
 interface ContentEditor {
   index: number
@@ -28,13 +26,17 @@ const ContentEditor: React.FC<ContentEditor> = ({
 
   return (
     <>
+      {/*
+      TODO: style into a progress ring 
       <p
         className={`text-md text-white ${remainingLength < 0 ? "hidden" : ""}`}
       >
         <strong>{remainingLength} characters left</strong>
-      </p>
+      </p> 
+      */}
       <textarea
-        className={`w-full p-2 border-2 border-gray-300 rounded-lg opacity-60 focus:opacity-100`}
+        className={`w-full min-h-[10rem] focus:min-h-[20rem] text-2xl text-white/30 focus:text-white bg-indigo-600 border-2 border-white/30 focus:border-white p-2 outline-none rounded-lg flex resize-none transition duration-200 ease-in-out`}
+        style={{ transitionProperty: "all" }}
         value={value}
         onChange={(e) => {
           if (e.target.value.length <= MAX_CHARACTERS) {
@@ -78,14 +80,19 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
 
   const lastTextBoxIsEmpty = values[values.length - 1].text.length < 1
 
+  // TODO: add remove text box option
+
   return (
-    <Layout enforceAuth={true}>
+    <>
+      {/*
+      TODO: style as an lowkey counter off to the side 
       <p className="text-md text-white">
         Total sections: <strong>{values.length}</strong>
-      </p>
+      </p> 
+      */}
       <form
         ref={formRef}
-        className="w-full max-w-3xl mx-auto flex flex-col items-center justify-center gap-4"
+        className="w-full h-full px-2 md:px-0 max-w-full md:max-w-xl mx-auto flex flex-col items-center justify-center gap-4"
       >
         {values.map((value, index) => {
           return (
@@ -113,7 +120,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
       >
         Add new text box
       </SecondaryButton>
-    </Layout>
+    </>
   )
 }
 

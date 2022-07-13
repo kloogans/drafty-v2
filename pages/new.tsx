@@ -13,7 +13,7 @@ interface NewDraftPage {
 const NewDraftPage: React.FC<NewDraftPage> = () => {
   const { togglePopover } = useGlobalState()
   return (
-    <Layout enforceAuth={true}>
+    <Layout enforceAuth={true} className="min-h-screen !justify-start pt-10">
       <DraftEditor />
     </Layout>
   )
