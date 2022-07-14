@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from "react"
 import { DraftEditorProps } from "./types"
-import { SecondaryButton } from "components/buttons"
+import { PrimaryButton, SecondaryButton } from "components/buttons"
 const MAX_CHARACTERS = 10
 
 interface ContentEditor {
   index: number
   value: string
   lastIndex: number
+  focused: boolean
   handleChange: (text: string) => void
   handleFocus: () => void
 }
@@ -15,6 +16,7 @@ const ContentEditor: React.FC<ContentEditor> = ({
   index,
   value,
   lastIndex,
+  focused,
   handleChange,
   handleFocus
 }) => {
@@ -23,6 +25,8 @@ const ContentEditor: React.FC<ContentEditor> = ({
   useEffect(() => {
     handleFocus()
   }, [])
+
+  const focusedStyle = `min-h-[20rem] !text-white !border-white !border-solid`
 
   return (
     <>
@@ -35,9 +39,12 @@ const ContentEditor: React.FC<ContentEditor> = ({
       </p> 
       */}
       <textarea
-        className={`w-full min-h-[10rem] focus:min-h-[20rem] text-2xl text-white/30 focus:text-white bg-indigo-600 border-2 border-white/30 focus:border-white p-2 outline-none rounded-lg flex resize-none transition duration-200 ease-in-out`}
+        className={`w-full text-2xl text-white/30 bg-indigo-600 border-2 border-white/30 border-dashed p-2 outline-none rounded-lg flex resize-none transition duration-200 ease-in-out ${
+          focused ? focusedStyle : "min-h-[10rem]"
+        }`}
         style={{ transitionProperty: "all" }}
         value={value}
+        onFocus={() => handleFocus()}
         onChange={(e) => {
           if (e.target.value.length <= MAX_CHARACTERS) {
             if (e.target.value.length === MAX_CHARACTERS) {
@@ -49,6 +56,8 @@ const ContentEditor: React.FC<ContentEditor> = ({
           }
         }}
       />
+
+      {}
     </>
   )
 }
@@ -57,35 +66,43 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
   const [values, setValues] = useState([
     {
       id: 0,
-      text: ""
+      text: "",
+      focused: true
     }
   ])
 
   const formRef = useRef<HTMLFormElement>(null)
 
   const focusOnNewTextBox = (id: number) => {
-    const form = formRef?.current
-    form && form.querySelectorAll("textarea")[id]?.focus()
+    const newValues = [...values]
+    newValues.forEach((value) => {
+      value.focused = false
+    })
+    newValues[id].focused = true
+    setValues(newValues)
   }
 
   const addNewTextBox = () => {
     const getLastValuesId = values[values.length - 1].id
     const newId = getLastValuesId + 1
     const newValues = [...values]
+    newValues.forEach((value) => {
+      value.focused = false
+    })
 
-    newValues.push({ id: newId, text: "" })
+    newValues.push({ id: newId, text: "", focused: true })
     setValues(newValues)
-    focusOnNewTextBox(newId)
   }
 
   const lastTextBoxIsEmpty = values[values.length - 1].text.length < 1
 
-  // TODO: add remove text box option
+  // TODO: create a control panel that will show in the focused text box with
+  // remaing characters progress ring and text, add new text box button, and delete text box button
 
   return (
     <>
       {/*
-      TODO: style as an lowkey counter off to the side 
+      TODO: style this as an lowkey counter off to the side 
       <p className="text-md text-white">
         Total sections: <strong>{values.length}</strong>
       </p> 
@@ -100,6 +117,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
               key={value.id}
               index={index}
               value={value.text}
+              focused={value.focused}
               lastIndex={values.length - 1}
               handleFocus={() => focusOnNewTextBox(value.id)}
               handleChange={(text: string) => {
@@ -110,6 +128,12 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
             />
           )
         })}
+        <PrimaryButton
+          handleClick={() => console.log("save whole thing")}
+          title="Save draft"
+        >
+          Save
+        </PrimaryButton>
       </form>
       <SecondaryButton
         disabled={lastTextBoxIsEmpty}

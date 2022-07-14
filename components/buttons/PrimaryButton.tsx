@@ -7,8 +7,10 @@ export const PrimaryButton: React.FC<ButtonProps> = ({
   className,
   title = "",
   isInternalLink = false,
+  disabled = false,
   linkPath = ""
 }) => {
+  const disabledStyle = `cursor-not-allowed opacity-50`
   if (isInternalLink) {
     return (
       <Link href={linkPath}>
@@ -16,7 +18,7 @@ export const PrimaryButton: React.FC<ButtonProps> = ({
           title={title}
           className={`text-md px-3 py-2 bg-amber-300 rounded-2xl border-4 border-yellow-100 ${
             className || ""
-          }`}
+          } ${disabledStyle || ""}`}
         >
           {children}
         </a>
