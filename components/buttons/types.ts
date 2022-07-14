@@ -1,6 +1,6 @@
 export interface ButtonProps {
   children: React.ReactNode
-  handleClick?: () => void
+  handleClick?: (e?: any) => void
   className?: string
   title?: string
   disabled?: boolean

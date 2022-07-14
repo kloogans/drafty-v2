@@ -1,7 +1,9 @@
-import { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { DraftEditorProps } from "./types"
 import { PrimaryButton, SecondaryButton } from "components/buttons"
-const MAX_CHARACTERS = 10
+import { CircularProgressbar } from "react-circular-progressbar"
+import "react-circular-progressbar/dist/styles.css"
+const MAX_CHARACTERS = 280
 
 interface ContentEditor {
   index: number
@@ -20,8 +22,6 @@ const ContentEditor: React.FC<ContentEditor> = ({
   handleChange,
   handleFocus
 }) => {
-  const remainingLength = MAX_CHARACTERS - value.length
-
   useEffect(() => {
     handleFocus()
   }, [])
@@ -56,9 +56,22 @@ const ContentEditor: React.FC<ContentEditor> = ({
           }
         }}
       />
-
-      {}
     </>
+  )
+}
+
+const Controls: React.FC<{ show: boolean; children: React.ReactNode }> = ({
+  show,
+  children
+}) => {
+  return (
+    <div
+      className={`${
+        show ? "" : "hidden"
+      } absolute bottom-0 right-0 p-4 flex items-center justify-center gap-2`}
+    >
+      {children}
+    </div>
   )
 }
 
@@ -112,20 +125,77 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
         className="w-full h-full px-2 md:px-0 max-w-full md:max-w-xl mx-auto flex flex-col items-center justify-center gap-4"
       >
         {values.map((value, index) => {
+          const isLastTextBox = index === values.length - 1
+          const remainingLength = MAX_CHARACTERS - value.text.length
+          const percentageOfRemainingLength = Math.ceil(
+            ((MAX_CHARACTERS - value.text.length) / MAX_CHARACTERS) * 100
+          )
+
           return (
-            <ContentEditor
-              key={value.id}
-              index={index}
-              value={value.text}
-              focused={value.focused}
-              lastIndex={values.length - 1}
-              handleFocus={() => focusOnNewTextBox(value.id)}
-              handleChange={(text: string) => {
-                const newValues = [...values]
-                newValues[index].text = text
-                setValues(newValues)
-              }}
-            />
+            <div className="relative w-full" key={value.id}>
+              <ContentEditor
+                key={value.id}
+                index={index}
+                value={value.text}
+                focused={value.focused}
+                lastIndex={values.length - 1}
+                handleFocus={() => focusOnNewTextBox(value.id)}
+                handleChange={(text: string) => {
+                  const newValues = [...values]
+                  newValues[index].text = text
+                  setValues(newValues)
+                }}
+              />
+              <Controls show={value.focused}>
+                <SecondaryButton
+                  disabled={lastTextBoxIsEmpty}
+                  handleClick={(e) => {
+                    e.preventDefault()
+                    !lastTextBoxIsEmpty && addNewTextBox()
+                  }}
+                  title="Add new text box"
+                  tertiary={true}
+                  className={`${!isLastTextBox ? "hidden" : ""} mr-2`}
+                >
+                  Add
+                </SecondaryButton>
+
+                {/* <SecondaryButton
+                  disabled={lastTextBoxIsEmpty}
+                  handleClick={(e) => {
+                    e.preventDefault()
+                    !lastTextBoxIsEmpty && addNewTextBox()
+                  }}
+                  title="Add new text box"
+                  tertiary={true}
+                  className={`${!isLastTextBox ? "hidden" : ""} mr-2`}
+                >
+                  Remove
+                </SecondaryButton> */}
+                <CircularProgressbar
+                  className="w-6 h-6"
+                  strokeWidth={10}
+                  value={percentageOfRemainingLength}
+                  styles={{
+                    path: {
+                      stroke:
+                        percentageOfRemainingLength < 20 ? "red" : "#818cf8"
+                    },
+                    text: {
+                      fill: percentageOfRemainingLength < 20 ? "red" : "#818cf8"
+                    }
+                  }}
+                />
+
+                <p
+                  className={`text-sm ${
+                    remainingLength < 20 ? "text-red-400" : "text-indigo-200"
+                  }`}
+                >
+                  {remainingLength}
+                </p>
+              </Controls>
+            </div>
           )
         })}
         <PrimaryButton
@@ -135,7 +205,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
           Save
         </PrimaryButton>
       </form>
-      <SecondaryButton
+      {/* <SecondaryButton
         disabled={lastTextBoxIsEmpty}
         handleClick={() => !lastTextBoxIsEmpty && addNewTextBox()}
         title="Add new text box"
@@ -143,7 +213,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
         className="mt-4"
       >
         Add new text box
-      </SecondaryButton>
+      </SecondaryButton> */}
     </>
   )
 }
