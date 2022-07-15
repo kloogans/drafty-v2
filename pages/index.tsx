@@ -3,6 +3,7 @@ import dynamic from "next/dynamic"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { PrimaryButton, SecondaryButton } from "components/buttons"
 import Icon from "components/icon/Icon"
+import LogoIcon from "components/logo/LogoIcon"
 
 const Layout = dynamic(() => import("components/layout/Layout"))
 const PrimaryHeading = dynamic(
@@ -14,13 +15,11 @@ const Home: NextPage = () => {
   console.log(session?.user)
   return (
     <Layout enforceAuth={false}>
-      <Icon
-        className={`w-20 h-20 bg-white`}
-        url={`/assets/logo/tornado-4.svg`}
-      />
-      <PrimaryHeading className="mb-2">
-        <strong>Drafty</strong>
-      </PrimaryHeading>
+      <LogoIcon className="w-20 h-20" animated={true} />
+
+      <h1 className="title-font leading-none text-indigo-200 text-3xl lg:text-4xl mb-3 -translate-y-2">
+        Drafty
+      </h1>
 
       {!isAuthenticated && (
         <PrimaryButton
@@ -32,14 +31,7 @@ const Home: NextPage = () => {
       )}
       {isAuthenticated && (
         <div className="flex flex-col items-center justify-center gap-4">
-          <div className="flex items-center gap-4">
-            <PrimaryButton
-              title="Go to my drafts"
-              isInternalLink={true}
-              linkPath="/drafts"
-            >
-              Go to my <strong>drafts</strong>
-            </PrimaryButton>
+          <div className="flex flex-col items-center justify-center gap-4">
             <PrimaryButton
               title="Create a new draft"
               isInternalLink={true}
@@ -47,14 +39,23 @@ const Home: NextPage = () => {
             >
               <strong>Create</strong> a new draft
             </PrimaryButton>
+            <SecondaryButton
+              title="Go to my drafts"
+              handleClick={() => signOut()}
+              tertiary={true}
+              linkPath="/drafts"
+              className="text-sm"
+            >
+              Go to my <strong>drafts</strong>
+            </SecondaryButton>
           </div>
-          <SecondaryButton
+          {/* <SecondaryButton
             handleClick={() => signOut()}
             title="Sign out of my account"
             tertiary={true}
           >
             Sign out
-          </SecondaryButton>
+          </SecondaryButton> */}
         </div>
       )}
     </Layout>

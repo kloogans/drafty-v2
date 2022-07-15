@@ -5,7 +5,7 @@ class DraftyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Drafty</title>
+          {/* <title>Drafty</title> */}
           <meta
             name="description"
             content="Draft your twitter ideas with ease."

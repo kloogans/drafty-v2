@@ -18,7 +18,7 @@ export const PrimaryButton: React.FC<ButtonProps> = ({
           title={title}
           className={`text-md px-3 py-2 bg-amber-300 rounded-2xl border-4 border-yellow-100 ${
             className || ""
-          } ${disabledStyle || ""}`}
+          } ${disabled ? disabledStyle : ""}`}
         >
           {children}
         </a>
