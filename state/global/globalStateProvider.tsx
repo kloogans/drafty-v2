@@ -16,6 +16,11 @@ const globalStateReducer = (
         ...state,
         popoverIsOpen: action.payload as boolean
       }
+    case "toggleDrawer":
+      return {
+        ...state,
+        drawerIsOpen: action.payload as boolean
+      }
     default:
       return state
   }
@@ -31,6 +36,12 @@ const GlobalStateProvider: React.FC<GlobalStateProviderProps> = ({
       dispatch({
         type: "setPopoverIsOpen",
         payload: !state.popoverIsOpen
+      })
+    },
+    toggleDrawer: () => {
+      dispatch({
+        type: "toggleDrawer",
+        payload: !state.drawerIsOpen
       })
     }
   }

@@ -1,6 +1,8 @@
 export interface GlobalStateProps {
   popoverIsOpen: boolean
+  drawerIsOpen: boolean
   togglePopover: () => void
+  toggleDrawer: () => void
 }
 
 export interface GlobalStateProviderProps {

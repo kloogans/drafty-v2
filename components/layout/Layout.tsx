@@ -15,7 +15,7 @@ const Layout: React.FC<LayoutProps> = ({
   const isAuthenticated = status !== "loading" && status === "authenticated"
 
   const containerClass =
-    "w-full h-full min-h-screen flex flex-col items-center justify-center bg-indigo-600"
+    "w-full h-full min-h-screen flex flex-col items-center justify-center bg-indigo-900"
   const mainClass = "w-full h-full flex flex-col items-center justify-center"
 
   if (status === "loading") {

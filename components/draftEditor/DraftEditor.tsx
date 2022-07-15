@@ -39,8 +39,8 @@ const ContentEditor: React.FC<ContentEditor> = ({
       </p> 
       */}
       <textarea
-        className={`w-full text-2xl text-white/30 bg-indigo-600 border-2 border-white/30 border-dashed p-2 outline-none rounded-lg flex resize-none transition duration-200 ease-in-out ${
-          focused ? focusedStyle : "min-h-[10rem]"
+        className={`w-full text-2xl bg-indigo-800 border-2 border-white/30 border-dashed p-2 outline-none rounded-lg flex resize-none transition duration-200 ease-in-out ${
+          focused ? focusedStyle : "min-h-[10rem] text-gray-500"
         }`}
         style={{ transitionProperty: "all" }}
         value={value}
@@ -80,6 +80,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
     {
       id: 0,
       text: "",
+      attachments: [],
       focused: true
     }
   ])
@@ -103,7 +104,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
       value.focused = false
     })
 
-    newValues.push({ id: newId, text: "", focused: true })
+    newValues.push({ id: newId, text: "", attachments: [], focused: true })
     setValues(newValues)
   }
 
@@ -205,15 +206,6 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
           Save
         </PrimaryButton>
       </form>
-      {/* <SecondaryButton
-        disabled={lastTextBoxIsEmpty}
-        handleClick={() => !lastTextBoxIsEmpty && addNewTextBox()}
-        title="Add new text box"
-        tertiary={true}
-        className="mt-4"
-      >
-        Add new text box
-      </SecondaryButton> */}
     </>
   )
 }
