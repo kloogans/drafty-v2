@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import Icon from "components/icon/Icon"
 import { useSession } from "next-auth/react"
@@ -10,14 +11,22 @@ const NavbarContent = () => {
   const { data: session, status } = useSession()
   //   const {  }
   const { theme, setTheme } = useTheme()
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setLoading(false)
+  }, [])
+
   return (
     <div className="flex items-center gap-4">
-      <button
-        className="px-4 py-1 text-sm text-gray-700 bg-indigo-300 rounded-xl capitalize"
-        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      >
-        {theme}
-      </button>
+      {!loading && (
+        <button
+          className={`px-4 py-1 text-sm text-gray-700 bg-indigo-300 rounded-xl capitalize`}
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        >
+          {theme}
+        </button>
+      )}
       <button
         className="w-12 h-12"
         onClick={() => console.log("toggle nav drawer")}
