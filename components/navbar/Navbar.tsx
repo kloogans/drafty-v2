@@ -51,10 +51,7 @@ const Navbar = () => {
   const { data: session, status } = useSession()
   return (
     <nav className="fixed top-0 left-0 flex items-center justify-between px-5 w-full h-20">
-      <Icon
-        className={`w-10 h-10 bg-white`}
-        url={`/assets/logo/drafty-icon.svg`}
-      />
+      <Icon className={`w-8 h-8 bg-white`} url={`/assets/logo/tornado-4.svg`} />
       <NavbarContent />
     </nav>
   )

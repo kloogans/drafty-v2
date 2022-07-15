@@ -16,7 +16,7 @@ const Home: NextPage = () => {
     <Layout enforceAuth={false}>
       <Icon
         className={`w-20 h-20 bg-white`}
-        url={`/assets/logo/drafty-icon.svg`}
+        url={`/assets/logo/tornado-4.svg`}
       />
       <PrimaryHeading className="mb-2">
         <strong>Drafty</strong>
