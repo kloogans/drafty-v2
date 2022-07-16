@@ -35,6 +35,7 @@ const Home: NextPage = () => {
             <PrimaryButton
               title="Create a new draft"
               isInternalLink={true}
+              isDisplay={true}
               linkPath="/new"
             >
               <strong>Create</strong> a new draft

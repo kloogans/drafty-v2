@@ -8,12 +8,12 @@ interface LogoIconProps {
 const ALL_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!?"
 const COLORS = ["#C7D1FE"]
 
+const getRandomLetter = () => {
+  return ALL_LETTERS[Math.floor(Math.random() * ALL_LETTERS.length)]
+}
+
 const LogoDebris = () => {
   const [lettersInUse, setLettersInUse] = useState<string[]>([])
-
-  const getRandomLetter = () => {
-    return ALL_LETTERS[Math.floor(Math.random() * ALL_LETTERS.length)]
-  }
 
   const initializeLetters = () => {
     const lettersToUse = []
@@ -35,14 +35,14 @@ const LogoDebris = () => {
       if (lettersElement?.length >= 5) {
         lettersContainer?.removeChild(lettersElement?.[0])
       }
-      const randomColor = COLORS[Math.floor(Math.random() * COLORS.length)]
       const node = document.createElement("span")
+      const randomColor = COLORS[Math.floor(Math.random() * COLORS.length)]
+      const isReversed = Math.random() > 0.5
+      const isInFront = Math.random() > 0.5
       node.style.left = Math.random() * 100 + "%"
       node.style.animationDuration = Math.floor(Math.random() * 4 + 2) + "s"
       node.style.animationDelay = index + "s"
       node.style.color = randomColor
-      const isReversed = Math.random() > 0.5
-      const isInFront = Math.random() > 0.5
       node.classList.add(
         isReversed ? "logo-debris-animation" : "logo-debris-animation-reverse",
         isInFront ? "z-20" : "z-0",

@@ -13,7 +13,7 @@ export const SecondaryButton: React.FC<SecondaryButtonProps> = ({
 }) => {
   const displayStyle = `px-3 py-2 rounded-2xl border-4 border-white`
 
-  const tertiaryStyle = `hover:text-yellow-300`
+  const tertiaryStyle = `hover:text-pink-400`
 
   const disabledStyle = `cursor-not-allowed opacity-50`
 

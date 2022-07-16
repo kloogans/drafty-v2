@@ -199,6 +199,8 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
             </div>
           )
         })}
+
+        {/* TODO: form validation and disabled status */}
         <PrimaryButton
           handleClick={() => console.log("save whole thing")}
           title="Save draft"
