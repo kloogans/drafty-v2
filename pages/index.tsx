@@ -15,11 +15,16 @@ const Home: NextPage = () => {
   console.log(session?.user)
   return (
     <Layout enforceAuth={false}>
-      <LogoIcon className="w-20 h-20" animated={true} />
+      <div className="flex flex-col items-center justify-center translate-y-2">
+        <LogoIcon className="w-20 h-20" animated={true} />
 
-      <h1 className="title-font leading-none text-indigo-200 text-3xl lg:text-4xl mb-3 -translate-y-2">
-        Drafty
-      </h1>
+        <h1 className="title-font leading-none text-indigo-200 text-3xl lg:text-4xl -translate-y-2">
+          Drafty
+        </h1>
+      </div>
+      <h2 className="text-lg text-indigo-300 leading-none mb-4 max-w-xs">
+        Making twitter drafts a <strong>breeze💨</strong>
+      </h2>
 
       {!isAuthenticated && (
         <PrimaryButton
@@ -42,7 +47,6 @@ const Home: NextPage = () => {
             </PrimaryButton>
             <SecondaryButton
               title="Go to my drafts"
-              handleClick={() => signOut()}
               tertiary={true}
               linkPath="/drafts"
               className="text-sm"
