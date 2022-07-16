@@ -14,6 +14,9 @@ const NewDraftPage: React.FC<NewDraftPage> = () => {
   const { togglePopover } = useGlobalState()
   return (
     <Layout enforceAuth={true} className="min-h-screen !justify-start pt-32">
+      <PrimaryHeading className="mb-4">
+        Create a new <strong>draft</strong>
+      </PrimaryHeading>
       <DraftEditor />
     </Layout>
   )

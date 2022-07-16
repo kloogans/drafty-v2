@@ -3,6 +3,7 @@ import { DraftEditorProps } from "./types"
 import { PrimaryButton, SecondaryButton } from "components/buttons"
 import { CircularProgressbar } from "react-circular-progressbar"
 import "react-circular-progressbar/dist/styles.css"
+import Icon from "components/icon/Icon"
 const MAX_CHARACTERS = 280
 
 interface TextBoxProps {
@@ -43,6 +44,7 @@ interface ContentEditor {
   highlighted: boolean
   handleChange: (text: string) => void
   handleFocus: () => void
+  radius: string
 }
 
 const ContentEditor: React.FC<ContentEditor> = ({
@@ -52,20 +54,21 @@ const ContentEditor: React.FC<ContentEditor> = ({
   focused,
   handleChange,
   handleFocus,
-  highlighted
+  highlighted,
+  radius = "rounded-2xl"
 }) => {
   useEffect(() => {
     handleFocus()
   }, [])
 
-  const focusedStyle = `min-h-[20rem] !text-white !border-white !border-solid`
+  const focusedStyle = `min-h-[16.5rem] !bg-indigo-900 focus:!bg-indigo-800 pb-[56px] !text-white !border-white !border-solid`
   const highlightedStyle = `!border-rose-400 !border-solid`
 
   return (
     <>
       <textarea
-        className={`w-full text-2xl bg-indigo-800 border-2 border-white/30 border-dashed p-2 outline-none rounded-lg flex resize-none transition duration-200 ease-in-out ${
-          focused ? focusedStyle : "min-h-[10rem] text-gray-500"
+        className={`w-full text-2xl border-2 border-white/30 border-dashed p-4 outline-none ${radius} flex resize-none transition duration-200 ease-in-out ${
+          focused ? focusedStyle : "min-h-[10rem] text-gray-500 bg-indigo-900"
         } ${highlighted ? highlightedStyle : ""}`}
         style={{ transitionProperty: "all" }}
         value={value}
@@ -85,15 +88,15 @@ const ContentEditor: React.FC<ContentEditor> = ({
   )
 }
 
-const Controls: React.FC<{ show: boolean; children: React.ReactNode }> = ({
-  show,
-  children
-}) => {
+const Controls: React.FC<{
+  show: boolean
+  children: React.ReactNode
+}> = ({ show, children }) => {
   return (
     <div
       className={`${
-        show ? "" : "hidden"
-      } p-4 flex items-center justify-end gap-2`}
+        show ? "opacity-100" : "opacity-0"
+      } p-4 absolute bottom-0 w-full flex items-center justify-end gap-2 transition duration-200 ease-in-out`}
     >
       {children}
     </div>
@@ -137,13 +140,14 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
   const formRef = useRef<HTMLFormElement>(null)
 
   const focusOnNewTextBox = (id: number) => {
-    console.log(id)
+    const textBoxes = document.querySelectorAll("textarea")
     const newValues = [...values]
     newValues.forEach((value) => {
       value.focused = false
     })
     newValues[id].focused = true
     setValues(newValues)
+    textBoxes[id].focus()
   }
 
   const addNewTextBox = () => {
@@ -162,15 +166,9 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
 
   return (
     <div className="w-full pb-20">
-      {/*
-      TODO: style this as an lowkey counter off to the side 
-      <p className="text-md text-white">
-        Total sections: <strong>{values.length}</strong>
-      </p> 
-      */}
       <form
         ref={formRef}
-        className="w-full h-full px-2 md:px-0 max-w-full md:max-w-xl mx-auto flex flex-col items-center justify-center gap-4 mb-4"
+        className="w-full h-full px-2 md:px-0 max-w-full md:max-w-xl mx-auto flex flex-col items-center justify-center mb-4"
       >
         {values.map((value, index) => {
           const isFirstTextBox = index === 0
@@ -180,13 +178,32 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
             ((MAX_CHARACTERS - value.text.length) / MAX_CHARACTERS) * 100
           )
 
+          let radius = "rounded-2xl"
+          if (values.length > 1 && isFirstTextBox) {
+            radius = "rounded-2xl rounded-bl-none"
+          }
+
+          if (values.length > 1 && !isFirstTextBox && !isLastTextBox) {
+            radius = "rounded-2xl rounded-l-none"
+          }
+
+          if (values.length > 1 && isLastTextBox) {
+            radius = "rounded-2xl rounded-tl-none"
+          }
+
           return (
             <div className="relative w-full" key={value.id}>
+              <div
+                className={`${
+                  isFirstTextBox ? "hidden" : ""
+                } h-6 border-r-2 w-0 border-white/30 border-dashed mr-auto`}
+              />
               <ContentEditor
                 key={value.id}
                 index={index}
                 value={value.text}
                 focused={value.focused}
+                radius={radius}
                 highlighted={highlightedTextBoxes.includes(value.id)}
                 lastIndex={values.length - 1}
                 handleFocus={() => focusOnNewTextBox(value.id)}
@@ -200,6 +217,11 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
                   setValues(newValues)
                 }}
               />
+              {/* <div
+                className={`${
+                  isLastTextBox ? "hidden" : ""
+                } h-12 border-r-2 w-0 border-white/30 border-dashed mr-auto`}
+              /> */}
               <Controls show={value.focused}>
                 <SecondaryButton
                   disabled={lastTextBoxIsEmpty}
@@ -222,6 +244,22 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
                       clipRule="evenodd"
                     />
                   </svg>
+                </SecondaryButton>
+
+                <SecondaryButton
+                  // disabled={lastTextBoxIsEmpty}
+                  handleClick={(e) => {
+                    e.preventDefault()
+                    removeTextBox(value.id)
+                  }}
+                  title="Delete this text box"
+                  tertiary={true}
+                  className={`${isFirstTextBox ? "hidden" : ""} mr-1 group`}
+                >
+                  <Icon
+                    url={`/assets/icons/image.svg`}
+                    className="w-6 h-6 bg-white group-hover:bg-pink-400"
+                  />
                 </SecondaryButton>
 
                 <SecondaryButton
@@ -266,8 +304,10 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
                 </div>
 
                 <p
-                  className={`text-sm ${
-                    remainingLength < 20 ? "text-red-400" : "text-indigo-200"
+                  className={`text-sm min-w-[27px] ${
+                    remainingLength < 20
+                      ? "text-rose-300 font-bold"
+                      : "text-indigo-200"
                   }`}
                 >
                   {remainingLength}
@@ -277,23 +317,21 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ draft }) => {
           )
         })}
       </form>
-      <div className="fixed bottom-0 w-full flex items-center justify-end p-4 bg-indigo-900 border-t-2 border-t-indigo-600">
-        {/* TODO: form validation and disabled status */}
-        <div className="grid grid-cols-2 gap-2">
-          <PrimaryButton
-            handleClick={() => console.log("save whole thing")}
-            title="Save draft"
-          >
-            Save
-          </PrimaryButton>
-          <PrimaryButton
-            handleClick={handleSendDraftsAsTweet}
-            title="Tweet draft"
-            disabled={highlightedTextBoxes.length > 0}
-          >
-            Tweet
-          </PrimaryButton>
-        </div>
+      {/* TODO: form validation and disabled status */}
+      <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto">
+        <PrimaryButton
+          handleClick={handleSendDraftsAsTweet}
+          title="Tweet draft"
+          disabled={highlightedTextBoxes.length > 0}
+        >
+          Tweet
+        </PrimaryButton>
+        <PrimaryButton
+          handleClick={() => console.log("save whole thing")}
+          title="Save draft"
+        >
+          Save
+        </PrimaryButton>
       </div>
     </div>
   )
