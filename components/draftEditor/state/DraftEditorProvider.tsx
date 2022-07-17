@@ -20,7 +20,19 @@ export const DraftEditorProvider: React.FC<{ children: React.ReactNode }> = ({
     changeText: (id: number, text: string) =>
       dispatch({ type: "CHANGE_TEXT", id, text }),
     changeAttachments: (id: number, attachments: string[]) =>
-      dispatch({ type: "CHANGE_ATTACHMENTS", id, attachments })
+      dispatch({ type: "CHANGE_ATTACHMENTS", id, attachments }),
+    addAttachment: (id: number, attachment: string) =>
+      dispatch({ type: "ADD_ATTACHMENT", id, attachment }),
+    removeAttachment: (id: number, attachment: string) =>
+      dispatch({ type: "REMOVE_ATTACHMENT", id, attachment }),
+    setCategory: (category: string) =>
+      dispatch({ type: "SET_CATEGORY", category }),
+    highlightTextBox: (id: number) =>
+      dispatch({ type: "HIGHLIGHT_TEXT_BOX", id }),
+    unhighlightTextBox: (id: number) =>
+      dispatch({ type: "UNHIGHLIGHT_TEXT_BOX", id }),
+    setHighlightedTextBoxes: (highlightedTextBoxes: number[]) =>
+      dispatch({ type: "SET_HIGHLIGHTED_TEXT_BOXES", highlightedTextBoxes })
   }
 
   return (

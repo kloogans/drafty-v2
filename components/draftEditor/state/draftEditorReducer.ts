@@ -68,6 +68,48 @@ export const draftEditorReducer = (
           return section
         })
       }
+    case "ADD_ATTACHMENT":
+      return {
+        ...state,
+        sections: state.sections.map((section: DraftSection) => {
+          if (section.id === action.id) {
+            return {
+              ...section,
+              attachments: [...section.attachments, action.attachment]
+            }
+          }
+          return section
+        })
+      }
+    case "REMOVE_ATTACHMENT":
+      return {
+        ...state,
+        sections: state.sections.map((section: DraftSection) => {
+          if (section.id === action.id) {
+            return {
+              ...section,
+              attachments: section.attachments.filter(
+                (attachment: string) => attachment !== action.attachment
+              )
+            }
+          }
+          return section
+        })
+      }
+
+    case "HIGHLIGHT_TEXT_BOX":
+      return {
+        ...state,
+        highlightedTextBoxes: [...state.highlightedTextBoxes, action.id]
+      }
+    case "UNHIGHLIGHT_TEXT_BOX":
+      return {
+        ...state,
+        highlightedTextBoxes: state.highlightedTextBoxes.filter(
+          (id: number) => id !== action.id
+        )
+      }
+
     default:
       return state
   }
