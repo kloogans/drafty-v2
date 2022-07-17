@@ -12,16 +12,9 @@ const DraftSectionTextBox = dynamic(() => import("./DraftSectionTextBox"))
 const MAX_CHARACTERS = 280
 
 const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
-  const {
-    sections,
-    addTextBox,
-    removeTextBox,
-    highlightedTextBoxes,
-    changeText
-  } = useDraftEditorState()
+  const { sections, highlightedTextBoxes } = useDraftEditorState()
 
-  const { handleSendDraftsAsTweet, focusOnNewTextBox } =
-    useDraftEditorFunctions()
+  const { handleSendDraftsAsTweet } = useDraftEditorFunctions()
 
   const lastTextBoxIsEmpty = sections[sections.length - 1].text.length < 1
 
