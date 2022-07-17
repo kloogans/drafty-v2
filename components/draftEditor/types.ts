@@ -12,13 +12,9 @@ export interface DraftSection {
 }
 
 export interface DraftSecionTextBoxProps {
-  index: number
+  id: number
   value: string
-  lastIndex: number
   focused: boolean
-  highlighted: boolean
-  handleChange: (text: string) => void
-  handleFocus: () => void
   radius: string
 }
 
@@ -28,8 +24,6 @@ export interface DraftSectionControlsProps {
   lastTextBoxIsEmpty: boolean
   isFirstTextBox: boolean
   isLastTextBox: boolean
-  addNewTextBox: () => void
-  removeTextBox: (id: number) => void
   remainingLength: number
   progressPercentage: number
 }

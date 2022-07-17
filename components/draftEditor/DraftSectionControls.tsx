@@ -1,5 +1,6 @@
 import { SecondaryButton } from "components/buttons"
 import Icon from "components/icon/Icon"
+import { useDraftEditorState } from "./hooks/useDraftEditorState"
 import ProgressRing from "./ProgressRing"
 import { DraftSectionControlsProps } from "./types"
 
@@ -24,18 +25,17 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
   lastTextBoxIsEmpty,
   isFirstTextBox,
   isLastTextBox,
-  addNewTextBox,
-  removeTextBox,
   remainingLength,
   progressPercentage
 }) => {
+  const { addTextBox, removeTextBox } = useDraftEditorState()
   return (
     <Controls show={show}>
       <SecondaryButton
         disabled={lastTextBoxIsEmpty}
         handleClick={(e: any) => {
           e.preventDefault()
-          !lastTextBoxIsEmpty && addNewTextBox()
+          !lastTextBoxIsEmpty && addTextBox()
         }}
         title="Add new text box"
         tertiary={true}
@@ -55,9 +55,9 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
           e.preventDefault()
           removeTextBox(id)
         }}
-        title="Delete this text box"
+        title="Upload media"
         tertiary={true}
-        className={`${isFirstTextBox ? "hidden" : ""} mr-1 group`}
+        className={`mr-1 group`}
       >
         <Icon
           url={`/assets/icons/image.svg`}

@@ -1,5 +1,3 @@
-// TODO: move actions into correct components
-// TODO: change focus id when a textbox is removed
 // TODO: make textboxes sortable with the first being static
 // TODO: image uploads (max size, max number of files for child tweets)
 import dynamic from "next/dynamic"
@@ -8,6 +6,7 @@ import "react-circular-progressbar/dist/styles.css"
 import { allTextBoxesHaveValues } from "./utils"
 import { useDraftEditorState } from "./hooks/useDraftEditorState"
 import { DraftEditorProps } from "./types"
+import { useDraftEditorFunctions } from "./hooks/useDraftEditorFunctions"
 const DraftSectionControls = dynamic(() => import("./DraftSectionControls"))
 const DraftSectionTextBox = dynamic(() => import("./DraftSectionTextBox"))
 const MAX_CHARACTERS = 280
@@ -18,28 +17,11 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
     addTextBox,
     removeTextBox,
     highlightedTextBoxes,
-    setHighlightedTextBoxes,
-    changeText,
-    focusOnTextBox
+    changeText
   } = useDraftEditorState()
 
-  // for hooks (?)
-  const handleSendDraftsAsTweet = () => {
-    const textBoxes = allTextBoxesHaveValues(sections)
-    if (textBoxes.allHaveValues) {
-      setHighlightedTextBoxes([])
-      console.log("proceed to media check/upload/id assignment")
-    }
-    if (textBoxes.emptyTextboxIds) {
-      setHighlightedTextBoxes(textBoxes.emptyTextboxIds)
-    }
-  }
-
-  const focusOnNewTextBox = (id: number) => {
-    focusOnTextBox(id)
-    const textBoxes = document.querySelectorAll("textarea")
-    textBoxes[id].focus()
-  }
+  const { handleSendDraftsAsTweet, focusOnNewTextBox } =
+    useDraftEditorFunctions()
 
   const lastTextBoxIsEmpty = sections[sections.length - 1].text.length < 1
 
@@ -82,16 +64,10 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
               />
               <DraftSectionTextBox
                 key={value.id}
-                index={index}
+                id={value.id}
                 value={value.text}
                 focused={value.focused}
                 radius={radius}
-                highlighted={highlightedTextBoxes.includes(value.id)}
-                lastIndex={sections.length - 1}
-                handleFocus={() => focusOnNewTextBox(value.id)}
-                handleChange={(text: string) => {
-                  changeText(value.id, text)
-                }}
               />
 
               <DraftSectionControls
@@ -100,8 +76,6 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
                 lastTextBoxIsEmpty={lastTextBoxIsEmpty}
                 isFirstTextBox={isFirstTextBox}
                 isLastTextBox={isLastTextBox}
-                addNewTextBox={addTextBox}
-                removeTextBox={removeTextBox}
                 remainingLength={remainingLength}
                 progressPercentage={percentageOfRemainingLength}
               />
