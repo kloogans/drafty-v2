@@ -1,12 +1,15 @@
 // TODO: put state/actions into a context provider with a reducer
-import { useState, useRef } from "react"
+// TODO: change focus id when a textbox is removed
+// TODO: make textboxes sortable with the first being static
+// TODO: image uploads (max size, max number of files for child tweets)
+import { useState } from "react"
 import dynamic from "next/dynamic"
 import { PrimaryButton } from "components/buttons"
 import "react-circular-progressbar/dist/styles.css"
 import { allTextBoxesHaveValues } from "./utils"
 import { DraftEditorProps } from "./types"
 const DraftSectionControls = dynamic(() => import("./DraftSectionControls"))
-const DraftSection = dynamic(() => import("./DraftSection"))
+const DraftSectionTextBox = dynamic(() => import("./DraftSectionTextBox"))
 const MAX_CHARACTERS = 280
 
 const DraftEditor: React.FC<DraftEditorProps> = ({
@@ -42,8 +45,6 @@ const DraftEditor: React.FC<DraftEditorProps> = ({
     newValues.forEach((textBox, index) => (textBox.id = index))
     setSectionsState(newValues)
   }
-
-  const formRef = useRef<HTMLFormElement>(null)
 
   const focusOnNewTextBox = (id: number) => {
     const textBoxes = document.querySelectorAll("textarea")
@@ -89,10 +90,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({
 
   return (
     <div className="w-full pb-20">
-      <form
-        ref={formRef}
-        className="w-full h-full px-2 md:px-0 max-w-full md:max-w-xl mx-auto flex flex-col items-center justify-center mb-4"
-      >
+      <form className="w-full h-full px-2 md:px-0 max-w-full md:max-w-xl mx-auto flex flex-col items-center justify-center mb-4">
         {sectionsState.map((value, index) => {
           const isFirstTextBox = index === 0
           const isLastTextBox = index === sectionsState.length - 1
@@ -121,7 +119,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({
                   isFirstTextBox ? "hidden" : ""
                 } h-6 border-r-2 w-0 border-white/30 border-dashed mr-auto`}
               />
-              <DraftSection
+              <DraftSectionTextBox
                 key={value.id}
                 index={index}
                 value={value.text}

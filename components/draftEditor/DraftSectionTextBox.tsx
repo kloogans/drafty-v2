@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { DraftSecionTextBoxProps } from "./types"
 import { MAX_CHARACTERS } from "./utils"
-const DraftSection: React.FC<DraftSecionTextBoxProps> = ({
+const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   index,
   value,
   lastIndex,
@@ -42,4 +42,4 @@ const DraftSection: React.FC<DraftSecionTextBoxProps> = ({
   )
 }
 
-export default DraftSection
+export default DraftSectionTextBox
