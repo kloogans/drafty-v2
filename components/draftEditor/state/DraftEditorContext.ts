@@ -7,14 +7,6 @@ export const initialDraftEditorState: DraftEditorContextProps = {
   category: "",
   sections: [],
   highlightedTextBoxes: []
-  //   setCategory: () => {},
-  //   setSectionsState: () => {},
-  //   setHighlightedTextBoxes: () => {},
-  //   handleSendDraftsAsTweet: () => {},
-  //   removeTextBox: () => {},
-  //   focusOnNewTextBox: () => {},
-  //   addNewTextBox: () => {},
-  //   handleDraftSectionChange: () => {}
 }
 
 export const DraftEditorContext = createContext<DraftEditorContextProps>(
