@@ -4,6 +4,17 @@ export interface DraftEditorContextProps {
   category: string
   sections: DraftSection[]
   highlightedTextBoxes: number[]
+  addTextBox: () => void
+  removeTextBox: (id: number) => void
+  focusOnTextBox: (id: number) => void
+  changeText: (id: number, text: string) => void
+  changeAttachments: (id: number, attachments: string[]) => void
+  addAttachment: (id: number, attachment: string) => void
+  removeAttachment: (id: number, attachment: string) => void
+  setCategory: (category: string) => void
+  highlightTextBox: (id: number) => void
+  unhighlightTextBox: (id: number) => void
+  setHighlightedTextBoxes: (highlightedTextBoxes: number[]) => void
 }
 
 export interface DraftEditorReducerActionProps {

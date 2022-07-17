@@ -7,12 +7,20 @@ export const draftEditorReducer = (
 ) => {
   switch (action.type) {
     case "ADD_TEXT_BOX":
+      // toggle all focus properties to false
+      const newSections = state.sections.map((section: DraftSection) => {
+        return {
+          ...section,
+          focused: false
+        }
+      })
+
       return {
         ...state,
         sections: [
-          ...state.sections,
+          ...newSections,
           {
-            id: state.sections.length,
+            id: newSections.length,
             text: "",
             attachments: [],
             focused: true
@@ -20,11 +28,30 @@ export const draftEditorReducer = (
         ]
       }
     case "REMOVE_TEXT_BOX":
+      const newSectionsAfterRemoval = state.sections.filter(
+        (section: DraftSection) => section.id !== action.id
+      )
+      const incomingIdIsLast = action.id === state.sections.length
+      // @ts-ignore
+      let newFocusId = incomingIdIsLast ? action.id - 1 : action.id
+      const newSectionWithRenewedIds = newSectionsAfterRemoval.map(
+        (section: DraftSection, index: number) => {
+          if (index === newFocusId) {
+            return {
+              ...section,
+              focused: true,
+              id: index
+            }
+          }
+          return {
+            ...section,
+            id: index
+          }
+        }
+      )
       return {
         ...state,
-        sections: state.sections.filter(
-          (section: DraftSection) => section.id !== action.id
-        )
+        sections: [...newSectionWithRenewedIds]
       }
     case "FOCUS_ON_TEXT_BOX":
       return {
@@ -43,8 +70,12 @@ export const draftEditorReducer = (
         })
       }
     case "CHANGE_TEXT":
+      const newHighlightedTextBoxes = state.highlightedTextBoxes.filter(
+        (id: number) => id !== id
+      )
       return {
         ...state,
+        highlightedTextBoxes: newHighlightedTextBoxes,
         sections: state.sections.map((section: DraftSection) => {
           if (section.id === action.id) {
             return {

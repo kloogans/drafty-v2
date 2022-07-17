@@ -11,7 +11,18 @@ export const initialDraftEditorState: DraftEditorContextProps = {
       focused: true
     }
   ],
-  highlightedTextBoxes: []
+  highlightedTextBoxes: [],
+  addTextBox: () => {},
+  removeTextBox: () => {},
+  focusOnTextBox: () => {},
+  changeText: () => {},
+  changeAttachments: () => {},
+  addAttachment: () => {},
+  removeAttachment: () => {},
+  setCategory: () => {},
+  highlightTextBox: () => {},
+  unhighlightTextBox: () => {},
+  setHighlightedTextBoxes: () => {}
 }
 
 export const DraftEditorContext = createContext<DraftEditorContextProps>(

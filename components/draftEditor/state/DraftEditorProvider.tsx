@@ -15,8 +15,10 @@ export const DraftEditorProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const actions = {
     addTextBox: () => dispatch({ type: "ADD_TEXT_BOX" }),
-    removeTextBox: (id: number) => dispatch({ type: "REMOVE_TEXT_BOX", id }),
     focusOnTextBox: (id: number) => dispatch({ type: "FOCUS_ON_TEXT_BOX", id }),
+    removeTextBox: (id: number) => {
+      dispatch({ type: "REMOVE_TEXT_BOX", id })
+    },
     changeText: (id: number, text: string) =>
       dispatch({ type: "CHANGE_TEXT", id, text }),
     changeAttachments: (id: number, attachments: string[]) =>
