@@ -15,13 +15,13 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
 
   if (drafts != null && drafts.length < 1) {
     return (
-      <Layout enforceAuth={true}>
+      <Layout enforceAuth>
         <PrimaryHeading>No drafts yet!</PrimaryHeading>
       </Layout>
     )
   }
   return (
-    <Layout enforceAuth={true}>
+    <Layout enforceAuth>
       <PrimaryHeading>Drafts</PrimaryHeading>
     </Layout>
   )

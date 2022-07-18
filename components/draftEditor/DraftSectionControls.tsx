@@ -38,7 +38,7 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
           !lastTextBoxIsEmpty && addTextBox()
         }}
         title="Add new text box"
-        tertiary={true}
+        tertiary
         className={`${!isLastTextBox ? "hidden" : ""} mr-1`}
       >
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
           removeTextBox(id)
         }}
         title="Upload media"
-        tertiary={true}
+        tertiary
         className={`mr-1 group`}
       >
         <Icon
@@ -71,7 +71,7 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
           removeTextBox(id)
         }}
         title="Delete this text box"
-        tertiary={true}
+        tertiary
         className={`${isFirstTextBox ? "hidden" : ""} mr-1`}
       >
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">

@@ -15,13 +15,13 @@ const DraftByIdPage: React.FC<DraftPage> = ({ draft }) => {
 
   if (draft == null) {
     return (
-      <Layout enforceAuth={true}>
+      <Layout enforceAuth>
         <PrimaryHeading>Nothing's here!</PrimaryHeading>
       </Layout>
     )
   }
   return (
-    <Layout enforceAuth={true}>
+    <Layout enforceAuth>
       <PrimaryHeading>Draft</PrimaryHeading>
       {/* draft editor */}
     </Layout>

@@ -13,13 +13,10 @@ const MAX_CHARACTERS = 280
 
 const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
   const { sections, highlightedTextBoxes } = useDraftEditorState()
-
   const { handleSendDraftsAsTweet } = useDraftEditorFunctions()
 
   const lastTextBoxIsEmpty = sections[sections.length - 1].text.length < 1
-
   const { allHaveValues } = allTextBoxesHaveValues(sections)
-
   const atleastOneTextBoxHasAValue = sections.some(
     (textBox) => textBox.text.length > 0
   )
@@ -61,6 +58,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
                 value={value.text}
                 focused={value.focused}
                 radius={radius}
+                attachments={value.attachments}
               />
 
               <DraftSectionControls

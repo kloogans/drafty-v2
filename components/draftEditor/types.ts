@@ -16,6 +16,7 @@ export interface DraftSecionTextBoxProps {
   value: string
   focused: boolean
   radius: string
+  attachments: string[]
 }
 
 export interface DraftSectionControlsProps {

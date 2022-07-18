@@ -1,15 +1,26 @@
+import DragAndDropImageUploader from "components/fileUpload/DragAndDropImageUploader"
 import { useEffect } from "react"
 import { useDraftEditorState } from "./hooks/useDraftEditorState"
+import { useDraftEditorFunctions } from "./hooks/useDraftEditorFunctions"
 import { DraftSecionTextBoxProps } from "./types"
 import { MAX_CHARACTERS } from "./utils"
+
 const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   id,
   value,
   focused,
+  attachments,
   radius = "rounded-2xl"
 }) => {
-  const { highlightedTextBoxes, sections, focusOnTextBox, changeText } =
-    useDraftEditorState()
+  const {
+    highlightedTextBoxes,
+    sections,
+    focusOnTextBox,
+    changeText,
+    addAttachment
+  } = useDraftEditorState()
+
+  const { handleSendDraftsAsTweet, uploadMediaFile } = useDraftEditorFunctions()
 
   useEffect(() => {
     focusOnTextBox(id)
@@ -22,7 +33,10 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   const isHighlighted = highlightedTextBoxes.includes(id)
 
   return (
-    <>
+    <DragAndDropImageUploader
+      attachments={attachments}
+      handleChange={(file: File) => uploadMediaFile(file, id)}
+    >
       <textarea
         className={`w-full text-2xl border-2 border-white/30 border-dashed p-4 outline-none ${radius} flex resize-none transition duration-200 ease-in-out ${
           focused ? focusedStyle : "min-h-[10rem] text-gray-500 bg-indigo-900"
@@ -41,7 +55,7 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
           }
         }}
       />
-    </>
+    </DragAndDropImageUploader>
   )
 }
 

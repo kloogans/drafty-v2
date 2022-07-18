@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   return (
     <Layout enforceAuth={false}>
       <div className="flex flex-col items-center justify-center translate-y-2">
-        <LogoIcon className="w-20 h-20" animated={true} />
+        <LogoIcon className="w-20 h-20" animated />
 
         <h1 className="title-font leading-none text-indigo-200 text-3xl lg:text-4xl -translate-y-2">
           Drafty
@@ -39,15 +39,15 @@ const Home: NextPage = () => {
           <div className="flex flex-col items-center justify-center gap-4">
             <PrimaryButton
               title="Create a new draft"
-              isInternalLink={true}
-              isDisplay={true}
+              isInternalLink
+              isDisplay
               linkPath="/new"
             >
               <strong>Create</strong> a new draft
             </PrimaryButton>
             <SecondaryButton
               title="Go to my drafts"
-              tertiary={true}
+              tertiary
               linkPath="/drafts"
               className="text-sm"
             >
@@ -57,7 +57,7 @@ const Home: NextPage = () => {
           {/* <SecondaryButton
             handleClick={() => signOut()}
             title="Sign out of my account"
-            tertiary={true}
+            tertiary
           >
             Sign out
           </SecondaryButton> */}

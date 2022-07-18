@@ -11,7 +11,7 @@ interface SettingsPage {
 
 const SettingsPage: React.FC<SettingsPage> = ({ settings }) => {
   return (
-    <Layout enforceAuth={true}>
+    <Layout enforceAuth>
       <PrimaryHeading>
         <strong>Settings</strong>
       </PrimaryHeading>
