@@ -1,10 +1,9 @@
-import { useDraftEditorState } from "components/draftEditor/hooks/useDraftEditorState"
+import dynamic from "next/dynamic"
 import { useState } from "react"
-import FileUploader from "./FileUploader/FileUploader"
 import { DragAndDropImageUploaderProps } from "./types"
+const FileUploader = dynamic(() => import("./FileUploader/FileUploader"))
 
-const ACCEPTED_FILE_TYPES = ["JPG", "JPEG", "PNG", "GIF"]
-
+const ACCEPTED_FILE_TYPES = ["JPG", "JPEG", "PNG"]
 const MAX_UPLOAD_SIZE = 5
 
 const DragAndDropImageUploader: React.FC<DragAndDropImageUploaderProps> = ({
