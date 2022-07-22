@@ -31,7 +31,7 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   const hasAttachments = attachments.length > 0
   const focusedStyle = `${
     hasAttachments ? "min-h-[7.5rem]" : "min-h-[10.5rem]"
-  }  pb-[56px] !text-white`
+  } pb-[56px] !text-white`
   const highlightedStyle = `!border-rose-400 !border-solid`
 
   const isLastTextBox = id === sections[sections.length - 1].id
@@ -41,9 +41,13 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
     <DragAndDropImageUploader
       attachments={attachments}
       handleChange={(file: File) => uploadMediaFile(file, draftId, id)}
-      className={`border-2 border-white/30 border-dashed rounded-2xl pb-4 ${
-        focused ? "!border-white !border-solid bg-indigo-800" : "bg-indigo-900"
-      } ${isHighlighted ? highlightedStyle : ""} ${radius}`}
+      className={`border-2 border-white/30 border-dashed rounded-2xl ${
+        focused ? "!border-white !border-solid bg-indigo-800" : "bg-indigo-900 "
+      } 
+      ${focused && hasAttachments ? "pb-12 md:pb-4" : "pb-4"}
+      ${
+        isHighlighted ? highlightedStyle : ""
+      } ${radius} transition-[all] duration-200 ease-in-out`}
     >
       <textarea
         className={`w-full text-2xl p-4 outline-none bg-transparent flex resize-none transition duration-200 ease-in-out ${
