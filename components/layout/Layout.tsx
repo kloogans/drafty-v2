@@ -14,19 +14,19 @@ const Layout: React.FC<LayoutProps> = ({
   const { status } = useSession()
   const isAuthenticated = status !== "loading" && status === "authenticated"
 
-  const containerClass =
+  const mainClass =
     "w-full h-full min-h-screen flex flex-col items-center justify-center bg-indigo-900"
-  const mainClass = "w-full h-full flex flex-col items-center justify-center"
+  const innerClass = "w-full h-full flex flex-col items-center justify-center"
 
   if (status === "loading") {
     return (
-      <div className={`${containerClass}`}>
-        <main className={`${mainClass} ${className}`}>
+      <main className={`${mainClass}`}>
+        <div className={`${innerClass} ${className}`}>
           <p className="text-sm text-white">
             <strong>Loading</strong>
           </p>
-        </main>
-      </div>
+        </div>
+      </main>
     )
   }
 
@@ -36,9 +36,9 @@ const Layout: React.FC<LayoutProps> = ({
 
   return (
     <>
-      <div className={`${containerClass}`}>
-        <main className={`${mainClass} ${className}`}>{children}</main>
-      </div>
+      <main className={`${mainClass}`}>
+        <div className={`${innerClass} ${className}`}>{children}</div>
+      </main>
       <Popover id="main-layout-popover">
         <div className="bg-zinc-700 min-h-[70vh] lg:max-h-[70vh] lg:min-w-[532px] overflow-y-auto scrollbar-blue p-10 rounded-2xl shadow-md flex flex-col items-center justify-start">
           <p className="text-lg font-bold tracking-wide text-zinc-100 mb-4">

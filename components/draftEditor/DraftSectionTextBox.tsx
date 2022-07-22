@@ -7,10 +7,12 @@ import { MAX_CHARACTERS } from "./utils"
 
 const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   id,
+  draftId,
   value,
   focused,
   attachments,
-  radius = "rounded-2xl"
+  radius = "rounded-2xl",
+  children
 }) => {
   const {
     highlightedTextBoxes,
@@ -26,7 +28,10 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
     focusOnTextBox(id)
   }, [])
 
-  const focusedStyle = `min-h-[16.5rem] !bg-indigo-900 focus:!bg-indigo-800 pb-[56px] !text-white !border-white !border-solid`
+  const hasAttachments = attachments.length > 0
+  const focusedStyle = `${
+    hasAttachments ? "min-h-[7.5rem]" : "min-h-[16.5rem]"
+  }  pb-[56px] !text-white`
   const highlightedStyle = `!border-rose-400 !border-solid`
 
   const isLastTextBox = id === sections[sections.length - 1].id
@@ -35,12 +40,15 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   return (
     <DragAndDropImageUploader
       attachments={attachments}
-      handleChange={(file: File) => uploadMediaFile(file, id)}
+      handleChange={(file: File) => uploadMediaFile(file, draftId, id)}
+      className={`border-2 border-white/30 border-dashed rounded-2xl pb-4 ${
+        focused ? "!border-white !border-solid bg-indigo-800" : "bg-indigo-900"
+      } ${isHighlighted ? highlightedStyle : ""}`}
     >
       <textarea
-        className={`w-full text-2xl border-2 border-white/30 border-dashed p-4 outline-none ${radius} flex resize-none transition duration-200 ease-in-out ${
-          focused ? focusedStyle : "min-h-[10rem] text-gray-500 bg-indigo-900"
-        } ${isHighlighted ? highlightedStyle : ""}`}
+        className={`w-full text-2xl p-4 outline-none ${radius} bg-transparent flex resize-none transition duration-200 ease-in-out ${
+          focused ? focusedStyle : "min-h-[10rem] text-gray-500"
+        }`}
         style={{ transitionProperty: "all" }}
         value={value}
         onFocus={() => focusOnTextBox(id)}
@@ -55,6 +63,7 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
           }
         }}
       />
+      {children}
     </DragAndDropImageUploader>
   )
 }

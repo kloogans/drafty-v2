@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic"
 import { useGlobalState } from "state/hooks/useGlobalState"
 import { DraftEditorProvider } from "components/draftEditor/state/DraftEditorProvider"
+import { GetServerSideProps } from "next"
+import shortUUID from "short-uuid"
 const Layout = dynamic(() => import("components/layout/Layout"))
 const PrimaryHeading = dynamic(
   () => import("components/headings/PrimaryHeading")
@@ -8,10 +10,10 @@ const PrimaryHeading = dynamic(
 const DraftEditor = dynamic(() => import("components/draftEditor/DraftEditor"))
 
 interface NewDraftPage {
-  settings: any
+  id: string
 }
 
-const NewDraftPage: React.FC<NewDraftPage> = () => {
+const NewDraftPage: React.FC<NewDraftPage> = ({ id }) => {
   const { togglePopover } = useGlobalState()
   return (
     <DraftEditorProvider>
@@ -19,10 +21,19 @@ const NewDraftPage: React.FC<NewDraftPage> = () => {
         <PrimaryHeading className="mb-4">
           Create a new <strong>draft</strong>
         </PrimaryHeading>
-        <DraftEditor />
+        <DraftEditor id={id} />
       </Layout>
     </DraftEditorProvider>
   )
 }
 
 export default NewDraftPage
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const newId = shortUUID.generate()
+  return {
+    props: {
+      id: newId
+    }
+  }
+}

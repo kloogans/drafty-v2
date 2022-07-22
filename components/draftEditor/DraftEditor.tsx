@@ -1,5 +1,6 @@
 // TODO: make textboxes sortable with the first being static
 // TODO: image uploads (max size, max number of files for child tweets)
+import { useRef } from "react"
 import dynamic from "next/dynamic"
 import { PrimaryButton } from "components/buttons"
 import "react-circular-progressbar/dist/styles.css"
@@ -7,6 +8,7 @@ import { allTextBoxesHaveValues } from "./utils"
 import { useDraftEditorState } from "./hooks/useDraftEditorState"
 import { DraftEditorProps } from "./types"
 import { useDraftEditorFunctions } from "./hooks/useDraftEditorFunctions"
+import { DraftSectionAttachments } from "./DraftSectionAttachments"
 const DraftSectionControls = dynamic(() => import("./DraftSectionControls"))
 const DraftSectionTextBox = dynamic(() => import("./DraftSectionTextBox"))
 const MAX_CHARACTERS = 280
@@ -14,6 +16,7 @@ const MAX_CHARACTERS = 280
 const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
   const { sections, highlightedTextBoxes } = useDraftEditorState()
   const { handleSendDraftsAsTweet } = useDraftEditorFunctions()
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const lastTextBoxIsEmpty = sections[sections.length - 1].text.length < 1
   const { allHaveValues } = allTextBoxesHaveValues(sections)
@@ -55,11 +58,18 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
               <DraftSectionTextBox
                 key={value.id}
                 id={value.id}
+                draftId={id}
                 value={value.text}
                 focused={value.focused}
                 radius={radius}
                 attachments={value.attachments}
-              />
+              >
+                <DraftSectionAttachments
+                  sectionId={value.id}
+                  isFirstTextBox={isFirstTextBox}
+                  isLastTextBox={isLastTextBox}
+                />
+              </DraftSectionTextBox>
 
               <DraftSectionControls
                 show={value.focused}

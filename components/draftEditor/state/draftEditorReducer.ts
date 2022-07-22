@@ -116,11 +116,11 @@ export const draftEditorReducer = (
       return {
         ...state,
         sections: state.sections.map((section: DraftSection) => {
-          if (section.id === action.id) {
+          if (section.id === action.sectionId) {
             return {
               ...section,
               attachments: section.attachments.filter(
-                (attachment: string) => attachment !== action.attachment
+                (_, index) => index !== action.attachmentIndex
               )
             }
           }

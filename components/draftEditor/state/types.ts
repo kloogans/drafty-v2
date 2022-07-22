@@ -10,7 +10,7 @@ export interface DraftEditorContextProps {
   changeText: (id: number, text: string) => void
   changeAttachments: (id: number, attachments: string[]) => void
   addAttachment: (id: number, attachment: string) => void
-  removeAttachment: (id: number, attachment: string) => void
+  removeAttachment: (sectionId: number, attachmentIndex: number) => void
   setCategory: (category: string) => void
   highlightTextBox: (id: number) => void
   unhighlightTextBox: (id: number) => void
@@ -25,4 +25,6 @@ export interface DraftEditorReducerActionProps {
   attachments?: string[]
   category?: string
   highlightedTextBoxes?: number[]
+  attachmentIndex?: number
+  sectionId?: number
 }

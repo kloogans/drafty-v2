@@ -25,8 +25,8 @@ export const DraftEditorProvider: React.FC<{ children: React.ReactNode }> = ({
       dispatch({ type: "CHANGE_ATTACHMENTS", id, attachments }),
     addAttachment: (id: number, attachment: string) =>
       dispatch({ type: "ADD_ATTACHMENT", id, attachment }),
-    removeAttachment: (id: number, attachment: string) =>
-      dispatch({ type: "REMOVE_ATTACHMENT", id, attachment }),
+    removeAttachment: (sectionId: number, attachmentIndex: number) =>
+      dispatch({ type: "REMOVE_ATTACHMENT", sectionId, attachmentIndex }),
     setCategory: (category: string) =>
       dispatch({ type: "SET_CATEGORY", category }),
     highlightTextBox: (id: number) =>

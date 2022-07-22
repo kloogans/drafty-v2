@@ -1,5 +1,5 @@
 export interface DraftEditorProps {
-  id?: number
+  id: string
   sections?: DraftSection[]
   isNew?: boolean
 }
@@ -12,11 +12,13 @@ export interface DraftSection {
 }
 
 export interface DraftSecionTextBoxProps {
+  draftId: string
   id: number
   value: string
   focused: boolean
   radius: string
   attachments: string[]
+  children: React.ReactNode
 }
 
 export interface DraftSectionControlsProps {
