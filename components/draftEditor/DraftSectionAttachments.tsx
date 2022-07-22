@@ -2,6 +2,7 @@ interface DraftSectionAttachmentsProps {
   sectionId: number
   isFirstTextBox: boolean
   isLastTextBox: boolean
+  sectionIsFocused: boolean
 }
 
 import React from "react"
@@ -11,7 +12,7 @@ import { DraftSection } from "./types"
 
 export const DraftSectionAttachments: React.FC<
   DraftSectionAttachmentsProps
-> = ({ sectionId, isFirstTextBox, isLastTextBox }) => {
+> = ({ sectionId, isFirstTextBox, isLastTextBox, sectionIsFocused }) => {
   const { sections, removeAttachment } = useDraftEditorState()
   const currentSection = sections.find(
     (section) => section.id === sectionId
@@ -35,12 +36,16 @@ export const DraftSectionAttachments: React.FC<
       {attachments.map((attachment, index) => {
         return (
           <li
-            key={attachment}
-            onClick={() => handleRemoveAttachment(index)}
-            className="relative"
+            key={attachment + Math.ceil(Math.random() * 4387 + 100)}
+            className={`relative ${
+              sectionIsFocused ? "opacity-100" : "opacity-50"
+            }`}
           >
             <button
-              className="absolute -top-3 -right-3 p-1 bg-zinc-800 rounded-full group"
+              onClick={() => handleRemoveAttachment(index)}
+              className={`${
+                !sectionIsFocused ? "hidden" : ""
+              } absolute -top-3 -right-3 p-1 bg-zinc-800 rounded-full group`}
               title="Remove image"
             >
               {/* svg close icon */}

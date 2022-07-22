@@ -68,6 +68,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
                   sectionId={value.id}
                   isFirstTextBox={isFirstTextBox}
                   isLastTextBox={isLastTextBox}
+                  sectionIsFocused={value.focused}
                 />
               </DraftSectionTextBox>
 

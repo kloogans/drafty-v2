@@ -30,7 +30,7 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
 
   const hasAttachments = attachments.length > 0
   const focusedStyle = `${
-    hasAttachments ? "min-h-[7.5rem]" : "min-h-[16.5rem]"
+    hasAttachments ? "min-h-[7.5rem]" : "min-h-[10.5rem]"
   }  pb-[56px] !text-white`
   const highlightedStyle = `!border-rose-400 !border-solid`
 
@@ -43,14 +43,15 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
       handleChange={(file: File) => uploadMediaFile(file, draftId, id)}
       className={`border-2 border-white/30 border-dashed rounded-2xl pb-4 ${
         focused ? "!border-white !border-solid bg-indigo-800" : "bg-indigo-900"
-      } ${isHighlighted ? highlightedStyle : ""}`}
+      } ${isHighlighted ? highlightedStyle : ""} ${radius}`}
     >
       <textarea
-        className={`w-full text-2xl p-4 outline-none ${radius} bg-transparent flex resize-none transition duration-200 ease-in-out ${
-          focused ? focusedStyle : "min-h-[10rem] text-gray-500"
+        className={`w-full text-2xl p-4 outline-none bg-transparent flex resize-none transition duration-200 ease-in-out ${
+          focused ? focusedStyle : "min-h-[7.5rem] text-gray-500"
         }`}
         style={{ transitionProperty: "all" }}
         value={value}
+        placeholder="Your text"
         onFocus={() => focusOnTextBox(id)}
         onChange={(e) => {
           if (e.target.value.length <= MAX_CHARACTERS) {
