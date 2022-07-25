@@ -88,6 +88,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
                 isLastTextBox={isLastTextBox}
                 remainingLength={remainingLength}
                 progressPercentage={percentageOfRemainingLength}
+                numberOfAssets={value.attachments.length}
               />
             </div>
           )

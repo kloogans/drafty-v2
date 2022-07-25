@@ -24,6 +24,7 @@ export interface DraftSecionTextBoxProps {
 export interface DraftSectionControlsProps {
   show: boolean
   id: number
+  numberOfAssets: number
   lastTextBoxIsEmpty: boolean
   isFirstTextBox: boolean
   isLastTextBox: boolean

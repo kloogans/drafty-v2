@@ -1,5 +1,7 @@
 import { SecondaryButton } from "components/buttons"
 import Icon from "components/icon/Icon"
+import { useRef } from "react"
+import { useDraftEditorFunctions } from "./hooks/useDraftEditorFunctions"
 import { useDraftEditorState } from "./hooks/useDraftEditorState"
 import ProgressRing from "./ProgressRing"
 import { DraftSectionControlsProps } from "./types"
@@ -26,9 +28,18 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
   isFirstTextBox,
   isLastTextBox,
   remainingLength,
-  progressPercentage
+  progressPercentage,
+  numberOfAssets
 }) => {
   const { addTextBox, removeTextBox } = useDraftEditorState()
+  const { uploadMediaFileLocally } = useDraftEditorFunctions()
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const openFileBrowser = (ev: any) => {
+    ev.stopPropagation()
+    inputRef.current?.click()
+  }
+
   return (
     <Controls show={show}>
       <SecondaryButton
@@ -53,12 +64,26 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
       <SecondaryButton
         handleClick={(e) => {
           e.preventDefault()
-          removeTextBox(id)
+          openFileBrowser(e)
         }}
         title="Upload media"
         tertiary
         className={`mr-1 group`}
       >
+        <input
+          onClick={openFileBrowser}
+          onChange={(event) =>
+            //@ts-ignore
+            uploadMediaFileLocally(event?.target?.files[0], id)
+          }
+          accept={"image/png, image/jpeg, image/jpg, image/gif"}
+          ref={inputRef}
+          type="file"
+          name={"File upload"}
+          disabled={numberOfAssets >= 4}
+          multiple={false}
+          className="hidden"
+        />
         <Icon
           url={`/assets/icons/image.svg`}
           className="w-6 h-6 bg-white group-hover:bg-pink-400"

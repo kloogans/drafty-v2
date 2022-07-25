@@ -48,7 +48,7 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   return (
     <DragAndDropImageUploader
       attachments={attachments}
-      handleChange={(file: File) => uploadMediaFileLocally(file, draftId, id)}
+      handleChange={(file: File) => uploadMediaFileLocally(file, id)}
       className={`border-2 border-white/30 border-dashed rounded-2xl ${
         focused ? "!border-white !border-solid bg-indigo-800" : "bg-indigo-900 "
       } 

@@ -27,11 +27,7 @@ export const useDraftEditorFunctions = () => {
     textBoxes[id].focus()
   }
 
-  const uploadMediaFileLocally = async (
-    file: File,
-    draftId: string,
-    draftSectionId: number
-  ) => {
+  const uploadMediaFileLocally = async (file: File, draftSectionId: number) => {
     if (session?.user) {
       //@ts-ignore
       // const url = await uploadMediaFile(file, draftId, session?.user?.uid as string)
