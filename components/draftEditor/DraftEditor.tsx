@@ -1,6 +1,6 @@
 // TODO: make textboxes sortable with the first being static
 // TODO: image uploads (max size, max number of files for child tweets)
-import { useRef } from "react"
+import { useEffect, useLayoutEffect, useRef } from "react"
 import dynamic from "next/dynamic"
 import { PrimaryButton } from "components/buttons"
 import "react-circular-progressbar/dist/styles.css"
@@ -23,6 +23,14 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
   const atleastOneTextBoxHasAValue = sections.some(
     (textBox) => textBox.text.length > 0
   )
+
+  // useLayoutEffect(() => {
+  //   const allTextBoxes = document.querySelectorAll("textarea")
+  //   console.log(allTextBoxes)
+  //   if (allTextBoxes.length > 0) {
+  //     allTextBoxes[allTextBoxes.length - 1].focus()
+  //   }
+  // }, [])
 
   return (
     <div className="w-full pb-20">

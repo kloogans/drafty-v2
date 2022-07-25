@@ -1,9 +1,10 @@
 import DragAndDropImageUploader from "components/fileUpload/DragAndDropImageUploader"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { useDraftEditorState } from "./hooks/useDraftEditorState"
 import { useDraftEditorFunctions } from "./hooks/useDraftEditorFunctions"
 import { DraftSecionTextBoxProps } from "./types"
 import { MAX_CHARACTERS } from "./utils"
+import { text } from "stream/consumers"
 
 const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   id,
@@ -38,6 +39,12 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   const isLastTextBox = id === sections[sections.length - 1].id
   const isHighlighted = highlightedTextBoxes.includes(id)
 
+  const textboxRef = useRef<HTMLTextAreaElement>(null)
+
+  useEffect(() => {
+    isLastTextBox && textboxRef?.current?.focus()
+  }, [textboxRef.current])
+
   return (
     <DragAndDropImageUploader
       attachments={attachments}
@@ -55,6 +62,7 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
           focused ? focusedStyle : "min-h-[7.5rem] text-gray-500"
         }`}
         style={{ transitionProperty: "all" }}
+        ref={textboxRef}
         value={value}
         placeholder="Your text"
         onFocus={() => focusOnTextBox(id)}
