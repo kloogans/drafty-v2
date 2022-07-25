@@ -9,14 +9,17 @@ import { useDraftEditorState } from "./hooks/useDraftEditorState"
 import { DraftEditorProps } from "./types"
 import { useDraftEditorFunctions } from "./hooks/useDraftEditorFunctions"
 import { DraftSectionAttachments } from "./DraftSectionAttachments"
+import { useRouter } from "next/router"
 const DraftSectionControls = dynamic(() => import("./DraftSectionControls"))
 const DraftSectionTextBox = dynamic(() => import("./DraftSectionTextBox"))
 const MAX_CHARACTERS = 280
 
 const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
   const { sections, highlightedTextBoxes } = useDraftEditorState()
-  const { handleSendDraftsAsTweet } = useDraftEditorFunctions()
+  const { handleSendDraftsAsTweet, saveDraft, loading } =
+    useDraftEditorFunctions()
   const inputRef = useRef<HTMLInputElement>(null)
+  const isNewDraft = id == null
 
   const lastTextBoxIsEmpty = sections[sections.length - 1].text.length < 1
   const { allHaveValues } = allTextBoxesHaveValues(sections)
@@ -31,6 +34,18 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
   //     allTextBoxes[allTextBoxes.length - 1].focus()
   //   }
   // }, [])
+
+  const handleSaveDraft = async () => {
+    try {
+      const response = await saveDraft(id)
+      if (response.success) {
+        console.log("Draft saved")
+        useRouter().push(`${response.draftUrl}`)
+      }
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
 
   return (
     <div className="w-full pb-20">
@@ -66,7 +81,6 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
               <DraftSectionTextBox
                 key={value.id}
                 id={value.id}
-                draftId={id}
                 value={value.text}
                 focused={value.focused}
                 radius={radius}
@@ -104,10 +118,10 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
         </PrimaryButton>
         <PrimaryButton
           disabled={!atleastOneTextBoxHasAValue}
-          handleClick={() => console.log("save whole thing")}
+          handleClick={() => !loading && handleSaveDraft()}
           title="Save draft"
         >
-          Save
+          {loading ? "Saving..." : "Save"}
         </PrimaryButton>
       </div>
     </div>

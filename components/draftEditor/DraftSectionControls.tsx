@@ -67,6 +67,7 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
           openFileBrowser(e)
         }}
         title="Upload media"
+        disabled={numberOfAssets >= 4}
         tertiary
         className={`mr-1 group`}
       >

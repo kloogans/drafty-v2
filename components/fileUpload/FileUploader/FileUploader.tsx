@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import FileTypes from "./FileTypes"
 import ImageAdd from "./ImageAdd"
 import useDragging from "./useDragging"
+import Icon from "components/icon/Icon"
 
 type FileUploaderProps = {
   name?: string
@@ -189,9 +190,31 @@ const FileUploader: React.FC<FileUploaderProps> = (props): JSX.Element => {
         className="hidden"
       />
       {dragging && (
-        <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
-          <span className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">
-            {hoverTitle || "Drop Here"}
+        <div
+          className={`w-full h-full ${
+            disabled ? "bg-rose-500" : "bg-indigo-800/70"
+          } absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 backdrop-blur-md z-20`}
+        >
+          <span className="absolute top-1/2 text-white p-4 border-2 border-dashed border-white rounded-2xl left-1/2 -translate-y-1/2 -translate-x-1/2">
+            {disabled ? (
+              <>
+                <Icon
+                  url="/assets/icons/error.svg"
+                  className="w-8 h-8 bg-white mx-auto"
+                />
+                <strong>Max</strong> files
+              </>
+            ) : (
+              <>
+                <Icon
+                  url="/assets/icons/image.svg"
+                  className="w-8 h-8 bg-white mx-auto"
+                />
+                Drop file <strong>here</strong>
+              </>
+            )}
+
+            {disabled ? "Max files" : ""}
           </span>
         </div>
       )}

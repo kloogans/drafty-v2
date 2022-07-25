@@ -3,7 +3,7 @@ import { useState } from "react"
 import { DragAndDropImageUploaderProps } from "./types"
 const FileUploader = dynamic(() => import("./FileUploader/FileUploader"))
 
-const ACCEPTED_FILE_TYPES = ["JPG", "JPEG", "PNG"]
+const ACCEPTED_FILE_TYPES = ["JPG", "JPEG", "PNG", "GIF", "HEIC"]
 const MAX_UPLOAD_SIZE = 5
 
 const DragAndDropImageUploader: React.FC<DragAndDropImageUploaderProps> = ({
@@ -11,7 +11,8 @@ const DragAndDropImageUploader: React.FC<DragAndDropImageUploaderProps> = ({
   multiple = false,
   className = "",
   attachments = [],
-  handleChange
+  handleChange,
+  disabled
 }) => {
   const [dropZoneIsHovering, setDropZoneIsHovering] = useState(false)
 
@@ -21,10 +22,11 @@ const DragAndDropImageUploader: React.FC<DragAndDropImageUploaderProps> = ({
   return (
     <FileUploader
       handleChange={(file: any) => {
-        handleChange(file)
+        !disabled && handleChange(file)
       }}
       onDraggingStateChange={handleDropzoneHover}
       name="file"
+      disabled={disabled}
       // fileOrFiles={attachments}
       maxSize={multiple ? 10 : MAX_UPLOAD_SIZE}
       multiple={multiple}

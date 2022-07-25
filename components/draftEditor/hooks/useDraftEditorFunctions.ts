@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { getImageBuffer } from "lib/uploadImages"
 import { s3 } from "lib/s3"
 import { allTextBoxesHaveValues } from "../utils"
@@ -6,6 +7,7 @@ import { useSession } from "next-auth/react"
 import { uploadMediaFile, fileToBase64 } from "lib/media"
 
 export const useDraftEditorFunctions = () => {
+  const [loading, setLoading] = useState(false)
   const { data: session } = useSession()
   const { sections, setHighlightedTextBoxes, focusOnTextBox, addAttachment } =
     useDraftEditorState()
@@ -36,5 +38,32 @@ export const useDraftEditorFunctions = () => {
     }
   }
 
-  return { handleSendDraftsAsTweet, focusOnNewTextBox, uploadMediaFileLocally }
+  const saveDraft = async (id?: string) => {
+    setLoading(true)
+    const url = `/api/drafts/save`
+    const data = {
+      id: id || null,
+      sections
+    }
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify({ ...data })
+      })
+      const json = await res.json()
+      return json
+    } catch (e) {
+      console.log(e.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return {
+    handleSendDraftsAsTweet,
+    focusOnNewTextBox,
+    uploadMediaFileLocally,
+    saveDraft,
+    loading
+  }
 }

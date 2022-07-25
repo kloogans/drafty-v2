@@ -4,4 +4,5 @@ export interface DragAndDropImageUploaderProps {
   className?: string
   attachments?: string[]
   handleChange: (file: File) => void
+  disabled: boolean
 }

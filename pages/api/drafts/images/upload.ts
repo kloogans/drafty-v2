@@ -3,7 +3,6 @@ import dbConnect from "lib/dbConnect"
 import { getSession } from "next-auth/react"
 import { getImageBuffer } from "lib/uploadImages"
 import { s3 } from "lib/s3"
-import { ConnectContactLens } from "aws-sdk"
 
 interface UploadedFileProps {
   success: boolean
