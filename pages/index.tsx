@@ -54,13 +54,13 @@ const Home: NextPage = () => {
               Go to my <strong>drafts</strong>
             </SecondaryButton>
           </div>
-          {/* <SecondaryButton
+          <SecondaryButton
             handleClick={() => signOut()}
             title="Sign out of my account"
             tertiary
           >
             Sign out
-          </SecondaryButton> */}
+          </SecondaryButton>
         </div>
       )}
     </Layout>
