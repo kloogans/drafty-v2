@@ -1,3 +1,4 @@
+// TODO: split this up
 import shortUUID from "short-uuid"
 import { NextApiRequest, NextApiResponse } from "next"
 import dbConnect from "lib/dbConnect"
@@ -27,14 +28,13 @@ export default async function handler(
   const { id, sections } = JSON.parse(body)
 
   const isNewDraft = !id
-  const incomingSecions = [...sections] as DraftSection[]
-  //@ts-ignore
+  const incomingSections = [...sections] as DraftSection[]
   const uid = session?.user?.uid as string
 
   if (isNewDraft) {
     const newDraftId = shortUUID.generate()
 
-    incomingSecions.map(async (section: DraftSection, index: number) => {
+    incomingSections.map(async (section: DraftSection, index: number) => {
       if (section.attachments) {
         section.attachments.map(
           async (attachment: string, attachmentIndex: number) => {
@@ -45,7 +45,7 @@ export default async function handler(
               "jpg"
             )
             if (uploadResponse.success) {
-              incomingSecions[index].attachments[attachmentIndex] =
+              incomingSections[index].attachments[attachmentIndex] =
                 uploadResponse.url as string
             }
             return
@@ -55,9 +55,8 @@ export default async function handler(
     })
 
     const newDraft = new Drafts({
-      //@ts-ignore
       uid: session?.user?.uid as string,
-      drafts: [{ id: newDraftId, sections: incomingSecions }]
+      drafts: [{ id: newDraftId, sections: incomingSections }]
     })
 
     await newDraft.save()
@@ -65,7 +64,7 @@ export default async function handler(
     return
   }
 
-  incomingSecions.map(async (section: DraftSection, index: number) => {
+  incomingSections.map(async (section: DraftSection, index: number) => {
     if (section.attachments) {
       section.attachments.map(
         async (attachment: string, attachmentIndex: number) => {
@@ -77,7 +76,7 @@ export default async function handler(
               "jpg"
             )
             if (uploadResponse.success) {
-              incomingSecions[index].attachments[attachmentIndex] =
+              incomingSections[index].attachments[attachmentIndex] =
                 uploadResponse.url as string
             }
           }
@@ -90,7 +89,7 @@ export default async function handler(
   try {
     await Drafts.updateOne(
       { uid, "drafts.id": id },
-      { $set: { "drafts.$.sections": incomingSecions } },
+      { $set: { "drafts.$.sections": incomingSections } },
       { new: true }
     ).lean()
 
