@@ -25,6 +25,7 @@
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "18.2.0",
     "react-drag-drop-files": "^2.3.7",
+    "react-image-file-resizer": "^0.4.8",
     "react-use": "^17.4.0",
     "short-uuid": "^4.2.0"
   },

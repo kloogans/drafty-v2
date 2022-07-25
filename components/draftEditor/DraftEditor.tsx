@@ -117,7 +117,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
           Tweet
         </PrimaryButton>
         <PrimaryButton
-          disabled={!atleastOneTextBoxHasAValue}
+          disabled={!atleastOneTextBoxHasAValue || loading}
           handleClick={() => !loading && handleSaveDraft()}
           title="Save draft"
         >

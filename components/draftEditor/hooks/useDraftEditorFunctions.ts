@@ -5,6 +5,7 @@ import { allTextBoxesHaveValues } from "../utils"
 import { useDraftEditorState } from "./useDraftEditorState"
 import { useSession } from "next-auth/react"
 import { uploadMediaFile, fileToBase64 } from "lib/media"
+import { resizeImage } from "lib/media/resizeImage"
 
 export const useDraftEditorFunctions = () => {
   const [loading, setLoading] = useState(false)
@@ -33,8 +34,8 @@ export const useDraftEditorFunctions = () => {
     if (session?.user) {
       //@ts-ignore
       // const url = await uploadMediaFile(file, draftId, session?.user?.uid as string)
-      const url = (await fileToBase64(file)) as string
-      addAttachment(draftSectionId, url)
+      const processedImage = await resizeImage(file)
+      addAttachment(draftSectionId, processedImage)
     }
   }
 

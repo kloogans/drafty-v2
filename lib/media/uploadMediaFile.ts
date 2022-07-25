@@ -1,16 +1,16 @@
-import { fileToBase64 } from "./fileToBase64"
+import { resizeImage } from "./resizeImage"
 
 export const uploadMediaFile = async (
   file: File,
   draftId: string,
   uid: string
 ) => {
-  const base64File = (await fileToBase64(file)) as string
   try {
+    const processedImage = await resizeImage(file)
     const uploadResponse = await fetch("/api/drafts/images/upload", {
       method: "POST",
       body: JSON.stringify({
-        file: base64File,
+        file: processedImage,
         draftId,
         fileExtension: file.name.split(".").pop(),
         uid

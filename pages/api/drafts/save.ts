@@ -2,13 +2,9 @@ import shortUUID from "short-uuid"
 import { NextApiRequest, NextApiResponse } from "next"
 import dbConnect from "lib/dbConnect"
 import { getSession } from "next-auth/react"
-import { getImageBuffer } from "lib/uploadImages"
-import { s3 } from "lib/s3"
 import Drafts from "models/drafts"
-import { ConnectContactLens } from "aws-sdk"
 import { DraftSection } from "components/draftEditor/types"
 import { uploadFileToS3 } from "lib/media"
-
 interface ApiResponse {
   success: boolean
   message?: string
@@ -107,7 +103,7 @@ export default async function handler(
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: "4mb" // Set desired value here
+      sizeLimit: "15mb"
     }
   }
 }
