@@ -13,7 +13,7 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
 }) => {
   const disabledStyle = `cursor-not-allowed opacity-50`
   const displayStyle = `!bg-transparent !border-pink-400 !border-dashed hover:!border-solid hover:!bg-pink-500 hover:!border-pink-500 focus:!border-pink-500 hover:shadow-[0_0_10px_0_#ec4899] focus:shadow-[0_0_10px_0_#ec4899] !text-white`
-  const mainButtonStyle = `text-sm text-white px-3 py-3 bg-transparent shadow-md hover:bg-pink-500 focus:bg-pink-500 rounded-2xl border-4 border-pink-100 hover:border-pink-500 focus:border-pink-500`
+  const mainButtonStyle = `text-sm text-zinc-800 p-4 bg-amber-400 shadow-md hover:bg-amber-500 focus:bg-amber-500 rounded-2xl `
   if (isInternalLink) {
     return (
       <Link href={linkPath}>

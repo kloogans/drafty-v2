@@ -1,3 +1,4 @@
+import { PopoverProps } from "components/popover/types"
 import { useReducer } from "react"
 import { GlobalState, initialGlobalState } from "./globalContext"
 import {
@@ -14,12 +15,23 @@ const globalStateReducer = (
     case "setPopoverIsOpen":
       return {
         ...state,
-        popoverIsOpen: action.payload as boolean
+        popoverIsOpen: action.payload.isToggled as boolean,
+        popoverTitle: "",
+        popoverContent: "",
+        popoverConfirmAction: () => {}
       }
     case "toggleDrawer":
       return {
         ...state,
-        drawerIsOpen: action.payload as boolean
+        drawerIsOpen: action.payload.isToggled as boolean
+      }
+    case "OPEN_POPOVER":
+      return {
+        ...state,
+        popoverIsOpen: true,
+        popoverTitle: action.payload.popoverTitle as string,
+        popoverContent: action.payload.popoverContent as string,
+        popoverConfirmAction: action.payload.popoverConfirmAction as () => void
       }
     default:
       return state
@@ -35,13 +47,27 @@ const GlobalStateProvider: React.FC<GlobalStateProviderProps> = ({
     togglePopover: () => {
       dispatch({
         type: "setPopoverIsOpen",
-        payload: !state.popoverIsOpen
+        payload: { isToggled: !state.popoverIsOpen }
       })
     },
     toggleDrawer: () => {
       dispatch({
         type: "toggleDrawer",
-        payload: !state.drawerIsOpen
+        payload: { isToggled: !state.drawerIsOpen }
+      })
+    },
+    openPopover: (
+      popoverTitle: string,
+      popoverContent: string,
+      popoverConfirmAction: () => void
+    ) => {
+      dispatch({
+        type: "OPEN_POPOVER",
+        payload: {
+          popoverTitle,
+          popoverContent,
+          popoverConfirmAction
+        }
       })
     }
   }

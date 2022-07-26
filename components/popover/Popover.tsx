@@ -7,9 +7,9 @@ import { PopoverProps } from "./types"
 const Popover: React.FC<PopoverProps> = ({ children, id = "popover" }) => {
   const popoverRef = useRef<HTMLDivElement>(null)
   const { popoverIsOpen, togglePopover } = useGlobalState()
-  useClickAway(popoverRef, () => {
-    popoverIsOpen && togglePopover()
-  })
+  // useClickAway(popoverRef, () => {
+  //   popoverIsOpen && togglePopover()
+  // })
 
   useEffect(() => {
     const root = document.querySelector("#__next")
@@ -40,7 +40,7 @@ const Popover: React.FC<PopoverProps> = ({ children, id = "popover" }) => {
 
   return (
     <Portal containerId={id}>
-      <span ref={popoverRef}>{children}</span>
+      <div ref={popoverRef}>{children}</div>
     </Portal>
   )
 }

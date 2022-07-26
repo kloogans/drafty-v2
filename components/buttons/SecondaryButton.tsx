@@ -12,11 +12,8 @@ export const SecondaryButton: React.FC<SecondaryButtonProps> = ({
   tertiary = false
 }) => {
   const displayStyle = `px-3 py-2 rounded-2xl border-4 border-white`
-
-  const tertiaryStyle = `hover:text-pink-400`
-
+  const tertiaryStyle = `hover:text-amber-400`
   const disabledStyle = `cursor-not-allowed opacity-50`
-
   const style = `text-md text-white ${className || ""} 
   ${tertiary ? tertiaryStyle : displayStyle}
   ${disabled ? disabledStyle : ""}

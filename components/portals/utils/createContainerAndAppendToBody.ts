@@ -8,7 +8,7 @@ export const createContainerAndAppendToBody = (containerId: string) => {
     "left-0",
     "w-full",
     "h-full",
-    "bg-indigo-600/70",
+    "bg-indigo-800/80",
     "backdrop-blur-md",
     "flex",
     "items-center",

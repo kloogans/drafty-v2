@@ -8,6 +8,7 @@ import dbConnect from "lib/dbConnect"
 import DraftPreview from "components/drafts/DraftPreview"
 import Link from "next/link"
 import Icon from "components/icon/Icon"
+import ConfirmationPopover from "components/popover/ConfirmationPopover"
 
 const Layout = dynamic(() => import("components/layout/Layout"))
 const PrimaryHeading = dynamic(
@@ -18,9 +19,8 @@ interface DashboardPage {
 }
 
 const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
-  const { togglePopover } = useGlobalState()
+  const { togglePopover, openPopover } = useGlobalState()
 
-  console.log(drafts)
   if (drafts != null && drafts.length < 1) {
     return (
       <Layout enforceAuth>
@@ -28,6 +28,17 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
       </Layout>
     )
   }
+
+  const removeDraft = async (id: string) => {
+    console.log("removed draft ", id)
+  }
+
+  const handleRemoveDraft = (id: string) => {
+    openPopover("Are you sure?", "This action cannot be undone.", async () => {
+      await removeDraft(id)
+    })
+  }
+
   return (
     <Layout className="min-h-screen !justify-start pt-32" enforceAuth>
       <PrimaryHeading className="mb-5">
@@ -48,7 +59,7 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
               </a>
             </Link>
             <button
-              onClick={() => console.log("popover confirm and remove draft")}
+              onClick={() => handleRemoveDraft(draft.id)}
               title="Delete this draft"
               className="text-white h-full flex items-center absolute right-0 top-0 translate-x-12"
             >
@@ -58,6 +69,12 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
               />
               <div className="absolute left-1/2 -translate-x-1/2 rounded-full h-12 w-12 bg-white/10 scale-0 group-hover:scale-100 hover:!scale-130 z-0 transition duration-200 ease-in-out" />
             </button>
+            <ConfirmationPopover
+              text="Are you sure?"
+              confirmText="Yes, delete it"
+              cancelText="No, keep it"
+              handleConfirmation={async () => handleRemoveDraft(draft.id)}
+            />
           </div>
         )
       })}
