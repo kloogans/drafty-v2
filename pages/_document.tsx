@@ -12,7 +12,9 @@ class DraftyDocument extends Document {
           />
           <link rel="icon" href="/favicon.ico" />
 
+          <meta name="theme-color" content="#3730a3" />
           {/* Facebook */}
+
           <meta
             property="og:title"
             content={`Draft your twitter ideas with ease.`}
