@@ -8,7 +8,6 @@ import dbConnect from "lib/dbConnect"
 import DraftPreview from "components/drafts/DraftPreview"
 import Link from "next/link"
 import Icon from "components/icon/Icon"
-import ConfirmationPopover from "components/popover/ConfirmationPopover"
 
 const Layout = dynamic(() => import("components/layout/Layout"))
 const PrimaryHeading = dynamic(
@@ -69,12 +68,6 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
               />
               <div className="absolute left-1/2 -translate-x-1/2 rounded-full h-12 w-12 bg-white/10 scale-0 group-hover:scale-100 hover:!scale-130 z-0 transition duration-200 ease-in-out" />
             </button>
-            <ConfirmationPopover
-              text="Are you sure?"
-              confirmText="Yes, delete it"
-              cancelText="No, keep it"
-              handleConfirmation={async () => handleRemoveDraft(draft.id)}
-            />
           </div>
         )
       })}
