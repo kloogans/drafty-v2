@@ -29,8 +29,8 @@ const DraftByIdPage: React.FC<DraftPage> = ({ draft }) => {
 
   return (
     <DraftEditorProvider>
-      <Layout enforceAuth>
-        <div className="w-full max-w-xl flex justify-start mb-5">
+      <Layout className="min-h-screen !justify-start pt-32" enforceAuth>
+        <div className="w-full max-w-xl mb-5">
           <Link href="/drafts">
             <a className="flex items-center text-sm text-white hover:text-amber-400">
               <span>
