@@ -4,6 +4,7 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import { PrimaryButton, SecondaryButton } from "components/buttons"
 import Icon from "components/icon/Icon"
 import LogoIcon from "components/logo/LogoIcon"
+import Link from "next/link"
 
 const Layout = dynamic(() => import("components/layout/Layout"))
 const PrimaryHeading = dynamic(
@@ -45,14 +46,14 @@ const Home: NextPage = () => {
             >
               <strong>Create</strong> a new draft
             </PrimaryButton>
-            <SecondaryButton
-              title="Go to my drafts"
-              tertiary
-              linkPath="/drafts"
-              className="text-sm"
-            >
-              Go to my <strong>drafts</strong>
-            </SecondaryButton>
+            <Link href="/drafts" passHref>
+              <a
+                title="Go to my drafts"
+                className="text-sm text-white hover:text-amber-300"
+              >
+                Go to my <strong>drafts</strong>
+              </a>
+            </Link>
           </div>
           <SecondaryButton
             handleClick={() => signOut()}

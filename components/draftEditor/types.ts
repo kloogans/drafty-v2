@@ -12,6 +12,11 @@ export interface DraftSection {
   focused: boolean
 }
 
+export interface DraftProps {
+  id: string
+  sections: DraftSection[]
+}
+
 export interface DraftSecionTextBoxProps {
   id: number
   draftId: string
