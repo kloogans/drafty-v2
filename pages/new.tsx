@@ -9,15 +9,16 @@ const PrimaryHeading = dynamic(
 )
 const DraftEditor = dynamic(() => import("components/draftEditor/DraftEditor"))
 
-const NewDraftPage = () => {
+const NewDraftPage: React.FC<{ id: string }> = ({ id }) => {
   const { togglePopover } = useGlobalState()
+  console.log(id)
   return (
     <DraftEditorProvider>
       <Layout enforceAuth className="min-h-screen !justify-start pt-32">
         <PrimaryHeading className="mb-4">
           Create a new <strong>draft</strong>
         </PrimaryHeading>
-        <DraftEditor />
+        <DraftEditor id={id} />
       </Layout>
     </DraftEditorProvider>
   )
@@ -25,11 +26,11 @@ const NewDraftPage = () => {
 
 export default NewDraftPage
 
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const newId = shortUUID.generate()
-//   return {
-//     props: {
-//       id: newId
-//     }
-//   }
-// }
+export const getServerSideProps: GetServerSideProps = async () => {
+  const newId = shortUUID.generate()
+  return {
+    props: {
+      id: newId
+    }
+  }
+}

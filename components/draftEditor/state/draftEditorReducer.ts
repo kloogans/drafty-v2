@@ -140,6 +140,12 @@ export const draftEditorReducer = (
           (id: number) => id !== action.id
         )
       }
+    case "SET_SECTIONS":
+      console.log("running")
+      return {
+        ...state,
+        sections: action.sections
+      }
 
     default:
       return state

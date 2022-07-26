@@ -14,12 +14,16 @@ const DraftSectionControls = dynamic(() => import("./DraftSectionControls"))
 const DraftSectionTextBox = dynamic(() => import("./DraftSectionTextBox"))
 const MAX_CHARACTERS = 280
 
-const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
-  const { sections, highlightedTextBoxes } = useDraftEditorState()
+const DraftEditor: React.FC<DraftEditorProps> = ({
+  id,
+  data,
+  isNew = true
+}) => {
+  const { sections, highlightedTextBoxes, setSections, dispatch } =
+    useDraftEditorState()
+  const router = useRouter()
   const { handleSendDraftsAsTweet, saveDraft, loading } =
     useDraftEditorFunctions()
-  const inputRef = useRef<HTMLInputElement>(null)
-  const isNewDraft = id == null
 
   const lastTextBoxIsEmpty = sections[sections.length - 1].text.length < 1
   const { allHaveValues } = allTextBoxesHaveValues(sections)
@@ -27,20 +31,18 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
     (textBox) => textBox.text.length > 0
   )
 
-  // useLayoutEffect(() => {
-  //   const allTextBoxes = document.querySelectorAll("textarea")
-  //   console.log(allTextBoxes)
-  //   if (allTextBoxes.length > 0) {
-  //     allTextBoxes[allTextBoxes.length - 1].focus()
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (data) {
+      setSections(data)
+    }
+  }, [data])
 
   const handleSaveDraft = async () => {
     try {
       const response = await saveDraft(id)
       if (response.success) {
         console.log("Draft saved")
-        useRouter().push(`${response.draftUrl}`)
+        router.push(`${response.draftUrl}`)
       }
     } catch (e) {
       console.log(e.message)
@@ -81,6 +83,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({ id, isNew = true }) => {
               <DraftSectionTextBox
                 key={value.id}
                 id={value.id}
+                draftId={id as string}
                 value={value.text}
                 focused={value.focused}
                 radius={radius}

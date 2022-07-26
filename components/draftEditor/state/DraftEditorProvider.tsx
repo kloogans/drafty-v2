@@ -4,6 +4,7 @@ import {
   DraftEditorContext,
   initialDraftEditorState
 } from "./DraftEditorContext"
+import { DraftSection } from "../types"
 
 export const DraftEditorProvider: React.FC<{ children: React.ReactNode }> = ({
   children
@@ -34,7 +35,11 @@ export const DraftEditorProvider: React.FC<{ children: React.ReactNode }> = ({
     unhighlightTextBox: (id: number) =>
       dispatch({ type: "UNHIGHLIGHT_TEXT_BOX", id }),
     setHighlightedTextBoxes: (highlightedTextBoxes: number[]) =>
-      dispatch({ type: "SET_HIGHLIGHTED_TEXT_BOXES", highlightedTextBoxes })
+      dispatch({ type: "SET_HIGHLIGHTED_TEXT_BOXES", highlightedTextBoxes }),
+    setSections: (sections: DraftSection[]) => {
+      console.log("here")
+      dispatch({ type: "SET_SECTIONS", sections })
+    }
   }
 
   return (

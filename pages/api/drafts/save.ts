@@ -1,11 +1,10 @@
 // TODO: split this up
-import shortUUID from "short-uuid"
 import { NextApiRequest, NextApiResponse } from "next"
 import dbConnect from "lib/dbConnect"
 import { getSession } from "next-auth/react"
 import Drafts from "models/drafts"
 import { DraftSection } from "components/draftEditor/types"
-import { uploadFileToS3 } from "lib/media"
+
 interface ApiResponse {
   success: boolean
   message?: string
@@ -26,75 +25,36 @@ export default async function handler(
     res.status(401).json({ success: false, message: "Method not supported" })
 
   const { id, sections } = JSON.parse(body)
-
-  const isNewDraft = !id
-  const incomingSections = [...sections] as DraftSection[]
   const uid = session?.user?.uid as string
-
-  if (isNewDraft) {
-    const newDraftId = shortUUID.generate()
-
-    incomingSections.map(async (section: DraftSection, index: number) => {
-      if (section.attachments) {
-        section.attachments.map(
-          async (attachment: string, attachmentIndex: number) => {
-            const uploadResponse = await uploadFileToS3(
-              attachment,
-              newDraftId,
-              uid,
-              "jpg"
-            )
-            if (uploadResponse.success) {
-              incomingSections[index].attachments[attachmentIndex] =
-                uploadResponse.url as string
-            }
-            return
-          }
-        )
-      }
-    })
-
-    const newDraft = new Drafts({
-      uid: session?.user?.uid as string,
-      drafts: [{ id: newDraftId, sections: incomingSections }]
-    })
-
-    await newDraft.save()
-    res.status(200).json({ success: true, draftUrl: `/drafts/${newDraftId}` })
-    return
-  }
-
-  incomingSections.map(async (section: DraftSection, index: number) => {
-    if (section.attachments) {
-      section.attachments.map(
-        async (attachment: string, attachmentIndex: number) => {
-          if (!attachment.includes("https://")) {
-            const uploadResponse = await uploadFileToS3(
-              attachment,
-              id,
-              uid,
-              "jpg"
-            )
-            if (uploadResponse.success) {
-              incomingSections[index].attachments[attachmentIndex] =
-                uploadResponse.url as string
-            }
-          }
-          return
-        }
-      )
-    }
-  })
+  //@ts-ignore
+  const existingUserDrafts = await Drafts.findOne(
+    { uid },
+    { _id: 0, drafts: 1 }
+  ).lean()
+  //@ts-ignore
+  const isExistingDraft = await Drafts.findOne(
+    { uid, "drafts.id": id },
+    { _id: 0, drafts: 1 }
+  ).lean()
 
   try {
-    await Drafts.updateOne(
-      { uid, "drafts.id": id },
-      { $set: { "drafts.$.sections": incomingSections } },
-      { new: true }
-    ).lean()
+    if (existingUserDrafts == null) {
+      const newDraft = new Drafts({
+        uid,
+        drafts: [{ id, sections }]
+      })
 
-    res.status(200).json({ success: true })
+      await newDraft.save()
+      // await Drafts.updateOne({ uid }, { $set: { drafts: [{ id, sections }] } })
+      res.status(200).json({ success: true, draftUrl: `/drafts/${id}` })
+      return
+    }
+
+    await Drafts.updateOne({ uid }, { $push: { drafts: { id, sections } } })
+
+    res.status(200).json({ success: true, draftUrl: `/drafts/${id}` })
   } catch (error) {
+    console.log(error.message)
     res.status(500).json({ success: false, message: "Error saving draft" })
   }
 }

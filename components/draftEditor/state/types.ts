@@ -15,6 +15,8 @@ export interface DraftEditorContextProps {
   highlightTextBox: (id: number) => void
   unhighlightTextBox: (id: number) => void
   setHighlightedTextBoxes: (highlightedTextBoxes: number[]) => void
+  setSections: (sections: DraftSection[]) => void
+  dispatch: (action: DraftEditorReducerActionProps) => void
 }
 
 export interface DraftEditorReducerActionProps {
@@ -27,4 +29,5 @@ export interface DraftEditorReducerActionProps {
   highlightedTextBoxes?: number[]
   attachmentIndex?: number
   sectionId?: number
+  sections?: DraftSection[]
 }

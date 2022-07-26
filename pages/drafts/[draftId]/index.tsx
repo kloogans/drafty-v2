@@ -1,13 +1,19 @@
 import dynamic from "next/dynamic"
 import { GetServerSideProps } from "next"
 import { useGlobalState } from "state/hooks/useGlobalState"
+import { getSession } from "next-auth/react"
+import Drafts from "models/drafts"
+import { DraftEditorProps, DraftSection } from "components/draftEditor/types"
+import DraftEditor from "components/draftEditor/DraftEditor"
+import { DraftEditorProvider } from "components/draftEditor/state/DraftEditorProvider"
+import Link from "next/link"
 
 const Layout = dynamic(() => import("components/layout/Layout"))
 const PrimaryHeading = dynamic(
   () => import("components/headings/PrimaryHeading")
 )
 interface DraftPage {
-  draft: any
+  draft: DraftEditorProps
 }
 
 const DraftByIdPage: React.FC<DraftPage> = ({ draft }) => {
@@ -20,19 +26,68 @@ const DraftByIdPage: React.FC<DraftPage> = ({ draft }) => {
       </Layout>
     )
   }
+
   return (
-    <Layout enforceAuth>
-      <PrimaryHeading>Draft</PrimaryHeading>
-    </Layout>
+    <DraftEditorProvider>
+      <Layout enforceAuth>
+        <div className="w-full max-w-xl flex justify-start mb-5">
+          <Link href="/drafts">
+            <a className="flex items-center text-sm text-white hover:text-amber-400">
+              <span>
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </span>
+              Back to drafts
+            </a>
+          </Link>
+        </div>
+        <DraftEditor id={draft.id} data={draft.sections} />
+      </Layout>
+    </DraftEditorProvider>
   )
 }
 
 export default DraftByIdPage
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  return {
-    props: {
-      draft: {}
+  const session = await getSession({ req: context.req })
+  const { draftId } = context.query
+  try {
+    //@ts-ignore
+    const draftById = await Drafts.aggregate([
+      { $match: { uid: session?.user?.uid, "drafts.id": draftId } },
+      {
+        $project: {
+          drafts: {
+            $filter: {
+              input: "$drafts",
+              as: "draft",
+              cond: { $eq: ["$$draft.id", draftId] }
+            }
+          },
+          _id: 0
+        }
+      }
+    ])
+    return {
+      props: {
+        draft: draftById[0].drafts[0]
+      }
+    }
+  } catch (e) {
+    return {
+      props: {
+        draft: null
+      }
     }
   }
 }

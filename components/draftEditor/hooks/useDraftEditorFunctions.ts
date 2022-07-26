@@ -1,11 +1,8 @@
 import { useState } from "react"
-import { getImageBuffer } from "lib/uploadImages"
-import { s3 } from "lib/s3"
 import { allTextBoxesHaveValues } from "../utils"
 import { useDraftEditorState } from "./useDraftEditorState"
 import { useSession } from "next-auth/react"
-import { uploadMediaFile, fileToBase64 } from "lib/media"
-import { resizeImage } from "lib/media/resizeImage"
+import { uploadMediaFile } from "lib/media"
 
 export const useDraftEditorFunctions = () => {
   const [loading, setLoading] = useState(false)
@@ -30,12 +27,26 @@ export const useDraftEditorFunctions = () => {
     textBoxes[id].focus()
   }
 
-  const uploadMediaFileLocally = async (file: File, draftSectionId: number) => {
+  const uploadMedia = async (
+    file: File,
+    draftId: string,
+    draftSectionId: number
+  ) => {
+    setLoading(true)
     if (session?.user) {
-      //@ts-ignore
-      // const url = await uploadMediaFile(file, draftId, session?.user?.uid as string)
-      const processedImage = await resizeImage(file)
-      addAttachment(draftSectionId, processedImage)
+      try {
+        //@ts-ignore
+        const url = await uploadMediaFile(
+          file,
+          draftId,
+          session?.user?.uid as string
+        )
+        addAttachment(draftSectionId, url)
+      } catch (e) {
+        console.log(e.message)
+      } finally {
+        setLoading(false)
+      }
     }
   }
 
@@ -63,7 +74,7 @@ export const useDraftEditorFunctions = () => {
   return {
     handleSendDraftsAsTweet,
     focusOnNewTextBox,
-    uploadMediaFileLocally,
+    uploadMedia,
     saveDraft,
     loading
   }

@@ -32,7 +32,7 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
   numberOfAssets
 }) => {
   const { addTextBox, removeTextBox } = useDraftEditorState()
-  const { uploadMediaFileLocally } = useDraftEditorFunctions()
+  const { uploadMedia } = useDraftEditorFunctions()
   const inputRef = useRef<HTMLInputElement>(null)
 
   const openFileBrowser = (ev: any) => {

@@ -1,6 +1,7 @@
 export interface DraftEditorProps {
   id?: string
   sections?: DraftSection[]
+  data?: DraftSection[]
   isNew?: boolean
 }
 
@@ -13,6 +14,7 @@ export interface DraftSection {
 
 export interface DraftSecionTextBoxProps {
   id: number
+  draftId: string
   value: string
   focused: boolean
   radius: string

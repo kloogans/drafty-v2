@@ -7,6 +7,7 @@ import { MAX_CHARACTERS } from "./utils"
 
 const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   id,
+  draftId,
   value,
   focused,
   attachments,
@@ -16,8 +17,7 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   const { highlightedTextBoxes, sections, focusOnTextBox, changeText } =
     useDraftEditorState()
 
-  const { handleSendDraftsAsTweet, uploadMediaFileLocally } =
-    useDraftEditorFunctions()
+  const { handleSendDraftsAsTweet, uploadMedia } = useDraftEditorFunctions()
 
   const isLastTextBox = id === sections[sections.length - 1].id
   const isHighlighted = highlightedTextBoxes.includes(id)
@@ -56,7 +56,7 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
       attachments={attachments}
       disabled={hasMaxAttachments}
       handleChange={(file: File) =>
-        !hasMaxAttachments && uploadMediaFileLocally(file, id)
+        !hasMaxAttachments && uploadMedia(file, draftId, id)
       }
       className={`${borderStyle} ${paddingStyle} ${radius} transition-[all] duration-200 ease-in-out`}
     >
