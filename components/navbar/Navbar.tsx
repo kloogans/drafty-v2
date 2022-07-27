@@ -28,21 +28,28 @@ const NavbarContent = () => {
           {theme}
         </button>
       )} */}
+      <Link href="/new">
+        <a className="px-4 py-2 text-sm border-2 border-bg-white text-white hover:bg-amber-400 hover:text-indigo-800 hover:border-amber-400 group rounded-2xl transition duration-200 ease-in-out">
+          <span className="flex items-center justify-center h-full gap-1 scale-100 group-hover:scale-95">
+            <Icon
+              url="/assets/icons/pencil.svg"
+              className="w-4 h-4 bg-white group-hover:bg-indigo-800 transition duration-200 ease-in-out"
+            />
+            <strong>New</strong> draft
+          </span>
+        </a>
+      </Link>
       <button
-        className="w-12 h-12"
+        className="relative w-12 h-12 transition duration-200 ease-in-out group"
         onClick={() => console.log("toggle nav drawer")}
       >
         <UserAvatar
           url={session?.user ? (session?.user.image as string) : ""}
           username={session?.user ? (session?.user.name as string) : ""}
           size="12"
-          //   className={`border-4 transition duration-200 ease-in-out ${
-          //     globalState.drawerIsOpen &&
-          //     globalState.drawerContentType === "navigation"
-          //       ? "border-pink-600 dark:border-pink-500"
-          //       : "border-zinc-100 dark:border-zinc-500"
-          //   }`}
+          className="scale-100 group-hover:scale-[0.9] transition duration-200 ease-in-out"
         />
+        <div className="absolute h-full w-full bg-amber-400 rounded-full top-0 left-1/2 -translate-x-1/2 z-0 scale-0 group-hover:scale-[1.1] transition duration-200 ease-in-out" />
       </button>
     </div>
   )

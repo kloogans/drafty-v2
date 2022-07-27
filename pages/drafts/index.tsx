@@ -8,6 +8,7 @@ import dbConnect from "lib/dbConnect"
 import DraftPreview from "components/drafts/DraftPreview"
 import Link from "next/link"
 import Icon from "components/icon/Icon"
+import Head from "next/head"
 
 const Layout = dynamic(() => import("components/layout/Layout"))
 const PrimaryHeading = dynamic(
@@ -18,7 +19,7 @@ interface DashboardPage {
 }
 
 const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
-  const { togglePopover, openPopover } = useGlobalState()
+  const { openPopover } = useGlobalState()
 
   if (drafts != null && drafts.length < 1) {
     return (
@@ -40,6 +41,9 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
 
   return (
     <Layout className="min-h-screen !justify-start pt-32" enforceAuth>
+      <Head>
+        <title>Your Drafts</title>
+      </Head>
       <PrimaryHeading className="mb-5">
         Your <strong>drafts</strong>
       </PrimaryHeading>

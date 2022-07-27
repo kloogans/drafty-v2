@@ -15,7 +15,7 @@ const UserAvatar: React.FC<AvatarProps> = ({
 }) => {
   return (
     <div
-      className={`w-${size} h-${size} rounded-full overflow-hidden ${className} relative`}
+      className={`w-${size} h-${size} rounded-full overflow-hidden ${className} relative z-10`}
     >
       {url.length > 0 && (
         <Image
