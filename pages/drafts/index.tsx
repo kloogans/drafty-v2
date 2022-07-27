@@ -9,6 +9,7 @@ import DraftPreview from "components/drafts/DraftPreview"
 import Link from "next/link"
 import Icon from "components/icon/Icon"
 import Head from "next/head"
+import { useRouter } from "next/router"
 
 const Layout = dynamic(() => import("components/layout/Layout"))
 const PrimaryHeading = dynamic(
@@ -18,8 +19,22 @@ interface DashboardPage {
   drafts: DraftProps[]
 }
 
+const removeDraft = async (id: string) => {
+  try {
+    await fetch("/api/drafts/remove", {
+      method: "POST",
+      body: JSON.stringify({ id })
+    })
+    return { success: true }
+  } catch (e) {
+    console.error(e.message)
+    return { success: false }
+  }
+}
+
 const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
   const { openPopover } = useGlobalState()
+  const router = useRouter()
 
   if (drafts != null && drafts.length < 1) {
     return (
@@ -29,13 +44,17 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
     )
   }
 
-  const removeDraft = async (id: string) => {
-    console.log("removed draft ", id)
+  const handleRemoveDraft = async (id: string) => {
+    const { success } = await removeDraft(id)
+    if (success) {
+      await removeDraft(id)
+      router.replace(router.asPath)
+    }
   }
 
-  const handleRemoveDraft = (id: string) => {
+  const confirmDraftRemoval = (id: string) => {
     openPopover("Are you sure?", "This action cannot be undone.", async () => {
-      await removeDraft(id)
+      await handleRemoveDraft(id)
     })
   }
 
@@ -62,7 +81,7 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
               </a>
             </Link>
             <button
-              onClick={() => handleRemoveDraft(draft.id)}
+              onClick={() => confirmDraftRemoval(draft.id)}
               title="Delete this draft"
               className="text-white h-full flex items-center absolute right-0 top-0 translate-x-12"
             >
