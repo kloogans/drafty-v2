@@ -10,6 +10,7 @@ import Link from "next/link"
 import Icon from "components/icon/Icon"
 import Head from "next/head"
 import { useRouter } from "next/router"
+import { PrimaryButton } from "components/buttons"
 
 const Layout = dynamic(() => import("components/layout/Layout"))
 const PrimaryHeading = dynamic(
@@ -39,7 +40,27 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
   if (drafts != null && drafts.length < 1) {
     return (
       <Layout enforceAuth>
-        <PrimaryHeading>No drafts yet!</PrimaryHeading>
+        <Head>
+          <title>Your Drafts</title>
+        </Head>
+        <Icon
+          url={`/assets/placeholders/writing.svg`}
+          className="w-32 h-32 bg-white"
+        />
+        <PrimaryHeading className="mb-2">
+          No drafts - <strong>yet</strong>!
+        </PrimaryHeading>
+        <Link href="/new">
+          <a className="px-4 py-2 text-sm border-2 border-bg-white text-white hover:bg-amber-400 hover:text-indigo-800 hover:border-amber-400 group rounded-2xl transition duration-200 ease-in-out">
+            <span className="flex items-center justify-center h-full gap-1 scale-100 group-hover:scale-95">
+              <Icon
+                url="/assets/icons/pencil.svg"
+                className="w-4 h-4 bg-white group-hover:bg-indigo-800 transition duration-200 ease-in-out"
+              />
+              Start a <strong>new</strong> draft
+            </span>
+          </a>
+        </Link>
       </Layout>
     )
   }
