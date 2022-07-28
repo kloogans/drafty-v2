@@ -1,15 +1,8 @@
-// TODO: split this up
 import { NextApiRequest, NextApiResponse } from "next"
-import dbConnect from "lib/dbConnect"
 import { getSession } from "next-auth/react"
+import { ApiResponse } from "types/api"
+import dbConnect from "lib/dbConnect"
 import Drafts from "models/drafts"
-import { DraftSection } from "components/draftEditor/types"
-
-interface ApiResponse {
-  success: boolean
-  message?: string
-  draftUrl?: string
-}
 
 const ACCEPTED_METHODS = ["POST"]
 
@@ -20,12 +13,14 @@ export default async function handler(
   const { method, body } = req
   await dbConnect()
   const session = await getSession({ req })
+  const uid = session?.user?.uid as string
 
   if (!ACCEPTED_METHODS.includes(method as string))
     res.status(401).json({ success: false, message: "Method not supported" })
 
+  if (!uid) res.status(401).json({ success: false, message: "Not authorized" })
+
   const { id, sections } = JSON.parse(body)
-  const uid = session?.user?.uid as string
   //@ts-ignore
   const existingUserDrafts = await Drafts.findOne(
     { uid },
@@ -45,7 +40,6 @@ export default async function handler(
       })
 
       await newDraft.save()
-      // await Drafts.updateOne({ uid }, { $set: { drafts: [{ id, sections }] } })
       res.status(200).json({ success: true, draftUrl: `/drafts/${id}` })
       return
     }
@@ -54,8 +48,7 @@ export default async function handler(
 
     res.status(200).json({ success: true, draftUrl: `/drafts/${id}` })
   } catch (error) {
-    console.log(error.message)
-    res.status(500).json({ success: false, message: "Error saving draft" })
+    res.status(500).json({ success: false, message: error.message })
   }
 }
 

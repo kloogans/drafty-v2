@@ -1,15 +1,9 @@
+import { getSession } from "next-auth/react"
 import { NextApiRequest, NextApiResponse } from "next"
 import dbConnect from "lib/dbConnect"
-import { getSession } from "next-auth/react"
-import { getImageBuffer } from "lib/uploadImages"
 import { s3 } from "lib/s3"
-import { ConnectContactLens } from "aws-sdk"
-
-interface UploadedFileProps {
-  success: boolean
-  url?: string
-  message?: string
-}
+import { ApiResponse } from "types/api"
+import { enforceHttpMethodsAndAuthentication } from "lib/api"
 
 const deleteFile = async (path: string) => {
   try {
@@ -45,11 +39,6 @@ const deleteFiles = async (paths: S3Props[]) => {
   }
 }
 
-interface ApiResponse {
-  success: boolean
-  message?: string
-}
-
 const ACCEPTED_METHODS = ["POST"]
 
 export default async function handler(
@@ -57,12 +46,18 @@ export default async function handler(
   res: NextApiResponse<ApiResponse>
 ) {
   const { method, body } = req
+  const session = await getSession({ req })
+  const uid = session?.user?.uid as string
   await dbConnect()
 
-  if (!ACCEPTED_METHODS.includes(method as string))
-    res.status(401).json({ success: false, message: "Method not supported" })
+  enforceHttpMethodsAndAuthentication(
+    req,
+    res,
+    method as string,
+    ACCEPTED_METHODS
+  )
 
-  const { uid, filePaths, draftId } = JSON.parse(body)
+  const { filePaths, draftId } = JSON.parse(body)
 
   const pathsWithKeys = filePaths.map((path: string) => ({
     Key: `/${uid}/drafts/${draftId}/${path}`

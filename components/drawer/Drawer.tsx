@@ -1,9 +1,11 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useGlobalState } from "state/hooks/useGlobalState"
 import { useClickAway } from "react-use"
 import Link from "next/link"
 import { signOut } from "next-auth/react"
+import { useRouter } from "next/router"
 const Drawer = () => {
+  const router = useRouter()
   const { toggleDrawer, drawerIsOpen } = useGlobalState()
   const drawerContainer = useRef(null)
 
@@ -14,6 +16,14 @@ const Drawer = () => {
   let transformState = `translate-x-[100%]`
 
   if (drawerIsOpen) transformState = `translate-x-[0])`
+
+  useEffect(() => {
+    drawerIsOpen && toggleDrawer()
+
+    return () => {
+      drawerIsOpen && toggleDrawer()
+    }
+  }, [router.pathname])
 
   return (
     <aside

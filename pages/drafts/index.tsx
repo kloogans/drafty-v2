@@ -23,7 +23,7 @@ interface DashboardPage {
 
 const removeDraft = async (id: string) => {
   try {
-    await fetch("/api/drafts/remove", {
+    await fetch("/api/drafts/delete", {
       method: "POST",
       body: JSON.stringify({ id })
     })

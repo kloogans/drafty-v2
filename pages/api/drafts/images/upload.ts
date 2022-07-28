@@ -1,14 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import dbConnect from "lib/dbConnect"
-import { getSession } from "next-auth/react"
 import { getImageBuffer } from "lib/uploadImages"
+import { getSession } from "next-auth/react"
+import { ApiResponse } from "types/api"
+import dbConnect from "lib/dbConnect"
 import { s3 } from "lib/s3"
-
-interface UploadedFileProps {
-  success: boolean
-  url?: string
-  message?: string
-}
 
 const uploadFile = async (
   file: string,
@@ -38,18 +33,6 @@ const uploadFile = async (
   }
 }
 
-interface ApiResponse {
-  success: boolean
-  message?: string
-  url?: string
-}
-
-interface UploadedFileProps {
-  success: boolean
-  url?: string
-  message?: string
-}
-
 const ACCEPTED_METHODS = ["POST"]
 
 export default async function handler(
@@ -58,21 +41,20 @@ export default async function handler(
 ) {
   const { method, body } = req
   await dbConnect()
+  const session = await getSession({ req })
+  const uid = session?.user?.uid as string
 
   if (!ACCEPTED_METHODS.includes(method as string))
     res.status(401).json({ success: false, message: "Method not supported" })
 
-  const { file, draftId, uid, fileExtension } = JSON.parse(body)
+  if (!uid) res.status(401).json({ success: false, message: "Not authorized" })
 
-  const s3Response = (await uploadFile(
-    file,
-    draftId,
-    uid,
-    fileExtension
-  )) as UploadedFileProps
+  const { file, draftId, fileExtension } = JSON.parse(body)
+
+  const s3Response = await uploadFile(file, draftId, uid, fileExtension)
 
   if (s3Response?.success) {
-    res.status(200).json({ success: true, url: s3Response.url })
+    res.status(200).json({ success: true, s3ImageUrl: s3Response.url })
     return
   }
 

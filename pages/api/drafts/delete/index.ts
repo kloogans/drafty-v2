@@ -1,14 +1,9 @@
-// TODO: split this up
 import { NextApiRequest, NextApiResponse } from "next"
-import dbConnect from "lib/dbConnect"
 import { getSession } from "next-auth/react"
+import { ApiResponse } from "types/api"
+import dbConnect from "lib/dbConnect"
 import Drafts from "models/drafts"
-
-interface ApiResponse {
-  success: boolean
-  message?: string
-  draftUrl?: string
-}
+import { enforceHttpMethodsAndAuthentication } from "lib/api"
 
 const ACCEPTED_METHODS = ["POST"]
 
@@ -21,10 +16,12 @@ export default async function handler(
   const session = await getSession({ req })
   const uid = session?.user?.uid as string
 
-  if (!ACCEPTED_METHODS.includes(method as string))
-    res.status(401).json({ success: false, message: "Method not supported" })
-
-  if (!uid) res.status(401).json({ success: false, message: "Not authorized" })
+  enforceHttpMethodsAndAuthentication(
+    req,
+    res,
+    method as string,
+    ACCEPTED_METHODS
+  )
 
   const { id } = JSON.parse(body)
 
@@ -34,13 +31,5 @@ export default async function handler(
   } catch (error) {
     console.log(error.message)
     res.status(500).json({ success: false, message: "Error saving draft" })
-  }
-}
-
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: "15mb"
-    }
   }
 }

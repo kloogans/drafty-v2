@@ -28,6 +28,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+button {
+  transition: all 0.2s ease-in-out;
+}
+
 .title-font {
   font-family: "Cunia", sans-serif;
 }
