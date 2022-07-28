@@ -12,7 +12,6 @@ const DraftEditor = dynamic(() => import("components/draftEditor/DraftEditor"))
 
 const NewDraftPage: React.FC<{ id: string }> = ({ id }) => {
   const { togglePopover } = useGlobalState()
-  console.log(id)
   return (
     <DraftEditorProvider>
       <Layout enforceAuth className="min-h-screen !justify-start pt-32">

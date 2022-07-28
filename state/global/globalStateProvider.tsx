@@ -20,7 +20,7 @@ const globalStateReducer = (
         popoverContent: "",
         popoverConfirmAction: () => {}
       }
-    case "toggleDrawer":
+    case "TOGGLE_DRAWER":
       return {
         ...state,
         drawerIsOpen: action.payload.isToggled as boolean
@@ -52,7 +52,7 @@ const GlobalStateProvider: React.FC<GlobalStateProviderProps> = ({
     },
     toggleDrawer: () => {
       dispatch({
-        type: "toggleDrawer",
+        type: "TOGGLE_DRAWER",
         payload: { isToggled: !state.drawerIsOpen }
       })
     },

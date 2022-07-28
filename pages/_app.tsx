@@ -4,6 +4,7 @@ import Navbar from "components/navbar/Navbar"
 import type { AppProps } from "next/app"
 import { ThemeProvider } from "next-themes"
 import "../styles/globals.css"
+import Drawer from "components/drawer/Drawer"
 
 function Drafty({ Component, pageProps }: AppProps) {
   return (
@@ -12,6 +13,7 @@ function Drafty({ Component, pageProps }: AppProps) {
         <ThemeProvider attribute="class">
           <Navbar />
           <Component {...pageProps} />
+          <Drawer />
         </ThemeProvider>
       </GlobalStateProvider>
     </SessionProvider>

@@ -10,7 +10,7 @@ const UserAvatar = dynamic(() => import("components/avatar/Avatar"))
 
 const NavbarContent = () => {
   const { data: session, status } = useSession()
-  //   const {  }
+  const { toggleDrawer, drawerIsOpen } = useGlobalState()
   const { theme, setTheme } = useTheme()
   const [loading, setLoading] = useState(true)
 
@@ -40,16 +40,22 @@ const NavbarContent = () => {
         </a>
       </Link>
       <button
-        className="relative w-12 h-12 transition duration-200 ease-in-out group"
-        onClick={() => console.log("toggle nav drawer")}
+        className={`relative w-12 h-12 transition duration-200 ease-in-out group`}
+        onClick={() => !drawerIsOpen && toggleDrawer()}
       >
         <UserAvatar
           url={session?.user ? (session?.user.image as string) : ""}
           username={session?.user ? (session?.user.name as string) : ""}
           size="12"
-          className="scale-100 group-hover:scale-[0.9] transition duration-200 ease-in-out"
+          className={`scale-100 group-hover:scale-[0.9] group-focus:scale-[0.9] ${
+            drawerIsOpen ? "scale-[0.9]" : ""
+          } transition duration-200 ease-in-out`}
         />
-        <div className="absolute h-full w-full bg-amber-400 rounded-full top-0 left-1/2 -translate-x-1/2 z-0 scale-0 group-hover:scale-[1.1] transition duration-200 ease-in-out" />
+        <div
+          className={`absolute h-full w-full bg-amber-400 rounded-full top-0 left-1/2 -translate-x-1/2 z-0 scale-0 group-hover:scale-[1.1] group-focus:scale-[1.1] ${
+            drawerIsOpen ? "scale-[1.1]" : ""
+          } transition duration-200 ease-in-out`}
+        />
       </button>
     </div>
   )
