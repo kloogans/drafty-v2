@@ -4,6 +4,27 @@ import { useClickAway } from "react-use"
 import Link from "next/link"
 import { signOut } from "next-auth/react"
 import { useRouter } from "next/router"
+import { menuItems } from "./data/menuItems"
+interface MenuProps {
+  href: string
+  title: string
+  active: boolean
+  children: React.ReactNode
+}
+
+const MenuLink: React.FC<MenuProps> = ({ href, children, title, active }) => (
+  <Link href={href}>
+    <a
+      title={title}
+      className={`w-full flex flex-col items-center justify-center px-4 py-5 hover:bg-zinc-700 rounded-2xl text-white hover:text-amber-400 focus:text-amber-400 ${
+        active ? "text-amber-400 bg-zinc-700" : ""
+      }`}
+    >
+      {children}
+    </a>
+  </Link>
+)
+
 const Drawer = () => {
   const router = useRouter()
   const { toggleDrawer, drawerIsOpen } = useGlobalState()
@@ -38,48 +59,20 @@ const Drawer = () => {
           </p>
 
           <ul className="w-full flex flex-col items-center justify-center gap-2">
-            <li className="w-full">
-              <Link href="/">
-                <a
-                  href="#"
-                  className="w-full flex flex-col items-center justify-center px-4 py-5 hover:bg-zinc-700 rounded-2xl text-white hover:text-amber-400 focus:text-amber-400"
+            {menuItems.map(({ href, title, children }) => (
+              <li key={href} className="w-full">
+                <MenuLink
+                  href={href}
+                  title={title}
+                  active={router.pathname === href}
                 >
-                  Home
-                </a>
-              </Link>
-            </li>
-            <li className="w-full">
-              <Link href="/new">
-                <a
-                  href="#"
-                  className="w-full flex flex-col items-center justify-center px-4 py-5 hover:bg-zinc-700 rounded-2xl text-white hover:text-amber-400 focus:text-amber-400"
-                >
-                  Create a New Draft
-                </a>
-              </Link>
-            </li>
-            <li className="w-full">
-              <Link href="/drafts">
-                <a
-                  href="#"
-                  className="w-full flex flex-col items-center justify-center px-4 py-5 hover:bg-zinc-700 rounded-2xl text-white hover:text-amber-400 focus:text-amber-400"
-                >
-                  My Drafts
-                </a>
-              </Link>
-            </li>
-            <li className="w-full">
-              <Link href="/settings">
-                <a
-                  href="#"
-                  className="w-full flex flex-col items-center justify-center px-4 py-5 hover:bg-zinc-700 rounded-2xl text-white hover:text-amber-400 focus:text-amber-400"
-                >
-                  Settings
-                </a>
-              </Link>
-            </li>
+                  {children}
+                </MenuLink>
+              </li>
+            ))}
             <li className="w-full">
               <button
+                title="Sign out of your account"
                 className="w-full flex flex-col items-center justify-center px-4 py-5 hover:bg-zinc-700 rounded-2xl text-white hover:text-amber-400 focus:text-amber-400"
                 onClick={() => signOut()}
               >
