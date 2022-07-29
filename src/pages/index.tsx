@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   return (
     <Layout enforceAuth={false}>
       <div className="flex flex-col items-center justify-center translate-y-2">
-        <LogoIcon className="w-20 h-20" animated />
+        <LogoIcon className="w-20 h-20" animated showDebris />
 
         <h1 className="title-font leading-none text-indigo-200 text-3xl lg:text-4xl -translate-y-2">
           Drafty
@@ -26,34 +26,39 @@ const Home: NextPage = () => {
         Making twitter drafts a <strong>breeze💨</strong>
       </h2>
 
-      {!isAuthenticated && (
+      {!isAuthenticated ? (
         <PrimaryButton
           handleClick={() => signIn("twitter")}
           title="Sign in with my Twitter"
         >
           Sign in with my Twitter
         </PrimaryButton>
-      )}
-      {isAuthenticated && (
+      ) : (
         <div className="flex flex-col items-center justify-center gap-4">
-          <div className="flex flex-col items-center justify-center gap-4">
-            <PrimaryButton
-              title="Create a new draft"
-              isInternalLink
-              linkPath="/new"
-            >
-              <strong>Create</strong> a new draft
-            </PrimaryButton>
+          <PrimaryButton
+            title="Create a new draft"
+            isInternalLink
+            linkPath="/new"
+            className="group"
+            isCTA
+          >
+            <span className="flex items-center justify-center h-full gap-1 scale-100 group-hover:scale-95">
+              <Icon
+                url="/assets/icons/pencil.svg"
+                className="w-4 h-4 bg-white group-hover:bg-indigo-800 transition duration-200 ease-in-out"
+              />
+              Start a <strong>new</strong> draft
+            </span>
+          </PrimaryButton>
 
-            <SecondaryButton
-              linkPath="/drafts"
-              title="Go to my drafts"
-              isInternalLink
-              tertiary
-            >
-              Go to my <strong>drafts</strong>
-            </SecondaryButton>
-          </div>
+          <SecondaryButton
+            linkPath="/drafts"
+            title="Go to my drafts"
+            isInternalLink
+            tertiary
+          >
+            Go to my <strong>drafts</strong>
+          </SecondaryButton>
           <SecondaryButton
             handleClick={() => signOut()}
             title="Sign out of my account"

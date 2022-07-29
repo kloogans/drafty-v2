@@ -11,6 +11,7 @@ export interface ButtonProps {
 
 export interface PrimaryButtonProps extends ButtonProps {
   isDisplay?: boolean
+  isCTA?: boolean
 }
 
 export interface SecondaryButtonProps extends ButtonProps {

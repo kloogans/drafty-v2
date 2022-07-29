@@ -1,12 +1,12 @@
 import { IconProps } from "./types"
 
-const Icon: React.FC<IconProps> = ({ url, className }) => {
+const Icon: React.FC<IconProps> = ({ url, className = "" }) => {
   return (
     <>
       <span
         aria-label={url.replace(".svg", "")}
         role="img"
-        className={`block icon-mask ${className || ""}`}
+        className={`block icon-mask ${className}`}
       />
       <style jsx>{`
         .icon-mask {

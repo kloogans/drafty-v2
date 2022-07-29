@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react"
 import { useTheme } from "next-themes"
 import { useGlobalState } from "src/state/hooks/useGlobalState"
 import Link from "next/link"
+import LogoIcon from "../logo/LogoIcon"
 const UserAvatar = dynamic(() => import("src/components/avatar/Avatar"))
 
 const NavbarContent = () => {
@@ -54,13 +55,23 @@ const NavbarContent = () => {
 
 const Navbar = () => {
   const { data: session, status } = useSession()
+  const [isHovering, setIsHovering] = useState(false)
   return (
     <nav className="fixed top-0 left-0 flex items-center justify-between px-5 w-full h-20">
       <Link href="/">
-        <a title="Go Home">
-          <Icon
+        <a
+          title="Go Home"
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+          {/* <Icon
             className={`w-8 h-8 bg-white`}
             url={`/assets/logo/tornado-4.svg`}
+          /> */}
+          <LogoIcon
+            className="w-8 h-8"
+            animated={isHovering}
+            showDebris={false}
           />
         </a>
       </Link>

@@ -87,12 +87,16 @@ button {
 
 @keyframes logo-animation {
   0% {
-    transform: translateX(15px) scaleX(1);
+    transform: translateX(0) scaleX(1);
   }
-  50% {
-    transform: translateX(8px) scaleX(0.93);
+
+  33.333% {
+    transform: translateX(4%) scaleX(0.93);
+  }
+  66.666% {
+    transform: translateX(-4%) scaleX(0.93);
   }
   100% {
-    transform: translateX(15px) scaleX(1);
+    transform: translateX(0) scaleX(1);
   }
 }
