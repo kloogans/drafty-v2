@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import Icon from "src/components/icon/Icon"
 import { useSession } from "next-auth/react"
-// import nightwind from "nightwind/helper"
 import { useTheme } from "next-themes"
 import { useGlobalState } from "src/state/hooks/useGlobalState"
 import Link from "next/link"
@@ -20,14 +19,6 @@ const NavbarContent = () => {
 
   return (
     <div className="flex items-center gap-4">
-      {/* {!loading && (
-        <button
-          className={`px-4 py-1 text-sm text-gray-700 bg-indigo-300 rounded-xl capitalize`}
-          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-        >
-          {theme}
-        </button>
-      )} */}
       <Link href="/new">
         <a className="px-4 py-2 text-sm border-2 border-bg-white text-white hover:bg-amber-400 hover:text-indigo-800 hover:border-amber-400 group rounded-2xl transition duration-200 ease-in-out">
           <span className="flex items-center justify-center h-full gap-1 scale-100 group-hover:scale-95">
@@ -52,7 +43,7 @@ const NavbarContent = () => {
           } transition duration-200 ease-in-out`}
         />
         <div
-          className={`absolute h-full w-full bg-amber-400 rounded-full top-0 left-1/2 -translate-x-1/2 z-0 scale-0 group-hover:scale-[1.1] group-focus:scale-[1.1] ${
+          className={`absolute h-full w-full bg-indigo-600 rounded-full top-0 left-1/2 -translate-x-1/2 z-0 scale-0 group-hover:scale-[1.1] group-focus:scale-[1.1] ${
             drawerIsOpen ? "scale-[1.1]" : ""
           } transition duration-200 ease-in-out`}
         />

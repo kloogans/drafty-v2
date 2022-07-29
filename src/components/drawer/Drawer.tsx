@@ -16,8 +16,10 @@ const MenuLink: React.FC<MenuProps> = ({ href, children, title, active }) => (
   <Link href={href}>
     <a
       title={title}
-      className={`w-full flex flex-col items-center justify-center px-4 py-5 hover:bg-zinc-700 rounded-2xl text-white hover:text-amber-400 focus:text-amber-400 ${
-        active ? "text-amber-400 bg-zinc-700" : ""
+      className={`w-full flex flex-col items-center justify-center px-4 py-5 text-white rounded-2xl ${
+        active
+          ? "text-zinc-800 bg-amber-400"
+          : "hover:bg-zinc-700 hover:text-amber-400 focus:text-amber-400"
       }`}
     >
       {children}
@@ -50,7 +52,7 @@ const Drawer = () => {
     <aside
       ref={drawerContainer}
       style={{ height: "calc(100% - 121px)" }}
-      className={`rounded-l-2xl fixed right-0 bg-zinc-800 scrollbar-zinc border-4 border-amber-400 border-r-0 top-[101px] shadow-md shadow-md w-[30rem] p-4 flex flex-col items-center justify-start transition duration-200 ease-in-out ${transformState} z-40 overflow-y-auto`}
+      className={`rounded-l-2xl fixed right-0 bg-zinc-800 scrollbar-zinc border-4 border-indigo-600 border-r-0 top-[101px] shadow-md shadow-md w-[30rem] p-4 flex flex-col items-center justify-start transition duration-200 ease-in-out ${transformState} z-40 overflow-y-auto`}
     >
       <div className={`w-full flex flex-col items-center justify-center`}>
         <div className="w-full flex flex-col items-center justify-center">

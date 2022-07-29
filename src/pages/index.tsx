@@ -13,7 +13,6 @@ const PrimaryHeading = dynamic(
 const Home: NextPage = () => {
   const { data: session, status } = useSession()
   const isAuthenticated = status !== "loading" && status === "authenticated"
-  console.log(session?.user)
   return (
     <Layout enforceAuth={false}>
       <div className="flex flex-col items-center justify-center translate-y-2">
@@ -41,19 +40,19 @@ const Home: NextPage = () => {
             <PrimaryButton
               title="Create a new draft"
               isInternalLink
-              isDisplay
               linkPath="/new"
             >
               <strong>Create</strong> a new draft
             </PrimaryButton>
-            <Link href="/drafts" passHref>
-              <a
-                title="Go to my drafts"
-                className="text-sm text-white hover:text-amber-300"
-              >
-                Go to my <strong>drafts</strong>
-              </a>
-            </Link>
+
+            <SecondaryButton
+              linkPath="/drafts"
+              title="Go to my drafts"
+              isInternalLink
+              tertiary
+            >
+              Go to my <strong>drafts</strong>
+            </SecondaryButton>
           </div>
           <SecondaryButton
             handleClick={() => signOut()}
