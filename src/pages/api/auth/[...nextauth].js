@@ -36,6 +36,21 @@ export default NextAuth({
         throw new Error(e.message)
       }
     },
+    async jwt({ token, user, account }) {
+      if (account.provider && !token[account.provider]) {
+        token[account.provider] = {}
+      }
+
+      if (account.accessToken) {
+        token[account.provider].accessToken = account.accessToken
+      }
+
+      if (account.refreshToken) {
+        token[account.provider].refreshToken = account.refreshToken
+      }
+
+      return token
+    },
     async session({ session, token }) {
       session.user.uid = token.sub
       return session

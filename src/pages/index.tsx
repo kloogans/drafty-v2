@@ -18,7 +18,7 @@ const Home: NextPage = () => {
       <div className="flex flex-col items-center justify-center translate-y-2">
         <LogoIcon className="w-20 h-20" animated showDebris />
 
-        <h1 className="title-font leading-none text-indigo-200 text-3xl lg:text-4xl -translate-y-2">
+        <h1 className="title-font leading-none text-indigo-200 text-3xl lg:text-4xl -translate-y-2 select-none">
           Drafty
         </h1>
       </div>

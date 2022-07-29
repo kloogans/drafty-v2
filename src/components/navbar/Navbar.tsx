@@ -64,12 +64,8 @@ const Navbar = () => {
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
-          {/* <Icon
-            className={`w-8 h-8 bg-white`}
-            url={`/assets/logo/tornado-4.svg`}
-          /> */}
           <LogoIcon
-            className="w-8 h-8"
+            className="w-10 h-10"
             animated={isHovering}
             showDebris={false}
           />
