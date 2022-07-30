@@ -23,7 +23,8 @@ export const initialDraftEditorState: DraftEditorContextProps = {
   highlightTextBox: () => {},
   unhighlightTextBox: () => {},
   setHighlightedTextBoxes: () => {},
-  setSections: () => {}
+  setSections: () => {},
+  dispatch: () => {}
 }
 
 export const DraftEditorContext = createContext<DraftEditorContextProps>(

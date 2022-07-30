@@ -5,6 +5,8 @@ import type { AppProps } from "next/app"
 import { ThemeProvider } from "next-themes"
 import "../styles/globals.css"
 import Drawer from "src/components/drawer/Drawer"
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 function Drafty({ Component, pageProps }: AppProps) {
   return (
@@ -14,6 +16,18 @@ function Drafty({ Component, pageProps }: AppProps) {
           <Navbar />
           <Component {...pageProps} />
           <Drawer />
+          <ToastContainer
+            position="top-center"
+            autoClose={1500}
+            hideProgressBar={true}
+            newestOnTop
+            closeOnClick
+            limit={1}
+            rtl={false}
+            draggable
+            pauseOnHover
+            closeButton={false}
+          />
         </ThemeProvider>
       </GlobalStateProvider>
     </SessionProvider>

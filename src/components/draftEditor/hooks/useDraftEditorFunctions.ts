@@ -1,3 +1,4 @@
+import { toast } from "react-toastify"
 import { useState } from "react"
 import { allTextBoxesHaveValues } from "../utils"
 import { useDraftEditorState } from "./useDraftEditorState"
@@ -6,18 +7,41 @@ import { uploadMediaFile } from "src/lib/media"
 
 export const useDraftEditorFunctions = () => {
   const [loading, setLoading] = useState(false)
+  const [twitterIsLoading, setTwitterIsLoading] = useState(false)
   const { data: session } = useSession()
   const { sections, setHighlightedTextBoxes, focusOnTextBox, addAttachment } =
     useDraftEditorState()
 
-  const handleSendDraftsAsTweet = () => {
+  const handleSendDraftsAsTweet = async (id: string) => {
     const textBoxes = allTextBoxesHaveValues(sections)
-    if (textBoxes.allHaveValues) {
-      setHighlightedTextBoxes([])
-      console.log("proceed to media check/upload/id assignment")
-    }
     if (textBoxes.emptyTextboxIds) {
       setHighlightedTextBoxes(textBoxes.emptyTextboxIds)
+      toast.error("Please fill in or remove empty text boxes.")
+      return
+    }
+    if (textBoxes.allHaveValues) {
+      try {
+        setTwitterIsLoading(true)
+        const response = await fetch(`/api/drafts/${id}/tweet`, {
+          method: "POST",
+          body: JSON.stringify({
+            sections
+          })
+        })
+        const { success, message } = await response.json()
+        if (!success) {
+          toast.error(message)
+          return
+        }
+
+        setHighlightedTextBoxes([])
+        toast.success("Tweet sent!")
+      } catch (error) {
+        console.log(error.message)
+        toast.error("Something went wrong. Please try again.")
+      } finally {
+        setTwitterIsLoading(false)
+      }
     }
   }
 
@@ -76,6 +100,7 @@ export const useDraftEditorFunctions = () => {
     focusOnNewTextBox,
     uploadMedia,
     saveDraft,
-    loading
+    loading,
+    twitterIsLoading
   }
 }

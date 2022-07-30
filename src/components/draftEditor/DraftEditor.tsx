@@ -12,6 +12,7 @@ import { DraftSectionAttachments } from "./DraftSectionAttachments"
 import { useRouter } from "next/router"
 import Skeleton from "react-loading-skeleton"
 import "react-loading-skeleton/dist/skeleton.css"
+import { toast } from "react-toastify"
 const DraftSectionControls = dynamic(() => import("./DraftSectionControls"))
 const DraftSectionTextBox = dynamic(() => import("./DraftSectionTextBox"), {
   suspense: true
@@ -23,10 +24,9 @@ const DraftEditor: React.FC<DraftEditorProps> = ({
   data,
   isNew = true
 }) => {
-  const { sections, highlightedTextBoxes, setSections, dispatch } =
-    useDraftEditorState()
+  const { sections, highlightedTextBoxes, setSections } = useDraftEditorState()
   const router = useRouter()
-  const { handleSendDraftsAsTweet, saveDraft, loading } =
+  const { handleSendDraftsAsTweet, saveDraft, loading, twitterIsLoading } =
     useDraftEditorFunctions()
 
   const lastTextBoxIsEmpty = sections[sections.length - 1].text.length < 1
@@ -44,11 +44,13 @@ const DraftEditor: React.FC<DraftEditorProps> = ({
   const handleSaveDraft = async () => {
     try {
       const response = await saveDraft(id)
-      if (response.success) {
+      if (response.success && router.pathname === "/new") {
         console.log("Draft saved")
         router.push(`${response.draftUrl}`)
       }
+      toast.success("Draft saved")
     } catch (e) {
+      toast.error(e.message)
       console.log(e.message)
     }
   }
@@ -126,11 +128,17 @@ const DraftEditor: React.FC<DraftEditorProps> = ({
         </form>
         <div className="grid grid-cols-2 gap-2 max-w-xs mx-auto">
           <PrimaryButton
-            handleClick={handleSendDraftsAsTweet}
+            handleClick={() =>
+              !twitterIsLoading && handleSendDraftsAsTweet(id as string)
+            }
             title="Tweet draft"
-            disabled={highlightedTextBoxes.length > 0 || !allHaveValues}
+            disabled={
+              highlightedTextBoxes.length > 0 ||
+              !allHaveValues ||
+              twitterIsLoading
+            }
           >
-            Tweet
+            {twitterIsLoading ? "Tweeting..." : "Tweet"}
           </PrimaryButton>
           <PrimaryButton
             disabled={!atleastOneTextBoxHasAValue || loading}

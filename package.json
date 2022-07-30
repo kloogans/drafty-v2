@@ -29,9 +29,11 @@
     "react-drag-drop-files": "^2.3.7",
     "react-image-file-resizer": "^0.4.8",
     "react-loading-skeleton": "^3.1.0",
+    "react-toastify": "^9.0.7",
     "react-use": "^17.4.0",
     "short-uuid": "^4.2.0",
-    "twitter-api-v2": "^1.12.3"
+    "twitter-api-v2": "^1.12.3",
+    "twitter-lite": "^1.1.0"
   },
   "devDependencies": {
     "@types/node": "18.0.3",
