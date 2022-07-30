@@ -1,3 +1,4 @@
+import { fileToBase64 } from "./fileToBase64"
 import { resizeImage } from "./resizeImage"
 
 export const uploadMediaFile = async (
@@ -6,7 +7,7 @@ export const uploadMediaFile = async (
   uid: string
 ) => {
   try {
-    const processedImage = await resizeImage(file)
+    const processedImage = await fileToBase64(file)
     const uploadResponse = await fetch("/api/drafts/images/upload", {
       method: "POST",
       body: JSON.stringify({
@@ -17,8 +18,9 @@ export const uploadMediaFile = async (
       })
     })
     const res = await uploadResponse.json()
-    return res.url
+    return res.s3ImageUrl
   } catch (e) {
+    console.log(e.message)
     return e.message
   }
 }

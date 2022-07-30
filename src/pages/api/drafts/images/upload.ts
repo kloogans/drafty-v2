@@ -60,3 +60,11 @@ export default async function handler(
 
   res.status(500).json({ success: false, message: s3Response.message })
 }
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "15mb"
+    }
+  }
+}

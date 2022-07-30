@@ -65,7 +65,8 @@ export const useDraftEditorFunctions = () => {
           draftId,
           session?.user?.uid as string
         )
-        addAttachment(draftSectionId, url)
+
+        addAttachment(draftSectionId, await url)
       } catch (e) {
         console.log(e.message)
       } finally {
