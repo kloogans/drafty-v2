@@ -15,7 +15,6 @@
     "aws-sdk": "^2.1176.0",
     "buffer": "^6.0.3",
     "dayjs": "^1.11.3",
-    "image-to-base64": "^2.2.0",
     "mongo-image-converter": "^1.0.2",
     "mongodb": "^4.7.0",
     "mongoose": "^6.4.4",
@@ -29,11 +28,11 @@
     "react-drag-drop-files": "^2.3.7",
     "react-image-file-resizer": "^0.4.8",
     "react-loading-skeleton": "^3.1.0",
+    "react-rewards": "^2.0.4",
     "react-toastify": "^9.0.7",
     "react-use": "^17.4.0",
     "short-uuid": "^4.2.0",
-    "twitter-api-v2": "^1.12.3",
-    "twitter-lite": "^1.1.0"
+    "twitter-api-v2": "^1.12.3"
   },
   "devDependencies": {
     "@types/node": "18.0.3",

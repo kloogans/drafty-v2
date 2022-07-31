@@ -59,6 +59,35 @@ button {
   animation-fill-mode: forwards;
 }
 
+.twitter-loading-animation {
+  animation: hashtag 0.5s linear infinite;
+  /* background: linear-gradient(
+    90deg,
+    #31278100 0%,
+    #31278130 25%,
+    #312781 40%,
+    #818cf8 50%,
+    #312781 60%,
+    #31278130 75%,
+    #31278100 100%
+  );
+  background-size: 200% auto; */
+}
+
+@keyframes hashtag {
+  from {
+    transform: scaleY(1);
+  }
+
+  50% {
+    transform: scaleY(0.9);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
 @keyframes logoDebris {
   0% {
     transform: translateY(0) rotate(0deg);
@@ -104,5 +133,79 @@ button {
   }
   100% {
     transform: translateX(0) scaleX(1);
+  }
+}
+
+@keyframes jump {
+  from {
+    transform-origin: bottom center;
+    transform: translateY(0) scaleY(1);
+  }
+
+  15% {
+    transform: translateY(0) scaleY(0.8);
+  }
+
+  20% {
+    transform: translateY(0) scaleY(1);
+  }
+
+  25% {
+    transform: translateY(-25px) scaleY(1);
+  }
+
+  35% {
+    transform: translateY(0) scaleY(1);
+  }
+
+  to {
+    transform-origin: bottom center;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes twitterLoadingRight {
+  0% {
+    transform: translate(0) scale(1);
+    opacity: 1;
+  }
+  33.333% {
+    transform: translate(50%) scale(0.8);
+  }
+
+  50% {
+    transform: translate(100%) scale(1);
+    opacity: 0.4;
+  }
+
+  66.666% {
+    transform: translate(50%) scale(-1.2, 1.2);
+  }
+  100% {
+    transform: translate(0) scale(-1, 1);
+    opacity: 1;
+  }
+}
+
+@keyframes twitterLoadingLeft {
+  0% {
+    transform: translate(0) scale(1);
+    opacity: 1;
+  }
+  33.333% {
+    transform: translate(6rem) scale(0.9);
+  }
+
+  50% {
+    transform: translate(12rem) scale(-0.8, 0.8);
+    opacity: 0.4;
+  }
+
+  66.666% {
+    transform: translate(6rem) scale(-0.9, 1);
+  }
+  100% {
+    transform: translate(0) scale(-1, 1);
+    opacity: 1;
   }
 }

@@ -20,9 +20,7 @@ const NewDraftPage: React.FC<{ id: string }> = ({ id }) => {
         <Head>
           <title>New Draft</title>
         </Head>
-        <PrimaryHeading className="mb-4">
-          Create a new <strong>draft</strong>
-        </PrimaryHeading>
+
         <DraftEditor id={id} />
       </Layout>
     </DraftEditorProvider>

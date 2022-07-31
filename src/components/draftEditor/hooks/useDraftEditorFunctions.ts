@@ -8,6 +8,7 @@ import { uploadMediaFile } from "src/lib/media"
 export const useDraftEditorFunctions = () => {
   const [loading, setLoading] = useState(false)
   const [twitterIsLoading, setTwitterIsLoading] = useState(false)
+  const [tweetSent, setTweetSent] = useState(false)
   const { data: session } = useSession()
   const { sections, setHighlightedTextBoxes, focusOnTextBox, addAttachment } =
     useDraftEditorState()
@@ -36,6 +37,7 @@ export const useDraftEditorFunctions = () => {
 
         setHighlightedTextBoxes([])
         toast.success("Tweet sent!")
+        setTweetSent(true)
       } catch (error) {
         console.log(error.message)
         toast.error("Something went wrong. Please try again.")
@@ -102,6 +104,7 @@ export const useDraftEditorFunctions = () => {
     uploadMedia,
     saveDraft,
     loading,
-    twitterIsLoading
+    twitterIsLoading,
+    tweetSent
   }
 }

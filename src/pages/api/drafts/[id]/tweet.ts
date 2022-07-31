@@ -7,9 +7,7 @@ import { DraftSection } from "src/components/draftEditor/types"
 import { ApiResponse } from "src/types/api"
 import { enforceHttpMethodsAndAuthentication } from "src/lib/api"
 import { getToken } from "next-auth/jwt"
-import imageToBase64 from "image-to-base64/browser"
 const ACCEPTED_METHODS = ["POST"]
-import Twitter from "twitter-lite"
 
 type MediaProps = {
   media_ids: string[]
@@ -44,15 +42,6 @@ export default async function handler(
   const accessSecret = token?.refreshToken as string
 
   const { sections } = JSON.parse(body)
-  const incomingSections = [...sections]
-
-  // const client = new Twitter({
-  //   subdomain: "api",
-  //   consumer_key: process.env.TWITTER_API_KEY as string,
-  //   consumer_secret: process.env.TWITTER_API_SECRET as string,
-  //   access_token_key: accessToken,
-  //   access_token_secret: accessSecret
-  // })
 
   const twitter = new TwitterApi({
     appKey: process.env.TWITTER_API_KEY as string,
@@ -62,7 +51,8 @@ export default async function handler(
   })
 
   const uploadAttachmentsAndReceiveMediaIds = async (
-    attachments: string[]
+    attachments: string[],
+    sectionId: number
   ): Promise<string[]> => {
     const mediaIds = []
 
@@ -78,7 +68,10 @@ export default async function handler(
           })
         )
       } catch (e) {
-        console.log("Error in image upload: ", e.data.errors)
+        res.status(500).json({
+          success: false,
+          message: `Error uploading image in section ${sectionId}: ${e.message}`
+        })
       }
     }
 
@@ -88,30 +81,30 @@ export default async function handler(
   try {
     const thread: TweetThreadObject[] = []
     const tweetThread = async (sections: DraftSection[]) => {
-      let lastTweetID = ""
       for (const section of sections) {
-        console.log(`uploading media for section ${section.id}`)
         const media = await uploadAttachmentsAndReceiveMediaIds(
-          section.attachments
+          section.attachments,
+          section.id
         )
-        console.log(`media uploaded for section ${section.id}`)
 
-        section.attachments.length > 0
-          ? thread.push({
-              text: section.text,
-              media: { media_ids: media }
-            })
-          : thread.push({ text: section.text })
+        if (section.attachments.length > 0) {
+          thread.push({
+            text: section.text,
+            media: { media_ids: media }
+          })
+        } else {
+          thread.push({ text: section.text })
+        }
 
         const isLastSection = sections.indexOf(section) === sections.length - 1
         if (isLastSection) {
           try {
-            console.log("tweeting thread with attachments...")
             await twitter.v2.tweetThread(thread)
-            console.log("tweet sent √")
           } catch (e) {
-            console.log("tweet thread error: ")
-            console.log(e.data.errors)
+            res.status(500).json({
+              success: false,
+              message: `Error tweeting thread: ${e.message}`
+            })
           }
         }
       }
@@ -123,7 +116,6 @@ export default async function handler(
 
     res.status(200).json({ success: true })
   } catch (error) {
-    // console.log(error)
     res.status(500).json({
       success: false,
       message: `twitter response error: ${error.message}`

@@ -18,7 +18,8 @@ const Layout: React.FC<LayoutProps> = ({
 
   const mainClass =
     "w-full h-full min-h-screen flex flex-col items-center justify-center bg-indigo-900"
-  const innerClass = "w-full h-full flex flex-col items-center justify-center"
+  const innerClass =
+    "w-full h-full flex flex-col items-center justify-center relative"
 
   if (status === "loading") {
     return (
