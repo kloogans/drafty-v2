@@ -209,3 +209,14 @@ button {
     opacity: 1;
   }
 }
+
+.tornado-animation {
+  /* animation: dash 3s linear infinite; */
+  stroke-dashoffset: 4;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 52;
+  }
+}

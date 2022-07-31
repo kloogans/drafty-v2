@@ -88,7 +88,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({
       <div className={` w-full relative `}>
         <div
           className={`${
-            twitterIsLoading ? "" : "hidden"
+            twitterIsLoading ? "scale-100" : "scale-0"
           } w-full h-full flex flex-col items-center justify-center transition duration-200 ease-in-out absolute top-0 left-0 min-h-[70vh] animate-fade-in`}
         >
           {/* <LogoIcon className="w-20 h-20" animated showDebris /> */}
@@ -111,7 +111,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({
         />
         <div
           className={`${
-            tweetSent ? "" : "hidden"
+            tweetSent ? "scale-100" : "scale-0"
           } w-full h-full flex flex-col items-center justify-center transition duration-200 ease-in-out absolute z-10 top-0 left-0 min-h-[70vh] animate-fade-in`}
         >
           {/* <LogoIcon className="w-20 h-20" animated showDebris /> */}
