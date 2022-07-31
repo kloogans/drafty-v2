@@ -1,9 +1,23 @@
 import { toast } from "react-toastify"
+import { promisify } from "util"
+import fs from "fs"
 import { useState } from "react"
 import { allTextBoxesHaveValues } from "../utils"
 import { useDraftEditorState } from "./useDraftEditorState"
 import { useSession } from "next-auth/react"
 import { uploadMediaFile } from "src/lib/media"
+import convert from "heic-convert"
+
+// const convertHeicToJpeg = async (file: File) => {
+//   const inputBuffer = promisify(fs.readFile)(file)
+//   const outputBuffer = await convert({
+//     buffer: inputBuffer, // the HEIC file buffer
+//     format: 'JPEG',      // output format
+//     quality: 1           // the jpeg compression quality, between 0 and 1
+//   });
+
+//   await promisify(fs.writeFile)('./result.jpg', outputBuffer)
+// }
 
 export const useDraftEditorFunctions = () => {
   const [loading, setLoading] = useState(false)
@@ -58,6 +72,28 @@ export const useDraftEditorFunctions = () => {
     draftId: string,
     draftSectionId: number
   ) => {
+    if (!file.type.includes("image")) {
+      toast.error("File type must be an image.")
+      return
+    }
+    if (file.size > 5000000) {
+      toast.error("Image is too large. 5MB max.")
+      return
+    }
+    // if file extension is HEIC, convert to JPEG
+    // if (file.name.includes(".HEIC")) {
+    //   const convertedFile = await convertHeicToJpeg(file)
+    //   if (!convertedFile) {
+    //     toast.error("Something went wrong. Please try again.")
+    //     return
+    //   }
+    //   file = convertedFile
+    // }
+    if (!file.name.endsWith(".jpg") && !file.name.endsWith(".png")) {
+      toast.error("File type must be jpg or png.")
+      return
+    }
+
     setLoading(true)
     if (session?.user) {
       try {

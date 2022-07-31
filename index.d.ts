@@ -5,8 +5,7 @@ declare module "mongo-image-converter"
 declare module "multer"
 declare module "multer-s3"
 declare module "nightwind/helper"
-declare module "image-to-base64"
-declare module "image-to-base64/browser"
+declare module "heic-convert"
 
 interface Window {
   gtag?: any

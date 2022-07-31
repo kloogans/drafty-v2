@@ -30,6 +30,7 @@ export interface DraftSecionTextBoxProps {
 export interface DraftSectionControlsProps {
   show: boolean
   id: number
+  draftId: string
   numberOfAssets: number
   lastTextBoxIsEmpty: boolean
   isFirstTextBox: boolean

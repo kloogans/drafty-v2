@@ -24,6 +24,7 @@ const Controls: React.FC<{
 const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
   show,
   id,
+  draftId,
   lastTextBoxIsEmpty,
   isFirstTextBox,
   isLastTextBox,
@@ -38,6 +39,10 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
   const openFileBrowser = (ev: any) => {
     ev.stopPropagation()
     inputRef.current?.click()
+  }
+
+  const handleUploadFile = async (file: File) => {
+    await uploadMedia(file, draftId, id)
   }
 
   return (
@@ -74,8 +79,7 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
         <input
           onClick={openFileBrowser}
           onChange={(event) =>
-            //@ts-ignore
-            uploadMediaFileLocally(event?.target?.files[0], id)
+            event.target.files && handleUploadFile(event.target.files[0])
           }
           accept={"image/png, image/jpeg, image/jpg, image/gif"}
           ref={inputRef}
@@ -87,7 +91,22 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
         />
         <Icon
           url={`/assets/icons/image.svg`}
-          className="w-6 h-6 bg-white group-hover:bg-pink-400"
+          className="w-6 h-6 bg-white group-hover:bg-amber-400"
+        />
+      </SecondaryButton>
+
+      <SecondaryButton
+        handleClick={(e) => {
+          console.log("browse gif")
+        }}
+        title="Add a gif"
+        // disabled={numberOfAssets >= 4}
+        tertiary
+        className={`mr-1 group`}
+      >
+        <Icon
+          url={`/assets/icons/gif.svg`}
+          className="w-6 h-6 bg-white group-hover:bg-amber-400"
         />
       </SecondaryButton>
 

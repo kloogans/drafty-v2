@@ -5,6 +5,7 @@ import { PrimaryButton, SecondaryButton } from "src/components/buttons"
 import Icon from "src/components/icon/Icon"
 import LogoIcon from "src/components/logo/LogoIcon"
 import Link from "next/link"
+import Head from "next/head"
 
 const Layout = dynamic(() => import("src/components/layout/Layout"))
 const PrimaryHeading = dynamic(
@@ -15,6 +16,9 @@ const Home: NextPage = () => {
   const isAuthenticated = status !== "loading" && status === "authenticated"
   return (
     <Layout enforceAuth={false}>
+      <Head>
+        <title>Drafty - Making Twitter drafts a breeze</title>
+      </Head>
       <div className="flex flex-col items-center justify-center translate-y-2">
         <LogoIcon className="w-20 h-20" animated showDebris />
 

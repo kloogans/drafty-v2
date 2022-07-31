@@ -201,6 +201,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({
                   <DraftSectionControls
                     show={value.focused}
                     id={value.id}
+                    draftId={id as string}
                     lastTextBoxIsEmpty={lastTextBoxIsEmpty}
                     isFirstTextBox={isFirstTextBox}
                     isLastTextBox={isLastTextBox}
