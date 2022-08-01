@@ -9,6 +9,7 @@ import React from "react"
 import { useDraftEditorState } from "./hooks/useDraftEditorState"
 import { useDraftEditorFunctions } from "./hooks/useDraftEditorFunctions"
 import { DraftSection } from "./types"
+import Image from "next/image"
 
 export const DraftSectionAttachments: React.FC<
   DraftSectionAttachmentsProps
@@ -45,7 +46,7 @@ export const DraftSectionAttachments: React.FC<
               onClick={() => handleRemoveAttachment(index)}
               className={`${
                 !sectionIsFocused ? "hidden" : ""
-              } absolute -top-3 -right-3 p-1 bg-zinc-800 rounded-full group`}
+              } absolute -top-3 -right-3 p-1 bg-zinc-800 rounded-full group z-10`}
               title="Remove image"
             >
               {/* svg close icon */}
@@ -62,10 +63,12 @@ export const DraftSectionAttachments: React.FC<
                 attachments.length > 1 ? "w-28 h-28" : "w-56 h-56"
               } rounded-2xl overflow-hidden`}
             >
-              <img
-                className="w-full h-full object-cover"
+              <Image
+                loader={() => attachment}
                 src={attachment}
-                alt="attachment"
+                layout="fill"
+                alt="Attachment"
+                className="w-full h-full object-cover rounded-2xl"
               />
             </div>
           </li>

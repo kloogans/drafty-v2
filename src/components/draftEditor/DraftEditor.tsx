@@ -64,8 +64,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({
     try {
       const response = await saveDraft(id)
       if (response.success && router.pathname === "/new") {
-        console.log("Draft saved")
-        router.push(`${response.draftUrl}`)
+        router.push(`${response.draftUrl}`, undefined, { shallow: true })
       }
       toast.success("Draft saved")
     } catch (e) {
@@ -150,7 +149,11 @@ const DraftEditor: React.FC<DraftEditorProps> = ({
             twitterIsLoading || tweetSent ? "opacity-0" : "opacity-100"
           } transition duration-200 ease-in-out`}
         >
-          <PrimaryHeading className="mb-4 text-center">
+          <PrimaryHeading
+            className={`mb-4 text-center ${
+              router.pathname === "/new" ? "" : "hidden"
+            }`}
+          >
             Create a new <strong>draft</strong>
           </PrimaryHeading>
           <form className="w-full h-full px-2 md:px-0 max-w-full md:max-w-xl mx-auto flex flex-col items-center justify-center mb-4">

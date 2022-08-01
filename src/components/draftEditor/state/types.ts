@@ -10,6 +10,7 @@ export interface DraftEditorContextProps {
   changeText: (id: number, text: string) => void
   changeAttachments: (id: number, attachments: string[]) => void
   addAttachment: (id: number, attachment: string) => void
+  editAttachments: (id: number, attachments: string[]) => void
   removeAttachment: (sectionId: number, attachmentIndex: number) => void
   setCategory: (category: string) => void
   highlightTextBox: (id: number) => void

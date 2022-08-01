@@ -17,7 +17,7 @@ const Layout: React.FC<LayoutProps> = ({
   const isAuthenticated = status !== "loading" && status === "authenticated"
 
   const mainClass =
-    "w-full h-full min-h-screen flex flex-col items-center justify-center bg-indigo-900"
+    "w-full h-full min-h-screen flex flex-col items-center justify-center bg-indigo-900 overflow-x-hidden"
   const innerClass =
     "w-full h-full flex flex-col items-center justify-center relative"
 
@@ -38,7 +38,7 @@ const Layout: React.FC<LayoutProps> = ({
   }
 
   const handleConfirm = async () => {
-    await popoverConfirmAction()
+    popoverConfirmAction()
     togglePopover()
   }
 

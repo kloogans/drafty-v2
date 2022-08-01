@@ -4,6 +4,7 @@ import { useDraftEditorState } from "./hooks/useDraftEditorState"
 import { useDraftEditorFunctions } from "./hooks/useDraftEditorFunctions"
 import { DraftSecionTextBoxProps } from "./types"
 import { MAX_CHARACTERS } from "./utils"
+import LoadingRing from "../loader/LoadingRing"
 
 const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   id,
@@ -17,7 +18,8 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   const { highlightedTextBoxes, sections, focusOnTextBox, changeText } =
     useDraftEditorState()
 
-  const { handleSendDraftsAsTweet, uploadMedia } = useDraftEditorFunctions()
+  const { handleSendDraftsAsTweet, uploadMedia, loading, imageUploadLoading } =
+    useDraftEditorFunctions()
 
   const isLastTextBox = id === sections[sections.length - 1].id
   const isHighlighted = highlightedTextBoxes.includes(id)
@@ -25,9 +27,9 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
   const hasMaxAttachments = attachments.length >= 4
   const focusedStyle = `${
     hasAttachments ? "min-h-[7.5rem]" : "min-h-[10.5rem]"
-  } pb-[56px] !text-white`
+  } md:pb-[56px] !text-white`
   const highlightedStyle = `!border-rose-400 !border-solid`
-  const paddingStyle = `${focused && hasAttachments ? "pb-12 md:pb-4" : "pb-4"}`
+  const paddingStyle = `${focused && hasAttachments ? "pb-12" : "pb-4"}`
 
   const borderStyle = `border-2 border-white/30 border-dashed rounded-2xl ${
     focused ? "!border-white !border-solid bg-indigo-800" : "bg-indigo-900 "
@@ -58,10 +60,17 @@ const DraftSectionTextBox: React.FC<DraftSecionTextBoxProps> = ({
       handleChange={(file: File) =>
         !hasMaxAttachments && uploadMedia(file, draftId, id)
       }
-      className={`${borderStyle} ${paddingStyle} ${radius} transition-[all] duration-200 ease-in-out`}
+      className={`${borderStyle} ${paddingStyle} ${radius} transition-[all] duration-200 ease-in-out relative`}
     >
+      <div
+        className={`absolute top-4 right-4 ${
+          loading || imageUploadLoading ? "" : "hidden"
+        }`}
+      >
+        <LoadingRing size={6} />
+      </div>
       <textarea
-        className={`w-full text-2xl p-4 outline-none bg-transparent flex resize-none transition duration-200 ease-in-out ${
+        className={`w-full text-lg md:text-2xl p-4 outline-none bg-transparent flex resize-none transition duration-200 ease-in-out ${
           focused ? focusedStyle : "min-h-[7.5rem] text-gray-500"
         }`}
         style={{ transitionProperty: "all" }}

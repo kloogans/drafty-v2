@@ -220,3 +220,27 @@ button {
     stroke-dashoffset: 52;
   }
 }
+
+.loading {
+  animation: turn 1s linear infinite;
+}
+.loading-ring {
+  animation: elastic 0.8s linear infinite alternate;
+  display: block;
+}
+@keyframes turn {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes elastic {
+  0% {
+    stroke-dashoffset: -221;
+  }
+  100% {
+    stroke-dashoffset: -316.05;
+  }
+}

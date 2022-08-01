@@ -1,3 +1,4 @@
+import { fileToBase64 } from "src/lib/media/fileToBase64"
 import { toast } from "react-toastify"
 import { promisify } from "util"
 import fs from "fs"
@@ -21,11 +22,17 @@ import convert from "heic-convert"
 
 export const useDraftEditorFunctions = () => {
   const [loading, setLoading] = useState(false)
+  const [imageUploadLoading, setImageUploadLoading] = useState(false)
   const [twitterIsLoading, setTwitterIsLoading] = useState(false)
   const [tweetSent, setTweetSent] = useState(false)
   const { data: session } = useSession()
-  const { sections, setHighlightedTextBoxes, focusOnTextBox, addAttachment } =
-    useDraftEditorState()
+  const {
+    sections,
+    setHighlightedTextBoxes,
+    focusOnTextBox,
+    addAttachment,
+    editAttachments
+  } = useDraftEditorState()
 
   const handleSendDraftsAsTweet = async (id: string) => {
     const textBoxes = allTextBoxesHaveValues(sections)
@@ -94,21 +101,31 @@ export const useDraftEditorFunctions = () => {
       return
     }
 
-    setLoading(true)
+    // const base64Image = await fileToBase64(file)
+    const currentSectionAttachments = sections[draftSectionId].attachments
+
+    // addAttachment(draftSectionId, base64Image)
+
+    setImageUploadLoading(true)
     if (session?.user) {
       try {
-        //@ts-ignore
-        const url = await uploadMediaFile(
+        const uploadResponse = await uploadMediaFile(
           file,
           draftId,
           session?.user?.uid as string
         )
 
-        addAttachment(draftSectionId, await url)
+        if (uploadResponse.success) {
+          editAttachments(draftSectionId, [
+            ...currentSectionAttachments,
+            uploadResponse.url as string
+          ])
+        }
       } catch (e) {
         console.log(e.message)
+        toast.error("Something went wrong. Please try again.")
       } finally {
-        setLoading(false)
+        setImageUploadLoading(false)
       }
     }
   }
@@ -129,6 +146,7 @@ export const useDraftEditorFunctions = () => {
       return json
     } catch (e) {
       console.log(e.message)
+      toast.error("Something went wrong. Please try again.")
     } finally {
       setLoading(false)
     }
@@ -141,6 +159,7 @@ export const useDraftEditorFunctions = () => {
     saveDraft,
     loading,
     twitterIsLoading,
-    tweetSent
+    tweetSent,
+    imageUploadLoading
   }
 }

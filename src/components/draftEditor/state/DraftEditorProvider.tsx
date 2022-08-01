@@ -26,6 +26,9 @@ export const DraftEditorProvider: React.FC<{ children: React.ReactNode }> = ({
       dispatch({ type: "CHANGE_ATTACHMENTS", id, attachments }),
     addAttachment: (id: number, attachment: string) =>
       dispatch({ type: "ADD_ATTACHMENT", id, attachment }),
+    editAttachments: (id: number, attachments: string[]) =>
+      dispatch({ type: "EDIT_ATTACHMENTS", id, attachments }),
+
     removeAttachment: (sectionId: number, attachmentIndex: number) =>
       dispatch({ type: "REMOVE_ATTACHMENT", sectionId, attachmentIndex }),
     setCategory: (category: string) =>

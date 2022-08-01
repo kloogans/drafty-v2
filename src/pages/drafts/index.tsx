@@ -89,11 +89,11 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
       <PrimaryHeading className="mb-5">
         Your <strong>drafts</strong>
       </PrimaryHeading>
-      <div ref={listRef} className="w-full max-w-xl">
+      <div ref={listRef} className="w-full max-w-xl px-2">
         {drafts.map((draft, index) => {
           return (
             <div
-              className="relative w-full max-w-lg border-2 border-white rounded-2xl py-6 px-4 mb-2 hover:bg-indigo-700 transition duration-200 ease-in-out"
+              className="relative w-full max-w-[85%] md:max-w-lg border-2 border-white rounded-2xl py-6 px-4 mb-2 hover:bg-indigo-700 transition duration-200 ease-in-out"
               key={draft.id}
             >
               <Link href={`/drafts/${draft.id}`}>

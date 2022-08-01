@@ -86,7 +86,7 @@ export const draftEditorReducer = (
           return section
         })
       }
-    case "CHANGE_ATTACHMENTS":
+    case "EDIT_ATTACHMENTS":
       return {
         ...state,
         sections: state.sections.map((section: DraftSection) => {

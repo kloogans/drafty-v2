@@ -18,6 +18,7 @@ export const initialDraftEditorState: DraftEditorContextProps = {
   changeText: () => {},
   changeAttachments: () => {},
   addAttachment: () => {},
+  editAttachments: () => {},
   removeAttachment: () => {},
   setCategory: () => {},
   highlightTextBox: () => {},
