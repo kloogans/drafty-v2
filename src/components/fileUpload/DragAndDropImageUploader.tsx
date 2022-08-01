@@ -34,7 +34,7 @@ const DragAndDropImageUploader: React.FC<DragAndDropImageUploaderProps> = ({
       classes={`w-full flex flex-col items-center cursor-pointer justify-center overflow-hidden ${
         !dropZoneIsHovering
           ? "border-indigo-500"
-          : "bg-transparent dark:bg-zinc-800 border-zinc-400 hover:border-indigo-500"
+          : "bg-transparent border-zinc-400 hover:border-indigo-500"
       } ${className}`}
     >
       {children}

@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from "next/document"
-import nightwind from "nightwind/helper"
 class DraftyDocument extends Document {
   render() {
     return (
@@ -43,9 +42,6 @@ class DraftyDocument extends Document {
             name="twitter:image"
             content={`https://littlebuilds.s3.amazonaws.com/lb_seo_image.jpg`}
           />
-          <script
-            dangerouslySetInnerHTML={{ __html: nightwind.init() }}
-          ></script>
         </Head>
         <body>
           <Main />
