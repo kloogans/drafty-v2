@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document"
+import Script from "next/script"
 class DraftyDocument extends Document {
   render() {
     return (
@@ -42,6 +43,11 @@ class DraftyDocument extends Document {
             name="twitter:image"
             content={`https://littlebuilds.s3.amazonaws.com/lb_seo_image.jpg`}
           />
+          <Script id="google-analytics" strategy="afterInteractive">
+            window.dataLayer = window.dataLayer || []; function gtag()
+            {window.dataLayer.push(arguments)}
+            gtag('js', new Date()); gtag('config', 'G-V796PQ2QZD');
+          </Script>
         </Head>
         <body>
           <Main />

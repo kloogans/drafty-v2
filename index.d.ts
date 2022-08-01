@@ -9,4 +9,5 @@ declare module "heic-convert"
 
 interface Window {
   gtag?: any
+  dataLayer?: any
 }
