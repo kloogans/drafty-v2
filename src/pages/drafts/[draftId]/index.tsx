@@ -25,7 +25,7 @@ const DraftByIdPage: React.FC<DraftPage> = ({ draft }) => {
   if (draft == null) {
     return (
       <Layout enforceAuth>
-        <PrimaryHeading>Nothing's here!</PrimaryHeading>
+        <PrimaryHeading>Nothing&apos;s here!</PrimaryHeading>
       </Layout>
     )
   }
