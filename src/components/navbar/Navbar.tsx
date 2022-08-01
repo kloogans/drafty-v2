@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import Icon from "src/components/icon/Icon"
 import { useSession } from "next-auth/react"
-import { useTheme } from "next-themes"
 import { useGlobalState } from "src/state/hooks/useGlobalState"
 import Link from "next/link"
 import LogoIcon from "../logo/LogoIcon"
@@ -11,7 +10,6 @@ const UserAvatar = dynamic(() => import("src/components/avatar/Avatar"))
 const NavbarContent = () => {
   const { data: session, status } = useSession()
   const { toggleDrawer, drawerIsOpen } = useGlobalState()
-  const { theme, setTheme } = useTheme()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
