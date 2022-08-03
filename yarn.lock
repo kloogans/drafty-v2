@@ -2647,6 +2647,11 @@ react-rewards@^2.0.4:
   resolved "https://registry.yarnpkg.com/react-rewards/-/react-rewards-2.0.4.tgz#617f6c1bb591f74bb0e0455cc6ff355ee6d36665"
   integrity sha512-Lw7gIhD8yPDzC6boaVmcXwuTHRLSLAdqB3kZc+29YWvdHWsuc3fdAZlxI8Cm8fvD8fhP+3JkZBtzX224czw15w==
 
+react-tenor@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-tenor/-/react-tenor-2.2.0.tgz#98326868cc199165bacb911abdbbb48306232b6f"
+  integrity sha512-hs0KomduflTLU05fvKAtrf9f/aAj3wN2kPF2cl5cAOFPkhuaVJuWLNxRSAQN1m+aKHinujEQZ1fXp+gL1KgYhg==
+
 react-toastify@^9.0.7:
   version "9.0.7"
   resolved "https://registry.yarnpkg.com/react-toastify/-/react-toastify-9.0.7.tgz#4e6c6e1ae66eb587accc4a7704fb76ff88ab23eb"

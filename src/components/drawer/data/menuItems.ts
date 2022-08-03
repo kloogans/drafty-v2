@@ -7,12 +7,12 @@ export const menuItems = [
   {
     href: "/new",
     title: "Create a New Draft",
-    children: "Create a New Draft"
+    children: "Create a new draft"
   },
   {
     href: "/drafts",
     title: "My Drafts",
-    children: "My Drafts"
+    children: "My drafts"
   },
   {
     href: "/settings",

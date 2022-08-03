@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import Icon from "src/components/icon/Icon"
-import { useSession } from "next-auth/react"
+import { signIn, useSession } from "next-auth/react"
 import { useGlobalState } from "src/state/hooks/useGlobalState"
 import Link from "next/link"
 import LogoIcon from "../logo/LogoIcon"
@@ -15,6 +15,26 @@ const NavbarContent = () => {
   useEffect(() => {
     setLoading(false)
   }, [])
+
+  if (status !== "authenticated") {
+    return (
+      <div className="flex items-center justify-center gap-4">
+        <button
+          onClick={() => signIn()}
+          title="Sign in with Twitter"
+          className="px-4 py-2 text-sm border-2 border-bg-white text-white hover:bg-amber-400 hover:text-indigo-800 hover:border-amber-400 group rounded-2xl transition duration-200 ease-in-out"
+        >
+          <span className="flex items-center justify-center h-full gap-1 scale-100 group-hover:scale-95">
+            <Icon
+              url="/assets/icons/twitter.svg"
+              className="w-4 h-4 bg-white group-hover:bg-indigo-800 transition duration-200 ease-in-out"
+            />
+            Sign in
+          </span>
+        </button>
+      </div>
+    )
+  }
 
   return (
     <div className="flex items-center gap-4">
@@ -62,11 +82,7 @@ const Navbar = () => {
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
-          <LogoIcon
-            className="w-10 h-10"
-            animated={isHovering}
-            showDebris={false}
-          />
+          <LogoIcon className="w-10 h-10 bg-white" />
         </a>
       </Link>
       <NavbarContent />

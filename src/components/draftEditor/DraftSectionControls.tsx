@@ -95,7 +95,7 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
         />
       </SecondaryButton>
 
-      <SecondaryButton
+      {/* <SecondaryButton
         handleClick={(e) => {
           console.log("browse gif")
         }}
@@ -108,7 +108,7 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
           url={`/assets/icons/gif.svg`}
           className="w-6 h-6 bg-white group-hover:bg-amber-400"
         />
-      </SecondaryButton>
+      </SecondaryButton> */}
 
       <SecondaryButton
         handleClick={(e) => {

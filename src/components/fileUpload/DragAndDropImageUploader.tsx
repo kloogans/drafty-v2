@@ -3,7 +3,7 @@ import { useState } from "react"
 import { DragAndDropImageUploaderProps } from "./types"
 const FileUploader = dynamic(() => import("./FileUploader/FileUploader"))
 
-const ACCEPTED_FILE_TYPES = ["JPG", "JPEG", "PNG", "GIF", "HEIC"]
+const ACCEPTED_FILE_TYPES = ["JPG", "JPEG", "PNG", "GIF"]
 const MAX_UPLOAD_SIZE = 5
 
 const DragAndDropImageUploader: React.FC<DragAndDropImageUploaderProps> = ({

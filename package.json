@@ -34,6 +34,7 @@
     "react-image-file-resizer": "^0.4.8",
     "react-loading-skeleton": "^3.1.0",
     "react-rewards": "^2.0.4",
+    "react-tenor": "^2.2.0",
     "react-toastify": "^9.0.7",
     "react-use": "^17.4.0",
     "short-uuid": "^4.2.0",

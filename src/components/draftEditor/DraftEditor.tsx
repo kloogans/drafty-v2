@@ -17,6 +17,8 @@ import LogoIcon from "../logo/LogoIcon"
 import { useReward } from "react-rewards"
 import Icon from "../icon/Icon"
 import PrimaryHeading from "../headings/PrimaryHeading"
+import Tenor from "react-tenor"
+import "react-tenor/dist/styles.css"
 const DraftSectionControls = dynamic(() => import("./DraftSectionControls"))
 const DraftSectionTextBox = dynamic(() => import("./DraftSectionTextBox"), {
   suspense: true

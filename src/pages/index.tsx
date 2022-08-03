@@ -19,41 +19,66 @@ const Home: NextPage = () => {
       <Head>
         <title>Drafty - Making Twitter drafts a breeze</title>
       </Head>
-      <div className="flex flex-col items-center justify-center translate-y-2">
-        <LogoIcon className="w-20 h-20" animated showDebris />
 
-        <h1 className="title-font leading-none text-indigo-200 text-3xl lg:text-4xl -translate-y-2 select-none">
+      <div className="flex items-end justify-center relative">
+        <h1 className="title-font leading-none text-indigo-200 text-5xl sm:text-7xl select-none">
           Drafty
         </h1>
+        <LogoIcon className="w-16 h-16 sm:w-20 sm:h-20 bg-indigo-200 absolute right-[-3.5rem] top-[-1.3rem] sm:right-[-4rem] sm:top-[-1rem]" />
       </div>
       <h2 className="text-lg text-indigo-300 leading-none mb-4 max-w-xs">
-        Making twitter drafts a <strong>breeze💨</strong>
+        Making twitter drafts a{" "}
+        <strong>
+          <em>breeze</em>
+        </strong>
       </h2>
 
       {!isAuthenticated ? (
-        <PrimaryButton
-          handleClick={() => signIn("twitter")}
-          title="Sign in with my Twitter"
+        <button
+          onClick={() => signIn("twitter")}
+          title="Sign in with Twitter"
+          className="px-4 py-2 text-md border-2 border-bg-white text-white hover:bg-amber-400 hover:text-indigo-800 hover:border-amber-400 group rounded-2xl transition duration-200 ease-in-out"
         >
-          Sign in with my Twitter
-        </PrimaryButton>
+          <span className="flex items-center justify-center h-full gap-1 scale-100 group-hover:scale-95">
+            <Icon
+              url="/assets/icons/twitter.svg"
+              className="w-5 h-5 bg-white group-hover:bg-indigo-800 transition duration-200 ease-in-out"
+            />
+            Sign in with <strong>Twitter</strong>
+          </span>
+        </button>
       ) : (
         <div className="flex flex-col items-center justify-center gap-4">
-          <PrimaryButton
-            title="Create a new draft"
-            isInternalLink
-            linkPath="/new"
-            className="group"
-            isCTA
-          >
-            <span className="flex items-center justify-center h-full gap-1 scale-100 group-hover:scale-95">
-              <Icon
-                url="/assets/icons/pencil.svg"
-                className="w-4 h-4 bg-white group-hover:bg-indigo-800 transition duration-200 ease-in-out"
-              />
-              Start a <strong>new</strong> draft
-            </span>
-          </PrimaryButton>
+          {/* //   <PrimaryButton
+        //     title="Create a new draft"
+        //     isInternalLink
+        //     linkPath="/new"
+        //     className="group"
+        //     isCTA
+        //   >
+        //     <span className="flex items-center justify-center h-full gap-1 scale-100 group-hover:scale-95">
+        //       <Icon
+        //         url="/assets/icons/pencil.svg"
+        //         className="w-4 h-4 bg-white group-hover:bg-indigo-800 transition duration-200 ease-in-out"
+        //       />
+        //       Start a <strong>new</strong> draft
+        //     </span>
+        //   </PrimaryButton> */}
+
+          <Link href="/new">
+            <a
+              title="Create a new draft"
+              className="px-4 py-2 text-md border-2 border-bg-white text-white hover:bg-amber-400 hover:text-indigo-800 hover:border-amber-400 group rounded-2xl transition duration-200 ease-in-out"
+            >
+              <span className="flex items-center justify-center h-full gap-1 scale-100 group-hover:scale-95">
+                <Icon
+                  url="/assets/icons/pencil.svg"
+                  className="w-5 h-5 bg-white group-hover:bg-indigo-800 transition duration-200 ease-in-out"
+                />
+                Create a <strong>new</strong> draft
+              </span>
+            </a>
+          </Link>
 
           <SecondaryButton
             linkPath="/drafts"
