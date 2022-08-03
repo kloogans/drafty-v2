@@ -25,6 +25,7 @@
     "mongoose": "^6.4.4",
     "next": "12.2.2",
     "next-auth": "^4.9.0",
+    "next-pwa": "^5.5.5",
     "react": "18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-cookie-consent": "^8.0.1",

@@ -51,14 +51,6 @@ class DraftyDocument extends Document {
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-title" content="Drafty" />
-          {/* PWA Scripts */}
-          <Script strategy="beforeInteractive">
-            {`
-            if ('serviceWorker' in navigator) {
-              navigator.serviceWorker.register('helpers/service-worker-pwa.js');
-          }
-            `}
-          </Script>
         </Head>
         <body>
           <Main />
