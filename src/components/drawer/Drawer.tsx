@@ -18,8 +18,8 @@ const MenuLink: React.FC<MenuProps> = ({ href, children, title, active }) => (
       title={title}
       className={`w-full flex flex-col items-center justify-center px-4 py-5 text-white rounded-2xl ${
         active
-          ? "text-zinc-800 bg-amber-400"
-          : "hover:bg-zinc-700 hover:text-amber-400 focus:text-amber-400"
+          ? "text-white bg-indigo-600"
+          : "hover:bg-zinc-700 hover:text-indigo-300 focus:text-indigo-300"
       }`}
     >
       {children}
@@ -75,7 +75,7 @@ const Drawer = () => {
             <li className="w-full">
               <button
                 title="Sign out of your account"
-                className="w-full flex flex-col items-center justify-center px-4 py-5 hover:bg-zinc-700 rounded-2xl text-white hover:text-amber-400 focus:text-amber-400"
+                className="w-full flex flex-col items-center justify-center px-4 py-5 hover:bg-zinc-700 rounded-2xl text-white hover:text-indigo-300 focus:text-indigo-300"
                 onClick={() => signOut()}
               >
                 Sign out
