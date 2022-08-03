@@ -1,5 +1,6 @@
 import Head from "next/head"
 import React from "react"
+import Footer from "src/components/footer/Footer"
 import PrimaryHeading from "src/components/headings/PrimaryHeading"
 import Layout from "src/components/layout/Layout"
 
@@ -18,7 +19,7 @@ const TermsPage = () => {
       <Head>
         <title>Terms and Conditions</title>
       </Head>
-      <PrimaryHeading className="!text-center font-bold">
+      <PrimaryHeading className="!text-center !text-2xl font-bold">
         TERMS AND CONDITIONS
       </PrimaryHeading>
       <h2 className="text-sm text-white/70 mb-4 w-full !text-center">
@@ -932,6 +933,7 @@ const TermsPage = () => {
           .
         </p>
       </div>
+      <Footer />
     </Layout>
   )
 }
