@@ -75,7 +75,7 @@ const Navbar = () => {
   const { data: session, status } = useSession()
   const [isHovering, setIsHovering] = useState(false)
   return (
-    <nav className="fixed top-0 left-0 flex items-center justify-between px-5 w-full h-20 z-50">
+    <nav className="absolute top-0 left-0 flex items-center justify-between px-5 w-full h-20 z-50">
       <Link href="/">
         <a
           title="Go Home"
