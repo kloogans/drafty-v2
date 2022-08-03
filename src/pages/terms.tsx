@@ -1,4 +1,5 @@
 import Head from "next/head"
+import Link from "next/link"
 import React from "react"
 import Footer from "src/components/footer/Footer"
 import PrimaryHeading from "src/components/headings/PrimaryHeading"
@@ -596,9 +597,9 @@ const TermsPage = () => {
         <p className="text-md text-white mb-4">
           We care about data privacy and security. Please review our Privacy
           Policy:{" "}
-          <a href="/privacy" title="Privacy Policy">
-            https://drafty.cc/privacy
-          </a>
+          <Link href="/privacy">
+            <a title="Privacy Policy">https://drafty.cc/privacy</a>
+          </Link>
           . By using the Site, you agree to be bound by our Privacy Policy,
           which is incorporated into these Terms of Use. Please be advised the
           Site is hosted in the United States. If you access the Site from any
