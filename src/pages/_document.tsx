@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document"
+import Script from "next/script"
 import { SEOConfig } from "src/configs/seo"
 class DraftyDocument extends Document {
   render() {
@@ -38,6 +39,26 @@ class DraftyDocument extends Document {
             crossOrigin=""
             type="font/ttf"
           />
+          {/* PWA */}
+          <link
+            rel="manifest"
+            crossOrigin="use-credentials"
+            href="/site.webmanifest"
+          />
+          <meta name="application-name" content="Drafty" />
+          <meta name="msapplication-starturl" content="https://drafty.cc/" />
+          <meta name="viewport" content="width=device-width,initial-scale=1" />
+          <meta name="mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-title" content="Drafty" />
+          {/* PWA Scripts */}
+          <Script strategy="beforeInteractive">
+            {`
+            if ('serviceWorker' in navigator) {
+              navigator.serviceWorker.register('helpers/service-worker-pwa.js');
+          }
+            `}
+          </Script>
         </Head>
         <body>
           <Main />

@@ -57,10 +57,7 @@ const Home: NextPage = () => {
                   className="px-4 py-2 text-md border-2 border-bg-white text-white hover:bg-amber-400 hover:text-indigo-800 hover:border-amber-400 group rounded-2xl transition duration-200 ease-in-out"
                 >
                   <span className="flex items-center justify-center h-full gap-1 scale-100 group-hover:scale-95">
-                    <Icon
-                      url="/assets/icons/pencil.svg"
-                      className="w-5 h-5 bg-white group-hover:bg-indigo-800 transition duration-200 ease-in-out"
-                    />
+                    <span className="-translate-y-[0.095rem]">+</span>
                     Create a <strong>new</strong> draft
                   </span>
                 </a>

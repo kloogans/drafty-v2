@@ -19,7 +19,7 @@ const Layout: React.FC<LayoutProps> = ({
   const mainClass =
     "w-full h-full min-h-screen flex flex-col items-center justify-center bg-indigo-900 overflow-x-hidden"
   const innerClass =
-    "w-full h-full flex flex-col items-center justify-center relative"
+    "w-full h-full flex flex-col items-center justify-center relative px-2"
 
   if (status === "loading") {
     return (
