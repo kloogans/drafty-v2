@@ -92,12 +92,12 @@ const SettingsPage: React.FC<SettingsPage> = ({
 
   return (
     <Layout className="min-h-screen !justify-start pt-32" enforceAuth>
-      <PrimaryHeading>
+      <PrimaryHeading className="mb-2">
         <strong>Settings</strong>
       </PrimaryHeading>
       <UserAvatar url={image ?? ""} username={username} size="16" />
       <p className="text-sm text-white/80 mb-3">@{username}</p>
-      <ul className="w-full max-w-xl mx-auto bg-indigo-700 rounded-2xl px-4 shadow-md mb-5">
+      <ul className="w-full max-w-xl mx-auto bg-indigo-800 rounded-2xl px-4 shadow-md mb-5">
         <li className="flex items-center justify-between py-5 border-b-2 border-b-white/50">
           <span className="text-md text-white/80">Number of drafts</span>
           <span className="text-md text-white/80 p-3 bg-indigo-500 rounded-2xl min-w-[4.8rem] text-center shadow-md">

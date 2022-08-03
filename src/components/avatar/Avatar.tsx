@@ -23,7 +23,7 @@ const UserAvatar: React.FC<AvatarProps> = ({
           src={url}
           layout="fill"
           alt={`${username}'s avatar`}
-          className="rounded-full"
+          className="rounded-full user-select-none"
         />
       )}
     </div>
