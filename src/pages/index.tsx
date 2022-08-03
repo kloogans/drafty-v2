@@ -1,3 +1,4 @@
+// TODO: style new primary link
 import type { NextPage } from "next"
 import dynamic from "next/dynamic"
 import { useSession, signIn, signOut } from "next-auth/react"
@@ -9,11 +10,9 @@ import Head from "next/head"
 import Footer from "src/components/footer/Footer"
 
 const Layout = dynamic(() => import("src/components/layout/Layout"))
-const PrimaryHeading = dynamic(
-  () => import("src/components/headings/PrimaryHeading")
-)
+
 const Home: NextPage = () => {
-  const { data: session, status } = useSession()
+  const { status } = useSession()
   const isAuthenticated = status !== "loading" && status === "authenticated"
   return (
     <>

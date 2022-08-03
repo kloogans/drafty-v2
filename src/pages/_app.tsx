@@ -25,7 +25,6 @@ function Drafty({ Component, pageProps }: AppProps) {
     <SessionProvider session={pageProps.session} refetchInterval={5 * 60}>
       <GlobalStateProvider>
         <AnalyticsProvider instance={analytics}>
-          <PaperTexture />
           <Navbar />
           <Component {...pageProps} />
           <Drawer />
