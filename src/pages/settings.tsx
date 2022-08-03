@@ -4,6 +4,7 @@ import { GetServerSideProps } from "next"
 import { getSession, signOut } from "next-auth/react"
 import dynamic from "next/dynamic"
 import { useRouter } from "next/router"
+import dbConnect from "src/lib/dbConnect"
 import { useState } from "react"
 import { useGlobalState } from "src/state/hooks/useGlobalState"
 const UserAvatar = dynamic(() => import("src/components/avatar/Avatar"))
@@ -147,6 +148,7 @@ const SettingsPage: React.FC<SettingsPage> = ({
 export default SettingsPage
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  await dbConnect()
   const session = await getSession({ req: context.req })
   try {
     //@ts-ignore
@@ -154,7 +156,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       { uid: session?.user?.uid },
       { _id: 0, drafts: 1 }
     ).lean()
-    const numberOfDrafts = drafts?.drafts?.length || 0
+    const numberOfDrafts = drafts?.drafts?.length ?? 0
     return {
       props: {
         numberOfDrafts,

@@ -126,8 +126,8 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
 export default DraftsPage
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession({ req: context.req })
   await dbConnect()
+  const session = await getSession({ req: context.req })
 
   try {
     //@ts-ignore

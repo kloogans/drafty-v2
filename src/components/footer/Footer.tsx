@@ -12,7 +12,7 @@ const Footer: React.FC<{ className?: string }> = ({ className }) => {
             Terms
           </a>
         </Link>
-        <span className="px-2">&middot;</span>
+        <span className="px-1">&middot;</span>
         <Link href="/privacy">
           <a
             className="hover:text-amber-400 focus:text-amber-400"
@@ -22,7 +22,7 @@ const Footer: React.FC<{ className?: string }> = ({ className }) => {
           </a>
         </Link>
 
-        <span className="px-2">&middot;</span>
+        <span className="px-1">&middot;</span>
         <Link href="/cookies">
           <a
             className="hover:text-amber-400 focus:text-amber-400"
