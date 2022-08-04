@@ -84,7 +84,7 @@ const SettingsPage: React.FC<SettingsPage> = ({
   const confirmDeleteAccount = () => {
     openPopover(
       "Are you sure?",
-      "all of your account data will be destroyed.",
+      "All of your account data will be destroyed.",
       async () => {
         await handleDeleteUser()
       }
@@ -137,10 +137,6 @@ const SettingsPage: React.FC<SettingsPage> = ({
       <SecondaryButton handleClick={() => signOut()} tertiary>
         Sign out
       </SecondaryButton>
-
-      {/* total number of drafts */}
-      {/* delete all drafts */}
-      {/* delete account */}
     </Layout>
   )
 }
@@ -165,7 +161,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }
     }
   } catch (e) {
-    console.log(e.message)
     return {
       props: {
         settings: []

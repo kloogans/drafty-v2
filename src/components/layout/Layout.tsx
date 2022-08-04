@@ -48,11 +48,11 @@ const Layout: React.FC<LayoutProps> = ({
         <div className={`${innerClass} ${className}`}>{children}</div>
       </main>
       <Popover id="main-layout-popover">
-        <div className="bg-zinc-800 lg:min-w-[532px] overflow-y-auto scrollbar-blue p-10 rounded-2xl shadow-md flex flex-col items-center justify-start">
+        <div className="bg-zinc-800 w-full max-w-sm lg:max-w-xl overflow-y-auto scrollbar-blue p-10 rounded-2xl shadow-md flex flex-col items-center justify-start">
           <p className="text-xl font-bold tracking-wide leading-none text-zinc-100 mb-2">
             {popoverTitle}
           </p>
-          <p className="text-md tracking-wide leading-none text-zinc-200 mb-4">
+          <p className="text-sm md:text-md tracking-wide leading-none text-zinc-200 mb-4">
             {popoverContent}
           </p>
           <div className="flex gap-2">

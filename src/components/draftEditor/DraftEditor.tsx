@@ -158,7 +158,7 @@ const DraftEditor: React.FC<DraftEditorProps> = ({
           >
             Create a new <strong>draft</strong>
           </PrimaryHeading>
-          <form className="w-full h-full px-2 md:px-0 max-w-full md:max-w-xl mx-auto flex flex-col items-center justify-center mb-4">
+          <form className="w-full h-full max-w-full md:max-w-xl mx-auto flex flex-col items-center justify-center mb-4">
             {sections.map((value, index) => {
               const isFirstTextBox = index === 0
               const isLastTextBox = index === sections.length - 1
