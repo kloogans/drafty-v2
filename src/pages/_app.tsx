@@ -9,20 +9,32 @@ import "react-toastify/dist/ReactToastify.css"
 import TagManager from "react-gtm-module"
 import { AnalyticsProvider } from "use-analytics"
 import { analytics } from "src/lib/analytics"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import PaperTexture from "src/components/PaperTexture"
 import CookieConsent from "react-cookie-consent"
 import Link from "next/link"
+import Head from "next/head"
 const TAG_MANAGER_CONFIG = {
   gtmId: "GTM-N27253L"
 }
 function Drafty({ Component, pageProps }: AppProps) {
+  const [isDarkTheme, setIsDarkTheme] = useState(false)
+
   useEffect(() => {
     analytics.page()
     TagManager.initialize(TAG_MANAGER_CONFIG)
+    setIsDarkTheme(window.matchMedia("(prefers-color-scheme: dark)").matches)
   }, [])
+  console.log(isDarkTheme)
   return (
     <SessionProvider session={pageProps.session} refetchInterval={5 * 60}>
+      <Head>
+        {isDarkTheme ? (
+          <link rel="icon" href="/favicon-dark.ico" />
+        ) : (
+          <link rel="icon" href="/favicon.ico" />
+        )}
+      </Head>
       <GlobalStateProvider>
         <AnalyticsProvider instance={analytics}>
           <Navbar />

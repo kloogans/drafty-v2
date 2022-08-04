@@ -8,7 +8,6 @@ class DraftyDocument extends Document {
       <Html>
         <Head>
           <meta name="description" content={description} />
-          <link rel="icon" href="/favicon.ico" />
           <meta name="theme-color" content="#3730a3" />
           {/* Facebook */}
           <meta property="og:title" content={description} />
