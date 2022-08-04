@@ -18,5 +18,46 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Draft",
+      "short_name": "New Draft",
+      "description": "Create a new draft",
+      "url": "/new",
+      "icons": [
+        {
+          "src": "/assets/icons/feather-1.svg",
+          "type": "image/svg+xml",
+          "purpose": "any"
+        }
+      ]
+    },
+    {
+      "name": "Drafts",
+      "short_name": "Drafts",
+      "description": "View your drafts",
+      "url": "/drafts",
+      "icons": [
+        {
+          "src": "/assets/icons/drafts.svg",
+          "type": "image/svg+xml",
+          "purpose": "any"
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "short_name": "Settings",
+      "description": "View your settings",
+      "url": "/settings",
+      "icons": [
+        {
+          "src": "/assets/icons/settings.svg",
+          "type": "image/svg+xml",
+          "purpose": "any"
+        }
+      ]
+    }
   ]
 }

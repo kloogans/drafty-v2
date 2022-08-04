@@ -4,6 +4,7 @@ import { DraftEditorProvider } from "src/components/draftEditor/state/DraftEdito
 import { GetServerSideProps } from "next"
 import shortUUID from "short-uuid"
 import Head from "next/head"
+import { getSession } from "next-auth/react"
 const Layout = dynamic(() => import("src/components/layout/Layout"))
 const PrimaryHeading = dynamic(
   () => import("src/components/headings/PrimaryHeading")
@@ -32,8 +33,17 @@ const NewDraftPage: React.FC<{ id: string }> = ({ id }) => {
 
 export default NewDraftPage
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req })
   const newId = shortUUID.generate()
+  if (!session) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/"
+      }
+    }
+  }
   return {
     props: {
       id: newId

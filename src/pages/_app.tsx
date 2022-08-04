@@ -24,7 +24,6 @@ function Drafty({ Component, pageProps }: AppProps) {
     TagManager.initialize(TAG_MANAGER_CONFIG)
     setIsDarkTheme(window.matchMedia("(prefers-color-scheme: dark)").matches)
   }, [])
-  console.log(isDarkTheme)
   return (
     <SessionProvider session={pageProps.session} refetchInterval={5 * 60}>
       <Head>
