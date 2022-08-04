@@ -10,7 +10,6 @@ import TagManager from "react-gtm-module"
 import { AnalyticsProvider } from "use-analytics"
 import { analytics } from "src/lib/analytics"
 import { useEffect, useState } from "react"
-import PaperTexture from "src/components/PaperTexture"
 import CookieConsent from "react-cookie-consent"
 import Link from "next/link"
 import Head from "next/head"
@@ -29,6 +28,7 @@ function Drafty({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session} refetchInterval={5 * 60}>
       <Head>
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
         {isDarkTheme ? (
           <link rel="icon" href="/favicon-dark.ico" />
         ) : (
