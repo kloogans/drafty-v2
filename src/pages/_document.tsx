@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from "next/document"
-import Script from "next/script"
 import { SEOConfig } from "src/configs/seo"
 class DraftyDocument extends Document {
   render() {
@@ -10,7 +9,7 @@ class DraftyDocument extends Document {
           <meta name="description" content={description} />
           <meta name="theme-color" content="#312e81" />
           {/* Facebook */}
-          <meta property="og:title" content={description} />
+          <meta property="og:title" content={defaultTitle} />
           <meta property="og:type" content="website" />
           <meta property="og:url" content={siteUrl} />
           <meta property="og:image" content={image} />
