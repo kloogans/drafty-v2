@@ -44,6 +44,10 @@ class DraftyDocument extends Document {
             crossOrigin="use-credentials"
             href="/site.webmanifest"
           />
+          <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
+          ></meta>
           <meta name="application-name" content="Drafty" />
           <meta name="msapplication-starturl" content="https://drafty.cc/" />
           <meta name="mobile-web-app-capable" content="yes" />
