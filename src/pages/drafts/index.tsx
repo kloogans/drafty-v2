@@ -19,6 +19,7 @@ const PrimaryHeading = dynamic(
 )
 interface DashboardPage {
   drafts: DraftProps[]
+  isAuthenticated: boolean
 }
 
 const removeDraft = async (id: string) => {
@@ -34,14 +35,14 @@ const removeDraft = async (id: string) => {
   }
 }
 
-const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
+const DraftsPage: React.FC<DashboardPage> = ({ drafts, isAuthenticated }) => {
   const { openPopover } = useGlobalState()
   const router = useRouter()
   const [listRef] = useAutoAnimate<HTMLDivElement>()
 
   if (drafts != null && drafts.length < 1) {
     return (
-      <Layout enforceAuth>
+      <Layout isAuthenticated={isAuthenticated} enforceAuth>
         <Head>
           <title>Your Drafts</title>
         </Head>
@@ -82,7 +83,11 @@ const DraftsPage: React.FC<DashboardPage> = ({ drafts }) => {
   }
 
   return (
-    <Layout className="min-h-screen !justify-start pt-32" enforceAuth>
+    <Layout
+      className="min-h-screen !justify-start pt-32"
+      isAuthenticated={isAuthenticated}
+      enforceAuth
+    >
       <Head>
         <title>Your Drafts</title>
       </Head>
@@ -128,6 +133,7 @@ export default DraftsPage
 export const getServerSideProps: GetServerSideProps = async (context) => {
   await dbConnect()
   const session = await getSession({ req: context.req })
+  const isAuthenticated = session && session?.user
 
   try {
     //@ts-ignore
@@ -137,14 +143,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     ).lean()
     return {
       props: {
-        drafts: drafts?.drafts ?? []
+        drafts: drafts?.drafts ?? [],
+        isAuthenticated
       }
     }
   } catch (e) {
     console.log(e.message)
     return {
       props: {
-        drafts: null
+        drafts: null,
+        isAuthenticated
       }
     }
   }

@@ -17,6 +17,7 @@ interface SettingsPage {
   numberOfDrafts: number
   username: string
   image: string
+  isAuthenticated: boolean
 }
 
 const deleteUser = async () => {
@@ -46,7 +47,8 @@ const deleteAllDrafts = async () => {
 const SettingsPage: React.FC<SettingsPage> = ({
   numberOfDrafts,
   username,
-  image
+  image,
+  isAuthenticated
 }) => {
   const { openPopover } = useGlobalState()
   const router = useRouter()
@@ -92,7 +94,11 @@ const SettingsPage: React.FC<SettingsPage> = ({
   }
 
   return (
-    <Layout className="min-h-screen !justify-start pt-32" enforceAuth>
+    <Layout
+      isAuthenticated={isAuthenticated}
+      className="min-h-screen !justify-start pt-32"
+      enforceAuth
+    >
       <PrimaryHeading className="mb-2">
         <strong>Settings</strong>
       </PrimaryHeading>
@@ -146,6 +152,7 @@ export default SettingsPage
 export const getServerSideProps: GetServerSideProps = async (context) => {
   await dbConnect()
   const session = await getSession({ req: context.req })
+  const isAuthenticated = session && session?.user
   try {
     //@ts-ignore
     const drafts = await Drafts.findOne(
@@ -157,13 +164,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: {
         numberOfDrafts,
         username: session?.user?.name,
-        image: session?.user?.image
+        image: session?.user?.image,
+        isAuthenticated
       }
     }
   } catch (e) {
     return {
       props: {
-        settings: []
+        settings: [],
+        isAuthenticated
       }
     }
   }

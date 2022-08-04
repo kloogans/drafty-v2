@@ -4,17 +4,18 @@ import Error from "next/error"
 import { useGlobalState } from "src/state/hooks/useGlobalState"
 import { LayoutProps } from "./types"
 import { PrimaryButton, SecondaryButton } from "src/components/buttons"
+import LoadingRing from "../loader/LoadingRing"
 const Popover = dynamic(() => import("src/components/popover/Popover"))
 
 const Layout: React.FC<LayoutProps> = ({
   children,
   enforceAuth = false,
+  isAuthenticated = false,
   className
 }) => {
   const { togglePopover, popoverTitle, popoverContent, popoverConfirmAction } =
     useGlobalState()
   const { status } = useSession()
-  const isAuthenticated = status !== "loading" && status === "authenticated"
 
   const mainClass =
     "w-full h-full min-h-screen flex flex-col items-center justify-center bg-indigo-900 overflow-x-hidden"
@@ -25,9 +26,7 @@ const Layout: React.FC<LayoutProps> = ({
     return (
       <main className={`${mainClass}`}>
         <div className={`${innerClass} ${className}`}>
-          <p className="text-sm text-white">
-            <strong>Loading</strong>
-          </p>
+          <LoadingRing size={12} />
         </div>
       </main>
     )

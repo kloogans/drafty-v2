@@ -13,12 +13,16 @@ const DraftEditor = dynamic(
   () => import("src/components/draftEditor/DraftEditor")
 )
 
-const NewDraftPage: React.FC<{ id: string }> = ({ id }) => {
+const NewDraftPage: React.FC<{ id: string; isAuthenticated: boolean }> = ({
+  id,
+  isAuthenticated
+}) => {
   const { togglePopover } = useGlobalState()
   return (
     <DraftEditorProvider>
       <Layout
         enforceAuth
+        isAuthenticated={isAuthenticated}
         className="min-h-screen !justify-start pt-20 md:pt-32"
       >
         <Head>
@@ -35,18 +39,21 @@ export default NewDraftPage
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession({ req: context.req })
+  const isAuthenticated = session && session?.user
   const newId = shortUUID.generate()
   if (!session) {
     return {
       redirect: {
         permanent: false,
-        destination: "/"
+        destination: "/",
+        isAuthenticated
       }
     }
   }
   return {
     props: {
-      id: newId
+      id: newId,
+      isAuthenticated
     }
   }
 }

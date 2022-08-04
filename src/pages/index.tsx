@@ -1,7 +1,7 @@
 // TODO: style new primary link
-import type { NextPage } from "next"
+import type { GetServerSideProps, NextPage } from "next"
 import dynamic from "next/dynamic"
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn, signOut, getSession } from "next-auth/react"
 import { PrimaryButton, SecondaryButton } from "src/components/buttons"
 import Icon from "src/components/icon/Icon"
 import LogoIcon from "src/components/logo/LogoIcon"
@@ -11,9 +11,13 @@ import Footer from "src/components/footer/Footer"
 
 const Layout = dynamic(() => import("src/components/layout/Layout"))
 
-const Home: NextPage = () => {
+interface MainPage {
+  isAuthenticated: boolean
+}
+
+const Home: React.FC<NextPage & MainPage> = ({ isAuthenticated }) => {
   const { status } = useSession()
-  const isAuthenticated = status !== "loading" && status === "authenticated"
+  // const isAuthenticated = status !== "loading" && status === "authenticated"
   return (
     <>
       <Layout className="min-h-screen" enforceAuth={false}>
@@ -88,3 +92,13 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req })
+  const isAuthenticated = session && session.user
+  return {
+    props: {
+      isAuthenticated
+    }
+  }
+}

@@ -17,14 +17,15 @@ const PrimaryHeading = dynamic(
 )
 interface DraftPage {
   draft: DraftEditorProps
+  isAuthenticated: boolean
 }
 
-const DraftByIdPage: React.FC<DraftPage> = ({ draft }) => {
+const DraftByIdPage: React.FC<DraftPage> = ({ draft, isAuthenticated }) => {
   const { togglePopover } = useGlobalState()
 
   if (draft == null) {
     return (
-      <Layout enforceAuth>
+      <Layout isAuthenticated={isAuthenticated} enforceAuth>
         <PrimaryHeading>Nothing&apos;s here!</PrimaryHeading>
       </Layout>
     )
@@ -32,7 +33,11 @@ const DraftByIdPage: React.FC<DraftPage> = ({ draft }) => {
 
   return (
     <DraftEditorProvider>
-      <Layout className="min-h-screen !justify-start pt-32" enforceAuth>
+      <Layout
+        isAuthenticated={isAuthenticated}
+        className="min-h-screen !justify-start pt-32"
+        enforceAuth
+      >
         <div className="w-full max-w-xl mb-5">
           <Link href="/drafts">
             <a className="flex items-center text-sm text-white hover:text-amber-400">
@@ -63,6 +68,7 @@ export default DraftByIdPage
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession({ req: context.req })
+  const isAuthenticated = session && session?.user
   const { draftId } = context.query
   try {
     //@ts-ignore
@@ -83,13 +89,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     ])
     return {
       props: {
-        draft: draftById[0].drafts[0]
+        draft: draftById[0].drafts[0],
+        isAuthenticated
       }
     }
   } catch (e) {
     return {
       props: {
-        draft: null
+        draft: null,
+        isAuthenticated
       }
     }
   }
