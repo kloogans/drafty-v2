@@ -21,26 +21,20 @@ export default async function handler(
   if (!uid) res.status(401).json({ success: false, message: "Not authorized" })
 
   const { id, sections } = JSON.parse(body)
-  //@ts-ignore
-  const existingUserDrafts = await Drafts.findOne(
-    { uid },
-    { _id: 0, drafts: 1 }
-  ).lean()
-  //@ts-ignore
-  const isExistingDraft = await Drafts.findOne(
-    { uid, "drafts.id": id },
-    { _id: 0, drafts: 1 }
-  ).lean()
 
   try {
-    if (existingUserDrafts == null) {
-      const newDraft = new Drafts({
-        uid,
-        drafts: [{ id, sections }]
-      })
+    //@ts-ignore
+    const isExistingDraft = await Drafts.findOne(
+      { uid, "drafts.id": id },
+      { _id: 0, drafts: 1 }
+    ).lean()
 
-      await newDraft.save()
-      res.status(200).json({ success: true, draftUrl: `/drafts/${id}` })
+    if (isExistingDraft) {
+      await Drafts.updateOne(
+        { uid, "drafts.id": id },
+        { $set: { "drafts.$.sections": sections } }
+      )
+      res.status(200).json({ success: true })
       return
     }
 

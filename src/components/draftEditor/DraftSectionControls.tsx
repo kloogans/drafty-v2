@@ -39,6 +39,7 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
   const openFileBrowser = (ev: any) => {
     ev.stopPropagation()
     inputRef.current?.click()
+    console.log(inputRef.current)
   }
 
   const handleUploadFile = async (file: File) => {
@@ -77,7 +78,7 @@ const DraftSectionControls: React.FC<DraftSectionControlsProps> = ({
         className={`mr-1 group`}
       >
         <input
-          onClick={openFileBrowser}
+          onClick={(e) => openFileBrowser(e)}
           onChange={(event) =>
             event.target.files && handleUploadFile(event.target.files[0])
           }
